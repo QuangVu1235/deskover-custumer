@@ -1,7 +1,7 @@
 import 'package:deskover_develop/src/config/base_api.dart';
-import 'package:deskover_develop/src/modules/gift_exchange/product_widget.dart';
 import 'package:deskover_develop/src/modules/homepage/homepage_model.dart';
 import 'package:deskover_develop/src/modules/homepage/homepage_screen.dart';
+import 'package:deskover_develop/src/modules/product_widget/product_widget.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

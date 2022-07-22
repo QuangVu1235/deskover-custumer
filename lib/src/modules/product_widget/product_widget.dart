@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/exchange_points/creat_cart.dart';
-import 'package:deskover_develop/src/modules/gift_exchange/product_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/modules/product_widget/product_detail.dart';
+import 'package:deskover_develop/src/modules/product_widget/product_model.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,10 +66,10 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
       height: MediaQuery.of(context).size.height*0.3,
       child: InkWell(
         onTap: () {
-          // Get.to(ProductDetail(
-          //   idProduct: widget.productId,
-          //   heroTag: herotag,
-          // ));
+          Get.to(ProductDetail(
+            idProduct: widget.productId,
+            heroTag: herotag,
+          ));
         },
         child: Card(
           elevation: 0.0,

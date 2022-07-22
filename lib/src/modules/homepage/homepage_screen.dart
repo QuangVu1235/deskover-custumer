@@ -1,7 +1,8 @@
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
-import 'package:deskover_develop/src/modules/gift_exchange/product_widget.dart';
 import 'package:deskover_develop/src/modules/homepage/widgets/list_product_new.dart';
+import 'package:deskover_develop/src/modules/product_widget/product_widget.dart';
+import 'package:deskover_develop/src/modules/subcategory/subcategory_screen.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
@@ -96,12 +97,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                        minimumSize: Size.zero),
                                    onPressed: () {
-                                     // Get.to(ProductListScreen(
-                                     //   categoryId:
-                                     //   viewModel.listCaterory.value![i].id!.toString(),
-                                     //   categoryTitle:
-                                     //   viewModel.listCaterory.value![i].name!,
-                                     // ));
+                                     Get.to(()=> SubCategoryScreen(categoryId: viewModel.DataCategory[i].id!, title:  viewModel.DataCategory[i].name!,));
                                    },
                                    child: Column(
                                      crossAxisAlignment: CrossAxisAlignment.center,

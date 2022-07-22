@@ -27,7 +27,7 @@ class GlobalImage extends StatelessWidget {
   Widget build(BuildContext context) {
     String urlX;
     if (url == null) {
-      urlX = 'https://cdn.nhanlucnganhluat.vn/uploads/images/4BE2A8EE/logo/2019-12/pictures_library_36193_20191122155415_1291.png';
+      urlX = 'https://www.kindpng.com/picc/m/20-200041_website-clipart-mobile-friendly-computer-phone-tablet-icon.png';
     } else {
       urlX = url!;
     }
