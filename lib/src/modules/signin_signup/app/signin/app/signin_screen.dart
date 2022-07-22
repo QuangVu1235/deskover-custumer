@@ -29,95 +29,84 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UIColors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          color: UIColors.login,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: UIColors.login,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
             child: Column(
               children: [
-                Expanded(
-                  child: Column(
-                   children: [
-                      Container(
-                        margin: EdgeInsets.all(50),
-                        child: Center(
-                          child:  Image.asset( ImageAssets.imgLogobanner, height: 120),
-                        ),
-                      ),
-                    SizedBox(
-                      height: SpaceValues.space32,
-                    ),
-                    GlobalInputFormWidget(
-                      textInputType:TextInputType.phone,
-                      validator:(valueDy)=> Validator.phone(valueDy),
-                      requireInput: '',
-                      hint: 'Số điện thoại',
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: SvgPicture.asset(SvgImageAssets.iconphone,height: 15,),
-                      ),
-                    ),
-                    SizedBox(
-                      height: SpaceValues.space12,
-                    ),
-                    GlobalInputFormWidget(
-                      textInputType: TextInputType.visiblePassword,
-                      // title: 'Số điện thoại',
-                      hint: '*******',
-                      security: true,
-                      requireInput: '',
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: SvgPicture.asset(SvgImageAssets.iconblock,height: 15,),
-                      ),
-                    )
-                  ],
-              ),
+                Container(
+                  margin: EdgeInsets.all(50),
+                  child: Center(
+                    child:  Image.asset( ImageAssets.imgLogobanner, height: 120),
+                  ),
                 ),
-             Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
+                  SizedBox(
+                height: SpaceValues.space32,
+                  ),
+                  GlobalInputFormWidget(
+                textInputType:TextInputType.phone,
+                validator:(valueDy)=> Validator.phone(valueDy),
+                requireInput: '',
+                hint: 'Số điện thoại',
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: SvgPicture.asset(SvgImageAssets.iconphone,height: 15,),
+                ),
+                  ),
+                  SizedBox(
+                height: SpaceValues.space12,
+                  ),
+                  GlobalInputFormWidget(
+                textInputType: TextInputType.visiblePassword,
+                // title: 'Số điện thoại',
+                hint: '*******',
+                security: true,
+                requireInput: '',
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: SvgPicture.asset(SvgImageAssets.iconblock,height: 15,),
+                ),
+                  ),
+             SizedBox(height: 32,),
+             Row(
                children: [
-                 Row(
-                   children: [ Expanded(
-                     child: ElevatedButton(
-                         onPressed: (){viewModel.openMainPage();},
-                         child:const Padding(
-                           padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),
-                           child: Text("Đăng nhập"),
-                         )),
-                   ),
-                 ]),
+                 Expanded(
+                 child: ElevatedButton(
+                     onPressed: (){viewModel.openMainPage();},
+                     child:const Padding(
+                       padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),
+                       child: Text("Đăng nhập"),
+                     )),
+               ),
+             ]),
+             TextButton(
+                 onPressed: () {
+                   Get.to(InputPhoneNumberScreen());
+                 },
+                 child: Text('Quên mật khẩu',style: TextStyle(
+                   fontSize: 13,
+                   color: UIColors.black,
+                   fontWeight: FontWeight.w400,
+                 ),)),
+             SizedBox(height: 10,),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Text("Dành cho khách hàng chưa có tài khoản?", style: TextStyle(fontSize: 11),),
+
                  TextButton(
-                     onPressed: () {
-                       Get.to(InputPhoneNumberScreen());
-                     }, 
-                     child: Text('Quên mật khẩu',style: TextStyle(
-                       fontSize: 13,
-                       color: UIColors.black,
-                       fontWeight: FontWeight.w400,
-                     ),)),
-                 SizedBox(height: 10,),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     Text("Dành cho khách hàng chưa có tài khoản?", style: TextStyle(fontSize: 11),),
-
-                     TextButton(
-                         onPressed: (){
-                           Get.to(SignUpScreen());
-                         } ,
-                         child: Row(
-                           children: [
-                             Text("Đăng ký ngay" ,style: TextStyle(fontSize: 11,color: UIColors.brandA),),
-                           ],
-                         ),
+                     onPressed: (){
+                       Get.to(SignUpScreen());
+                     } ,
+                     child: Row(
+                       children: [
+                         Text("Đăng ký ngay" ,style: TextStyle(fontSize: 11,color: UIColors.brandA),),
+                       ],
                      ),
-
-
-                   ],
-                 )
+                 ),
                ],
              )
             ]),

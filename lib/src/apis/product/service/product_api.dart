@@ -13,4 +13,13 @@ abstract class ProductAPI{
 
   @GET('/v1/api/custumer/display-product-new')
   Future<DataProductResponse> goGetAll(@Query('page') int? page, @Query('size') int? size);
+
+  @GET('/v1/api/custumer/display-product-category')
+  Future<DataProductResponse> doGetProductByCategoryId(@Query('categoryId') int? categoryId,@Query('page') int? page, @Query('size') int? size);
+
+  @GET('/v1/api/custumer/display-product-subcategory')
+  Future<DataProductResponse> doGetProductBySubId(@Query('subId') int? subId,@Query('page') int? page, @Query('size') int? size);
+
+  @GET('/v1/api/custumer/display-product/{id}')
+  Future<Product> getById(@Path('id') int? id);
 }
