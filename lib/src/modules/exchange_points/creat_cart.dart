@@ -199,124 +199,37 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                               },
                               separatorBuilder: (context, index) => const SizedBox(height: 10,),
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    alignment: Alignment.center
-                                ),
-                                onPressed: (){
-
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(SvgImageAssets.qrCode,height: 25,color: UIColors.white,),
-                                    const SizedBox(width: SpaceValues.space16,),
-                                    const Text(
-                                      'Thêm sản phẩm',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            SizedBox(height: SpaceValues.space12,),
-                            const Text(
-                              'Giá trị đơn quà',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            SizedBox(height: SpaceValues.space12,),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Tổng số thẻ quà Kun quy đổi',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        Text(
-                                          '24',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          ' thẻ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Tổng số thẻ Kun vận động quy đổi',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        Text(
-                                          '24',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          ' thẻ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: SpaceValues.space12,),
+                            // const SizedBox(height: SpaceValues.space12,),
+                            // ElevatedButton(
+                            //     style: ElevatedButton.styleFrom(
+                            //         alignment: Alignment.center
+                            //     ),
+                            //     onPressed: (){
+                            //
+                            //     },
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.center,
+                            //       children: [
+                            //         SvgPicture.asset(SvgImageAssets.qrCode,height: 25,color: UIColors.white,),
+                            //         const SizedBox(width: SpaceValues.space16,),
+                            //         const Text(
+                            //           'Thêm sản phẩm',
+                            //           style: TextStyle(
+                            //               fontSize: 14,
+                            //               fontWeight: FontWeight.w500
+                            //           ),
+                            //         )
+                            //       ],
+                            //     )),
+                            // const SizedBox(height: SpaceValues.space12,),
                             //Thông tin người nhận
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                //  ListTile(
-                                //   dense: true,
-                                //   minVerticalPadding: 0,
-                                //   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                //   contentPadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0),
-                                //   title: Text(
-                                //     "Địa chỉ nhận hàng",
-                                //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                                //   ),
-                                //   tileColor: Colors.transparent,
-                                //   onTap: null, // viewModel.selectedAddress,
-                                // ),
                                 const Text(
-                                  'Thông tin người nhận',
+                                  'Địa chỉ nhận hàng',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 14
                                   ),
                                 ),
@@ -335,12 +248,8 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   ],
 
                                 ))
-
-
-
                               ],
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
                             Card(
                               elevation: 0.0,
                               margin: EdgeInsets.zero,

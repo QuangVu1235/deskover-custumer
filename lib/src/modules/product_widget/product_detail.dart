@@ -240,7 +240,7 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                           fontWeight: FontWeight.w700,
                                           color: UIColors.brandA)),
                                   // Container(
-                                  //   padding:
+                                   //   padding:
                                   //   const EdgeInsets.only(left: 7, top: 7),
                                   //   child: Text(
                                   //     (viewModel.productDetail.value?.special_formatted ?? '').isNotEmpty ? (viewModel.productDetail.value?.price_formatted ?? '') : '',

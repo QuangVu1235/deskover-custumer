@@ -1,4 +1,5 @@
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/modules/main_page_model.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
@@ -36,7 +37,7 @@ class CartModel extends ViewModel{
                 action: [
                   ElevatedButton(
                       onPressed: (){
-                          Get.back();
+                          Get.off(MainPage(indexTab: 0,));
                       },
                       child: Text('Tới trang mua sắm'))
 
