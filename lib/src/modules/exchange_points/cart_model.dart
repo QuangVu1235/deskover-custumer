@@ -1,4 +1,5 @@
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
 import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/modules/main_page_model.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
@@ -16,6 +17,8 @@ class CartModel extends ViewModel{
   final MainPageModel _mainPageModel;
 
   RxList<Cart> dataCartResponse = RxList.empty();
+  RxList<UserAddress> dataAddress = RxList.empty();
+  Rxn<UserAddress> address = Rxn();
 
   CartModel(this._cartUserCase, this._mainPageModel);
 
@@ -23,6 +26,18 @@ class CartModel extends ViewModel{
   void initState() {
     super.initState();
     loadCartOrder('minhbd');
+    loadAddress('minhbd');
+  }
+
+  Future<void> loadAddress(String username) async {
+    await _cartUserCase.doGetAddress(username).then((value) async{
+        dataAddress.value = value ?? [];
+        dataAddress.value.forEach((item) {
+            if(item.choose == true){
+              address.value = item;
+            }
+        });
+    });
   }
 
   Future<void> loadCartOrder(String username) async{
@@ -58,6 +73,12 @@ class CartModel extends ViewModel{
         await loadCartOrder(username);
         // Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
       });
+  }
+  Future<void> btnChooseAddress(int id,  username)async {
+    await _cartUserCase.changeChoose(id, username).then((value) async{
+        await loadAddress(username);
+        Get.back();
+    });
   }
   Future<void> btnDelete(String username, int productId) async{
     await AppUtils().showPopup(
@@ -104,8 +125,6 @@ class CartModel extends ViewModel{
           ),
         )
       ]
-
-
     );
 
   }

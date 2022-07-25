@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
 import 'package:deskover_develop/src/modules/exchange_points/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -199,30 +202,6 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                               },
                               separatorBuilder: (context, index) => const SizedBox(height: 10,),
                             ),
-                            // const SizedBox(height: SpaceValues.space12,),
-                            // ElevatedButton(
-                            //     style: ElevatedButton.styleFrom(
-                            //         alignment: Alignment.center
-                            //     ),
-                            //     onPressed: (){
-                            //
-                            //     },
-                            //     child: Row(
-                            //       mainAxisAlignment: MainAxisAlignment.center,
-                            //       children: [
-                            //         SvgPicture.asset(SvgImageAssets.qrCode,height: 25,color: UIColors.white,),
-                            //         const SizedBox(width: SpaceValues.space16,),
-                            //         const Text(
-                            //           'Thêm sản phẩm',
-                            //           style: TextStyle(
-                            //               fontSize: 14,
-                            //               fontWeight: FontWeight.w500
-                            //           ),
-                            //         )
-                            //       ],
-                            //     )),
-                            // const SizedBox(height: SpaceValues.space12,),
-                            //Thông tin người nhận
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -239,7 +218,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       primary: UIColors.brandA,
                                     ) ,
                                     onPressed: (){
-
+                                        Get.to(()=> NotAddressScreen(viewModel: viewModel,));
                                     }
                                     , child: Row(
                                   children: [
@@ -250,84 +229,161 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ))
                               ],
                             ),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
+                            Obx(
+                             ()=>  Card(
+                                      elevation: 0.0,
+                                      margin: EdgeInsets.zero,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Column(
 
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Người nhận',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          'Lâm Thu Đang',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Số điện thoại',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          '0335 965 865',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children:  [
-                                        Text(
-                                          'Địa chỉ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        SizedBox(width: MediaQuery.of(context).size.width*0.2),
-                                        const Expanded(
-                                          child: Text(
-                                            'dsd, Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh',
-                                            // maxLines: 3,
-                                            // overflow: TextOverflow.fade,
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Người nhận',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                Text(
+                                                  viewModel.address.value?.fullname ?? '',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
+                                            SizedBox(height: 20,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children:  [
+                                                Text(
+                                                  'Số điện thoại',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                Text(
+                                                  viewModel.address.value?.tel ?? '',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children:  [
+                                                Text(
+                                                  'Địa chỉ',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                SizedBox(width: MediaQuery.of(context).size.width*0.2),
+                                                Expanded(
+                                                  child: Text(
+                                                    viewModel.address.value?.address ?? '',
+                                                    // maxLines: 3,
+                                                    // overflow: TextOverflow.fade,
+                                                    textAlign: TextAlign.end,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ],
+                            ),
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Vui lòng chọn trạng thái đơn hàng:',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
+                            const SizedBox(height: SpaceValues.space8,),
+                            Obx(
+                                  ()=>Visibility(
+                                visible: true,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        for (int i = 0;
+                                        i < status.length;
+                                        i++)
+                                          ListTile(
+                                            visualDensity: const VisualDensity(
+                                                horizontal: 0, vertical: -4),
+                                            contentPadding: EdgeInsets.zero,
+                                            horizontalTitleGap: 0,
+                                            tileColor: Colors.transparent,
+                                            title: Text(
+                                              status[i],
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                            leading: Radio(
+                                              value: code_status[i],
+                                              groupValue:  viewModel.value_status.value,
+                                              // activeColor: Color(0xFF6200EE),
+                                              onChanged: (value) {
+                                                print(value);
+                                                viewModel.value_status.value = value.toString();
+                                              },
+                                            ),
+                                          ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text(
+                                              'Ghi chú',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                        SizedBox(width: MediaQuery.of(context).size.width *1,height: SpaceValues.space12,),
+                                        TextField(
+                                          controller: viewModel.note,
+                                          decoration: const InputDecoration(
+                                              hintText: 'Nhập ghi chú (nếu có)',
+                                              hintStyle: TextStyle(
+                                                  fontStyle: FontStyle.italic,
+                                                  color: UIColors.black70
+                                              ),
+                                              floatingLabelAlignment: FloatingLabelAlignment.center
+                                          ),
+                                          minLines: 3,
+                                          maxLines: 3,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),),
                             const SizedBox(height: SpaceValues.space12,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
