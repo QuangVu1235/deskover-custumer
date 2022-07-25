@@ -18,10 +18,10 @@ abstract class MethodOrderApi{
   Future<Payment> doGetByIdPayment(@Path('id') int? id);
 
   @GET('/v1/api/custumer/shipping')
-  Future<List<Payment>?> doGetAllShipping();
+  Future<List<Shipping>?> doGetAllShipping();
 
   @GET('/v1/api/custumer/shipping/{id}')
-  Future<Payment> doGetByIdShipping(@Path('id') int? id);
+  Future<Shipping> doGetByIdShipping(@Path('id') int? id);
 
 
 

@@ -32,7 +32,4 @@ class UserAddressDataSourceIpml extends UserAddressDataSource{
   Future<MessageResponse> doPostAddress(UserAddress userAddress, String username)
   => _userAddressApi.doPostAddress(userAddress, username);
 
-
-
-
 }

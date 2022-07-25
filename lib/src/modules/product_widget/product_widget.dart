@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:deskover_develop/src/config/injection_config.dart';
-import 'package:deskover_develop/src/modules/exchange_points/creat_cart.dart';
+import 'package:deskover_develop/src/modules/cart/creat_cart.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_detail.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_model.dart';

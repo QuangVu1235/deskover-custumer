@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'exchange_points/creat_cart.dart';
-import 'exchange_points/exchange_points_screen.dart';
+import 'cart/creat_cart.dart';
 import 'homepage/homepage_screen.dart';
 import 'main_page_model.dart';
 

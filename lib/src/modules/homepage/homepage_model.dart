@@ -1,6 +1,6 @@
 import 'package:deskover_develop/src/apis/category/response/category_response.dart';
 import 'package:deskover_develop/src/apis/product/response/product_response.dart';
-import 'package:deskover_develop/src/modules/exchange_points/cart_model.dart';
+import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/category_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/product_usercase.dart';

@@ -1,9 +1,12 @@
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/apis/order/request/order_resquest.dart';
+import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
 import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/modules/main_page_model.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
+import 'package:deskover_develop/src/usecases/order/order_usercase.dart';
 import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +18,47 @@ import 'package:injectable/injectable.dart';
 class CartModel extends ViewModel{
   final CartUserCase _cartUserCase;
   final MainPageModel _mainPageModel;
+  final OrderUserCase _orderUserCase;
 
   RxList<Cart> dataCartResponse = RxList.empty();
   RxList<UserAddress> dataAddress = RxList.empty();
   Rxn<UserAddress> address = Rxn();
+  RxList<Shipping> dataShipping = RxList.empty();
+  Rxn<Shipping> shipping = Rxn();
+  RxList<Payment> dataPayment = RxList.empty();
+  Rxn<Payment> payment = Rxn();
 
-  CartModel(this._cartUserCase, this._mainPageModel);
+
+  CartModel(this._cartUserCase, this._mainPageModel, this._orderUserCase);
 
   @override
   void initState() {
     super.initState();
     loadCartOrder('minhbd');
     loadAddress('minhbd');
+    loadShippingMethod();
+    loadPaymentMethod();
+  }
+
+  Future<void> loadShippingMethod() async {
+    await _cartUserCase.doGetShipping().then((value) async{
+           dataShipping.value = value ?? [];
+           dataShipping.value.forEach((element) {
+             if(element.shipping_id == 'DKV'){
+               shipping.value = element;
+             }
+           });
+    });
+  }
+  Future<void> loadPaymentMethod() async {
+    await _cartUserCase.doGetPayment().then((value) async{
+      dataPayment.value = value ?? [];
+      dataPayment.value.forEach((element) {
+        if(element.payment_id == 'NH'){
+          payment.value = element;
+        }
+      });
+    });
   }
 
   Future<void> loadAddress(String username) async {
@@ -60,6 +92,20 @@ class CartModel extends ViewModel{
               );
           }
     });
+  }
+  OrderResquest? request;
+  void btnConfirmOrder() async {
+    request=OrderResquest(
+      payment: payment.value,
+      shipping: shipping.value,
+      note: ''
+    );
+    loading(() async{
+      await _orderUserCase.addOrder(request!).then((value) async{
+
+      });
+    });
+
   }
   Future<void> btnAddToCart(String username, int productId) async{
       await _cartUserCase.addToCart(username, productId, 1).then((value) async{

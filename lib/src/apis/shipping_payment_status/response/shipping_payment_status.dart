@@ -4,10 +4,10 @@ part 'shipping_payment_status.g.dart';
 @JsonSerializable()
 class Payment {
   int? id;
-  String? paymentId;
-  String? namePayment;
+  String? payment_id;
+  String? name_payment;
 
-  Payment({this.id, this.paymentId, this.namePayment});
+  Payment({this.id, this.payment_id, this.name_payment});
 
   factory Payment.fromJson(Map<String, dynamic> json) => _$PaymentFromJson(json);
   Map<String, dynamic> toJson() => _$PaymentToJson(this);
@@ -17,10 +17,10 @@ class Payment {
 @JsonSerializable()
 class Shipping {
   int? id;
-  String? shippingId;
-  String? nameShipping;
+  String? shipping_id;
+  String? name_shipping;
 
-  Shipping({this.id, this.shippingId, this.nameShipping});
+  Shipping({this.id, this.shipping_id, this.name_shipping});
 
   factory Shipping.fromJson(Map<String, dynamic> json) => _$ShippingFromJson(json);
   Map<String, dynamic> toJson() => _$ShippingToJson(this);

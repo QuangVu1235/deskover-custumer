@@ -1,7 +1,7 @@
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
-import 'package:deskover_develop/src/modules/exchange_points/cart_model.dart';
-import 'package:deskover_develop/src/modules/exchange_points/creat_cart.dart';
+import 'package:deskover_develop/src/modules/cart/cart_model.dart';
+import 'package:deskover_develop/src/modules/cart/creat_cart.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';

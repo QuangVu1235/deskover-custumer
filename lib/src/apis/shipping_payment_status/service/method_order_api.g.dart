@@ -53,37 +53,37 @@ class _MethodOrderApi implements MethodOrderApi {
   }
 
   @override
-  Future<List<Payment>?> doGetAllShipping() async {
+  Future<List<Shipping>?> doGetAllShipping() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Payment>>(
+        _setStreamType<List<Shipping>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/api/custumer/shipping',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
-        ?.map((dynamic i) => Payment.fromJson(i as Map<String, dynamic>))
+        ?.map((dynamic i) => Shipping.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<Payment> doGetByIdShipping(id) async {
+  Future<Shipping> doGetByIdShipping(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Payment>(
+        _setStreamType<Shipping>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/api/custumer/shipping/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Payment.fromJson(_result.data!);
+    final value = Shipping.fromJson(_result.data!);
     return value;
   }
 

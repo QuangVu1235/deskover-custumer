@@ -8,24 +8,24 @@ part of 'shipping_payment_status.dart';
 
 Payment _$PaymentFromJson(Map<String, dynamic> json) => Payment(
       id: json['id'] as int?,
-      paymentId: json['paymentId'] as String?,
-      namePayment: json['namePayment'] as String?,
+      payment_id: json['payment_id'] as String?,
+      name_payment: json['name_payment'] as String?,
     );
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
       'id': instance.id,
-      'paymentId': instance.paymentId,
-      'namePayment': instance.namePayment,
+      'payment_id': instance.payment_id,
+      'name_payment': instance.name_payment,
     };
 
 Shipping _$ShippingFromJson(Map<String, dynamic> json) => Shipping(
       id: json['id'] as int?,
-      shippingId: json['shippingId'] as String?,
-      nameShipping: json['nameShipping'] as String?,
+      shipping_id: json['shipping_id'] as String?,
+      name_shipping: json['name_shipping'] as String?,
     );
 
 Map<String, dynamic> _$ShippingToJson(Shipping instance) => <String, dynamic>{
       'id': instance.id,
-      'shippingId': instance.shippingId,
-      'nameShipping': instance.nameShipping,
+      'shipping_id': instance.shipping_id,
+      'name_shipping': instance.name_shipping,
     };

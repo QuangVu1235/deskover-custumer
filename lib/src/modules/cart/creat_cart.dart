@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
-import 'package:deskover_develop/src/modules/exchange_points/cart_model.dart';
+import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +27,11 @@ class CreateChangePointCart extends StatefulWidget{
 
 }
 class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>{
+
   final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
 
   bool isChecked = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -309,10 +313,11 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       ),
                                     ),
                             ),
+                            SizedBox(height: 16,),
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                'Vui lòng chọn trạng thái đơn hàng:',
+                                'Vui lòng chọn phương thức vận chuyển:',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -330,7 +335,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                     child: Column(
                                       children: [
                                         for (int i = 0;
-                                        i < status.length;
+                                        i < viewModel.dataShipping.length;
                                         i++)
                                           ListTile(
                                             visualDensity: const VisualDensity(
@@ -339,51 +344,53 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                             horizontalTitleGap: 0,
                                             tileColor: Colors.transparent,
                                             title: Text(
-                                              status[i],
+                                              viewModel.dataShipping[i].name_shipping ?? '' ,
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             leading: Radio(
-                                              value: code_status[i],
-                                              groupValue:  viewModel.value_status.value,
+                                              value: viewModel.dataShipping[i],
+                                              groupValue: viewModel.shipping.value,
                                               // activeColor: Color(0xFF6200EE),
                                               onChanged: (value) {
-                                                print(value);
-                                                viewModel.value_status.value = value.toString();
+                                                viewModel.shipping.value = value as Shipping? ;
+                                                print(viewModel.shipping.value?.name_shipping);
                                               },
                                             ),
                                           ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: const [
-                                            Text(
-                                              'Ghi chú',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                        SizedBox(width: MediaQuery.of(context).size.width *1,height: SpaceValues.space12,),
-                                        TextField(
-                                          controller: viewModel.note,
-                                          decoration: const InputDecoration(
-                                              hintText: 'Nhập ghi chú (nếu có)',
-                                              hintStyle: TextStyle(
-                                                  fontStyle: FontStyle.italic,
-                                                  color: UIColors.black70
-                                              ),
-                                              floatingLabelAlignment: FloatingLabelAlignment.center
-                                          ),
-                                          minLines: 3,
-                                          maxLines: 3,
-                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
                               ),),
+                            SizedBox(height: 16,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Vui lòng chọn phương thức thanh toán',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14
+                                  ),
+                                ),
+                                TextButton(
+                                    style: TextButton.styleFrom(
+                                      onSurface: UIColors.brandA,
+                                      primary: UIColors.brandA,
+                                    ) ,
+                                    onPressed: (){
+                                      viewModel.payment.value == null;
+                                      Get.bottomSheet(PaymentMethod(viewModel: viewModel,));
+                                    }
+                                    , child: Row(
+                                  children: [
+                                    SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
+                                    Text('Chọn',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
+                                  ],
+
+                                ))
+                              ],
+                            ),
                             const SizedBox(height: SpaceValues.space12,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -574,4 +581,95 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
   @override
   CartModel createViewModel() => getIt<CartModel>();
 
+}
+
+class PaymentMethod extends StatelessWidget{
+  final CartModel viewModel;
+
+  const PaymentMethod({Key? key, required this.viewModel})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height *0.25,
+      child: Scaffold(
+        bottomSheet: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Chọn phương thức thanh toán:',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Obx(
+                    ()=>Visibility(
+                  visible: true,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (int i = 0;
+                          i < viewModel.dataPayment.length;
+                          i++)
+                            ListTile(
+                              visualDensity: const VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              contentPadding: EdgeInsets.zero,
+                              horizontalTitleGap: 0,
+                              tileColor: Colors.transparent,
+                              title: Text(
+                                viewModel.dataPayment[i].name_payment ?? '' ,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              leading: Radio(
+                                value: viewModel.dataPayment[i],
+                                groupValue: viewModel.payment.value,
+                                // activeColor: Color(0xFF6200EE),
+                                onChanged: (value) {
+                                  viewModel.payment.value = value as Payment? ;
+                                  print(viewModel.payment.value?.name_payment);
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: (){
+                      if(viewModel.payment.value == null){
+                        AppUtils().showPopup(
+                          isSuccess: false,
+                          title: 'Vui lòng chọn phương thức thanh toán',
+                        );
+                      }
+                      print( viewModel.payment.value?.id);
+
+                      if(viewModel.payment.value != null){
+                        Get.back();
+                      }
+
+                  },
+                  child: Text('Chọn'),
+                ),
+              )
+            ],
+          ),
+        ) ,
+      ),
+    );
+  }
 }

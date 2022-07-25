@@ -6,7 +6,7 @@ import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
-import 'exchange_points/cart_model.dart';
+import 'cart/cart_model.dart';
 
 @lazySingleton
 class MainPageModel extends ViewModel {
