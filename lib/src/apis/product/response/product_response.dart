@@ -26,6 +26,9 @@ class Product {
   String? modifiedAt;
   String? modifiedBy;
   String? spec;
+  String? utility;
+  String? design;
+  String? other;
   String? video;
   int? quantity;
   Discount? discount;
@@ -47,6 +50,9 @@ class Product {
         this.modifiedAt,
         this.modifiedBy,
         this.spec,
+        this.utility,
+        this.design,
+        this.other,
         this.video,
         this.quantity,
         this.discount,

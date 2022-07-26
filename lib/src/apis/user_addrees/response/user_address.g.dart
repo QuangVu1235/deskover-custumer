@@ -8,6 +8,9 @@ part of 'user_address.dart';
 
 UserAddress _$UserAddressFromJson(Map<String, dynamic> json) => UserAddress(
       id: json['id'] as int?,
+      province_id: json['province_id'] == null
+          ? null
+          : Province.fromJson(json['province_id'] as Map<String, dynamic>),
       address: json['address'] as String?,
       fullname: json['fullname'] as String?,
       province: json['province'] as String?,
@@ -22,6 +25,7 @@ UserAddress _$UserAddressFromJson(Map<String, dynamic> json) => UserAddress(
 Map<String, dynamic> _$UserAddressToJson(UserAddress instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'province_id': instance.province_id,
       'address': instance.address,
       'fullname': instance.fullname,
       'province': instance.province,
@@ -31,4 +35,16 @@ Map<String, dynamic> _$UserAddressToJson(UserAddress instance) =>
       'email': instance.email,
       'choose': instance.choose,
       'actived': instance.actived,
+    };
+
+Province _$ProvinceFromJson(Map<String, dynamic> json) => Province(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      code: json['code'] as String?,
+    );
+
+Map<String, dynamic> _$ProvinceToJson(Province instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'code': instance.code,
     };

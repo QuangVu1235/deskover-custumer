@@ -26,7 +26,7 @@ class _CartAPI implements CartAPI {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Cart>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/v1/api/custumer/cart',
+            .compose(_dio.options, '/v1/api/customer/cart',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
@@ -49,7 +49,7 @@ class _CartAPI implements CartAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/add-cart',
+                .compose(_dio.options, '/v1/api/customer/add-cart',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
@@ -69,7 +69,7 @@ class _CartAPI implements CartAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/minus-cart',
+                .compose(_dio.options, '/v1/api/customer/minus-cart',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
@@ -89,7 +89,7 @@ class _CartAPI implements CartAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/cart',
+                .compose(_dio.options, '/v1/api/customer/cart',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);

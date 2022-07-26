@@ -28,6 +28,8 @@ class CartModel extends ViewModel{
   RxList<Payment> dataPayment = RxList.empty();
   Rxn<Payment> payment = Rxn();
 
+  TextEditingController inputNote = TextEditingController();
+
 
   CartModel(this._cartUserCase, this._mainPageModel, this._orderUserCase);
 
@@ -43,21 +45,18 @@ class CartModel extends ViewModel{
   Future<void> loadShippingMethod() async {
     await _cartUserCase.doGetShipping().then((value) async{
            dataShipping.value = value ?? [];
-           dataShipping.value.forEach((element) {
-             if(element.shipping_id == 'DKV'){
-               shipping.value = element;
-             }
-           });
+           shipping.value = null as Shipping?;
+           // dataShipping.value.forEach((element) {
+           //   if(element.shipping_id == 'DKV'){
+           //     shipping.value = element;
+           //   }
+           // });
     });
   }
   Future<void> loadPaymentMethod() async {
     await _cartUserCase.doGetPayment().then((value) async{
       dataPayment.value = value ?? [];
-      dataPayment.value.forEach((element) {
-        if(element.payment_id == 'NH'){
-          payment.value = element;
-        }
-      });
+      payment.value = null as Payment?;
     });
   }
 
@@ -84,7 +83,7 @@ class CartModel extends ViewModel{
                 action: [
                   ElevatedButton(
                       onPressed: (){
-                          Get.off(MainPage(indexTab: 0,));
+                          Get.offAll(MainPage(indexTab: 0,));
                       },
                       child: Text('Tới trang mua sắm'))
 
@@ -94,15 +93,28 @@ class CartModel extends ViewModel{
     });
   }
   OrderResquest? request;
-  void btnConfirmOrder() async {
+  Future<void> btnConfirmOrder() async {
     request=OrderResquest(
       payment: payment.value,
       shipping: shipping.value,
-      note: ''
+      note: inputNote.text
     );
     loading(() async{
       await _orderUserCase.addOrder(request!).then((value) async{
-
+        await AppUtils().showPopup(
+            title: 'Đặt hàng thành công',
+            isSuccess: true,
+            subtitle: value.message ?? '',
+            action: [
+              SizedBox(
+                width: MediaQuery.of(Get.context!).size.width * .5,
+                child: ElevatedButton(
+                  onPressed:()=> Get.offAll(MainPage(indexTab: 0,)),
+                  child: const Text('Xác nhận'),
+                ),
+              ),
+            ]
+          );
       });
     });
 
@@ -172,7 +184,18 @@ class CartModel extends ViewModel{
         )
       ]
     );
-
+  }
+  void checkShipping(){
+    if(address.value?.province_id?.code != 'SG'){
+      if(shipping.value?.shipping_id == 'DKV'){
+        AppUtils().showPopup(
+            isSuccess: false,
+            title: 'Vị trí của bạn không hỗ trợ được giao',
+            subtitle: 'Đơn vị miễn phí vận chuyển khu vực\nTP.Hồ Chí Minh'
+        );
+        shipping.value = null;
+      }
+    }
   }
 
 }

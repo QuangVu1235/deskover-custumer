@@ -11,16 +11,16 @@ abstract class MethodOrderApi{
   @factoryMethod
   factory MethodOrderApi(Dio dio) = _MethodOrderApi;
 
-  @GET('/v1/api/custumer/payment')
+  @GET('/v1/api/customer/payment')
   Future<List<Payment>?> doGetAllPayment();
 
-  @GET('/v1/api/custumer/payment/{id}')
+  @GET('/v1/api/customer/payment/{id}')
   Future<Payment> doGetByIdPayment(@Path('id') int? id);
 
-  @GET('/v1/api/custumer/shipping')
+  @GET('/v1/api/customer/shipping')
   Future<List<Shipping>?> doGetAllShipping();
 
-  @GET('/v1/api/custumer/shipping/{id}')
+  @GET('/v1/api/customer/shipping/{id}')
   Future<Shipping> doGetByIdShipping(@Path('id') int? id);
 
 

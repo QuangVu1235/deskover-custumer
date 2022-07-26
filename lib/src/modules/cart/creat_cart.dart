@@ -325,7 +325,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            const SizedBox(height: SpaceValues.space8,),
+                            const SizedBox(height: SpaceValues.space16,),
                             Obx(
                                   ()=>Visibility(
                                 visible: true,
@@ -345,7 +345,10 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                             tileColor: Colors.transparent,
                                             title: Text(
                                               viewModel.dataShipping[i].name_shipping ?? '' ,
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 12
+                                              ),
                                             ),
                                             leading: Radio(
                                               value: viewModel.dataShipping[i],
@@ -353,7 +356,8 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                               // activeColor: Color(0xFF6200EE),
                                               onChanged: (value) {
                                                 viewModel.shipping.value = value as Shipping? ;
-                                                print(viewModel.shipping.value?.name_shipping);
+                                                viewModel.checkShipping();
+
                                               },
                                             ),
                                           ),
@@ -362,7 +366,6 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   ),
                                 ),
                               ),),
-                            SizedBox(height: 16,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -391,102 +394,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ))
                               ],
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  'Nhận tại điểm đổi quà',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(SpaceValues.space16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(IconAssets.actionStore, color: UIColors.brandA, width: 24,),
-                                        SizedBox(width: SpaceValues.space12,),
-                                        const Text(
-                                          'Nhận tại điểm đổi quà',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 14
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        SizedBox(
-                                          width: 24,
-                                          height: 24,
-                                          child: TextButton(
-                                            style: TextButton.styleFrom(
-                                              onSurface: UIColors.brandA,
-                                              primary: UIColors.brandA,
-                                            ) ,
-                                            onPressed: (){
-
-                                            }
-                                            , child: Checkbox(
-                                            checkColor: Colors.white,
-                                            shape: CircleBorder(),
-                                            value: isChecked,
-                                            onChanged: (bool? value){
-                                              setState(() {
-                                                if(isChecked){
-                                                  isChecked = true;
-                                                }
-                                                isChecked = value!;
-
-                                              });
-                                            },
-                                            activeColor: UIColors.brandA,
-                                          ),
-                                          ),
-                                        )
-                                      ],),
-                                    SizedBox(width: SpaceValues.space12,),
-
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children:  const [
-                                        Text(
-                                          'Địa chỉ: ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            'dsd, Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh',
-                                            // maxLines: 3,
-                                            // overflow: TextOverflow.fade,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // IconAssets.actionStore
                             const SizedBox(height: SpaceValues.space12,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -502,10 +410,10 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                               ],
                             ),
                             const SizedBox(height: SpaceValues.space12,),
-                            const TextField(
+                            TextField(
+                              controller: viewModel.inputNote,
                               decoration: InputDecoration(
                                   hintText: 'Nhập ghi chú (nếu có)',
-
                                   hintStyle: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -524,27 +432,27 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                 padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: UIColors.white,
-                            // elevation: 0.0,
-                            shape:  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(color: UIColors.red,width: 1)
-                            )
-                          ) ,
-                          onPressed: (){
-
-                          },
-                          child: Text(
-                              'Xoá giỏ quà',
-                              style: TextStyle(
-                                color: UIColors.red
-                              ),
-                          )),
-                    ),
-                    SizedBox(width: 8,),
+                    // Expanded(
+                    //   child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //           primary: UIColors.white,
+                    //           // elevation: 0.0,
+                    //           shape:  RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               side: BorderSide(color: UIColors.red,width: 1)
+                    //           )
+                    //       ) ,
+                    //       onPressed: (){
+                    //
+                    //       },
+                    //       child: Text(
+                    //         'Xoá giỏ quà',
+                    //         style: TextStyle(
+                    //             color: UIColors.red
+                    //         ),
+                    //       )),
+                    // ),
+                    // SizedBox(width: 8,),
                     Expanded(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -555,11 +463,11 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
 
                               )
                           ) ,
-                          onPressed: (){
-
+                          onPressed: () async {
+                             await viewModel.btnConfirmOrder();
                           },
                           child: Text(
-                            'Xác nhận đơn quà',
+                            'Xác nhận mua hàng',
                             style: TextStyle(
 
                             ),

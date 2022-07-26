@@ -27,7 +27,7 @@ class _UserAddressApi implements UserAddressApi {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<UserAddress>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/user/address',
+                .compose(_dio.options, '/v1/api/customer/user/address',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
@@ -47,7 +47,7 @@ class _UserAddressApi implements UserAddressApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/user/address',
+                .compose(_dio.options, '/v1/api/customer/user/address',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
@@ -64,7 +64,7 @@ class _UserAddressApi implements UserAddressApi {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<UserAddress>>(
             Options(method: 'PUT', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/user/address/${id}',
+                .compose(_dio.options, '/v1/api/customer/user/address/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
@@ -84,7 +84,7 @@ class _UserAddressApi implements UserAddressApi {
         _setStreamType<MessageResponse>(
             Options(method: 'PUT', headers: _headers, extra: _extra)
                 .compose(
-                    _dio.options, '/v1/api/custumer/user/address-choose/${id}',
+                    _dio.options, '/v1/api/customer/user/address-choose/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);

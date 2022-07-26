@@ -26,7 +26,7 @@ class _MethodOrderApi implements MethodOrderApi {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<Payment>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/payment',
+                .compose(_dio.options, '/v1/api/customer/payment',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
@@ -45,7 +45,7 @@ class _MethodOrderApi implements MethodOrderApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Payment>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/payment/${id}',
+                .compose(_dio.options, '/v1/api/customer/payment/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Payment.fromJson(_result.data!);
@@ -61,7 +61,7 @@ class _MethodOrderApi implements MethodOrderApi {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<Shipping>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/shipping',
+                .compose(_dio.options, '/v1/api/customer/shipping',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
@@ -80,7 +80,7 @@ class _MethodOrderApi implements MethodOrderApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Shipping>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/custumer/shipping/${id}',
+                .compose(_dio.options, '/v1/api/customer/shipping/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Shipping.fromJson(_result.data!);
