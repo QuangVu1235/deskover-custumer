@@ -24,9 +24,12 @@ class ProductDetailModel extends ViewModel{
     ]);
   }
   Future<void> getProductById()async {
-    _productUserCase.getById(idProduct).then((value) async{
-      productDetail.value = value;
+    await loading(() async{
+     await _productUserCase.getById(idProduct).then((value) async{
+        productDetail.value = value;
+      });
     });
+
   }
 
 

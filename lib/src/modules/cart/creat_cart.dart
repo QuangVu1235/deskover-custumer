@@ -1,13 +1,18 @@
 import 'dart:ui';
 
+import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
-import 'package:deskover_develop/src/modules/exchange_points/cart_model.dart';
+import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
+import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -22,9 +27,11 @@ class CreateChangePointCart extends StatefulWidget{
 
 }
 class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>{
+
   final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
 
   bool isChecked = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -199,124 +206,13 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                               },
                               separatorBuilder: (context, index) => const SizedBox(height: 10,),
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    alignment: Alignment.center
-                                ),
-                                onPressed: (){
-
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(SvgImageAssets.qrCode,height: 25,color: UIColors.white,),
-                                    const SizedBox(width: SpaceValues.space16,),
-                                    const Text(
-                                      'Thêm sản phẩm',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500
-                                      ),
-                                    )
-                                  ],
-                                )),
-                            SizedBox(height: SpaceValues.space12,),
-                            const Text(
-                              'Giá trị đơn quà',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            SizedBox(height: SpaceValues.space12,),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Tổng số thẻ quà Kun quy đổi',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        Text(
-                                          '24',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          ' thẻ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Tổng số thẻ Kun vận động quy đổi',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        Text(
-                                          '24',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          ' thẻ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            //Thông tin người nhận
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                //  ListTile(
-                                //   dense: true,
-                                //   minVerticalPadding: 0,
-                                //   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                //   contentPadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0),
-                                //   title: Text(
-                                //     "Địa chỉ nhận hàng",
-                                //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                                //   ),
-                                //   tileColor: Colors.transparent,
-                                //   onTap: null, // viewModel.selectedAddress,
-                                // ),
                                 const Text(
-                                  'Thông tin người nhận',
+                                  'Địa chỉ nhận hàng',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 14
                                   ),
                                 ),
@@ -326,7 +222,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       primary: UIColors.brandA,
                                     ) ,
                                     onPressed: (){
-
+                                        Get.to(()=> NotAddressScreen(viewModel: viewModel,));
                                     }
                                     , child: Row(
                                   children: [
@@ -335,186 +231,170 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   ],
 
                                 ))
-
-
-
                               ],
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
+                            Obx(
+                             ()=>  Card(
+                                      elevation: 0.0,
+                                      margin: EdgeInsets.zero,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Column(
 
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Người nhận',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          'Lâm Thu Đang',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          'Số điện thoại',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Text(
-                                          '0335 965 865',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children:  [
-                                        Text(
-                                          'Địa chỉ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        SizedBox(width: MediaQuery.of(context).size.width*0.2),
-                                        const Expanded(
-                                          child: Text(
-                                            'dsd, Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh',
-                                            // maxLines: 3,
-                                            // overflow: TextOverflow.fade,
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Người nhận',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                Text(
+                                                  viewModel.address.value?.fullname ?? '',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
+                                            SizedBox(height: 20,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children:  [
+                                                Text(
+                                                  'Số điện thoại',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                Text(
+                                                  viewModel.address.value?.tel ?? '',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children:  [
+                                                Text(
+                                                  'Địa chỉ',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                  ),
+                                                ),
+                                                SizedBox(width: MediaQuery.of(context).size.width*0.2),
+                                                Expanded(
+                                                  child: Text(
+                                                    viewModel.address.value?.address ?? '',
+                                                    // maxLines: 3,
+                                                    // overflow: TextOverflow.fade,
+                                                    textAlign: TextAlign.end,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ],
+                            ),
+                            SizedBox(height: 16,),
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Vui lòng chọn phương thức vận chuyển:',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
+                            const SizedBox(height: SpaceValues.space16,),
+                            Obx(
+                                  ()=>Visibility(
+                                visible: true,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        for (int i = 0;
+                                        i < viewModel.dataShipping.length;
+                                        i++)
+                                          ListTile(
+                                            visualDensity: const VisualDensity(
+                                                horizontal: 0, vertical: -4),
+                                            contentPadding: EdgeInsets.zero,
+                                            horizontalTitleGap: 0,
+                                            tileColor: Colors.transparent,
+                                            title: Text(
+                                              viewModel.dataShipping[i].name_shipping ?? '' ,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 12
+                                              ),
+                                            ),
+                                            leading: Radio(
+                                              value: viewModel.dataShipping[i],
+                                              groupValue: viewModel.shipping.value,
+                                              // activeColor: Color(0xFF6200EE),
+                                              onChanged: (value) {
+                                                viewModel.shipping.value = value as Shipping? ;
+                                                viewModel.checkShipping();
+
+                                              },
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  'Nhận tại điểm đổi quà',
+                              children: [
+                                const Text(
+                                  'Vui lòng chọn phương thức thanh toán',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 14
                                   ),
                                 ),
+                                TextButton(
+                                    style: TextButton.styleFrom(
+                                      onSurface: UIColors.brandA,
+                                      primary: UIColors.brandA,
+                                    ) ,
+                                    onPressed: (){
+                                      viewModel.payment.value == null;
+                                      Get.bottomSheet(PaymentMethod(viewModel: viewModel,));
+                                    }
+                                    , child: Row(
+                                  children: [
+                                    SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
+                                    Text('Chọn',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
+                                  ],
 
+                                ))
                               ],
                             ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            Card(
-                              elevation: 0.0,
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(SpaceValues.space16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(IconAssets.actionStore, color: UIColors.brandA, width: 24,),
-                                        SizedBox(width: SpaceValues.space12,),
-                                        const Text(
-                                          'Nhận tại điểm đổi quà',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 14
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        SizedBox(
-                                          width: 24,
-                                          height: 24,
-                                          child: TextButton(
-                                            style: TextButton.styleFrom(
-                                              onSurface: UIColors.brandA,
-                                              primary: UIColors.brandA,
-                                            ) ,
-                                            onPressed: (){
-
-                                            }
-                                            , child: Checkbox(
-                                            checkColor: Colors.white,
-                                            shape: CircleBorder(),
-                                            value: isChecked,
-                                            onChanged: (bool? value){
-                                              setState(() {
-                                                if(isChecked){
-                                                  isChecked = true;
-                                                }
-                                                isChecked = value!;
-
-                                              });
-                                            },
-                                            activeColor: UIColors.brandA,
-                                          ),
-                                          ),
-                                        )
-                                      ],),
-                                    SizedBox(width: SpaceValues.space12,),
-
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children:  const [
-                                        Text(
-                                          'Địa chỉ: ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            'dsd, Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh',
-                                            // maxLines: 3,
-                                            // overflow: TextOverflow.fade,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // IconAssets.actionStore
                             const SizedBox(height: SpaceValues.space12,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -530,10 +410,10 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                               ],
                             ),
                             const SizedBox(height: SpaceValues.space12,),
-                            const TextField(
+                            TextField(
+                              controller: viewModel.inputNote,
                               decoration: InputDecoration(
                                   hintText: 'Nhập ghi chú (nếu có)',
-
                                   hintStyle: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -552,27 +432,27 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                 padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: UIColors.white,
-                            // elevation: 0.0,
-                            shape:  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(color: UIColors.red,width: 1)
-                            )
-                          ) ,
-                          onPressed: (){
-
-                          },
-                          child: Text(
-                              'Xoá giỏ quà',
-                              style: TextStyle(
-                                color: UIColors.red
-                              ),
-                          )),
-                    ),
-                    SizedBox(width: 8,),
+                    // Expanded(
+                    //   child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //           primary: UIColors.white,
+                    //           // elevation: 0.0,
+                    //           shape:  RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               side: BorderSide(color: UIColors.red,width: 1)
+                    //           )
+                    //       ) ,
+                    //       onPressed: (){
+                    //
+                    //       },
+                    //       child: Text(
+                    //         'Xoá giỏ quà',
+                    //         style: TextStyle(
+                    //             color: UIColors.red
+                    //         ),
+                    //       )),
+                    // ),
+                    // SizedBox(width: 8,),
                     Expanded(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -583,11 +463,11 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
 
                               )
                           ) ,
-                          onPressed: (){
-
+                          onPressed: () async {
+                             await viewModel.btnConfirmOrder();
                           },
                           child: Text(
-                            'Xác nhận đơn quà',
+                            'Xác nhận mua hàng',
                             style: TextStyle(
 
                             ),
@@ -609,4 +489,95 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
   @override
   CartModel createViewModel() => getIt<CartModel>();
 
+}
+
+class PaymentMethod extends StatelessWidget{
+  final CartModel viewModel;
+
+  const PaymentMethod({Key? key, required this.viewModel})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height *0.25,
+      child: Scaffold(
+        bottomSheet: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Chọn phương thức thanh toán:',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Obx(
+                    ()=>Visibility(
+                  visible: true,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (int i = 0;
+                          i < viewModel.dataPayment.length;
+                          i++)
+                            ListTile(
+                              visualDensity: const VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              contentPadding: EdgeInsets.zero,
+                              horizontalTitleGap: 0,
+                              tileColor: Colors.transparent,
+                              title: Text(
+                                viewModel.dataPayment[i].name_payment ?? '' ,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              leading: Radio(
+                                value: viewModel.dataPayment[i],
+                                groupValue: viewModel.payment.value,
+                                // activeColor: Color(0xFF6200EE),
+                                onChanged: (value) {
+                                  viewModel.payment.value = value as Payment? ;
+                                  print(viewModel.payment.value?.name_payment);
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: (){
+                      if(viewModel.payment.value == null){
+                        AppUtils().showPopup(
+                          isSuccess: false,
+                          title: 'Vui lòng chọn phương thức thanh toán',
+                        );
+                      }
+                      print( viewModel.payment.value?.id);
+
+                      if(viewModel.payment.value != null){
+                        Get.back();
+                      }
+
+                  },
+                  child: Text('Chọn'),
+                ),
+              )
+            ],
+          ),
+        ) ,
+      ),
+    );
+  }
 }

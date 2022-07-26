@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category_api.dart';
+part of 'order_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'category_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-class _CategoryAPI implements CategoryAPI {
-  _CategoryAPI(this._dio, {this.baseUrl}) {
+class _OrderAPI implements OrderAPI {
+  _OrderAPI(this._dio, {this.baseUrl}) {
     baseUrl ??= 'http://10.0.2.2:8080';
   }
 
@@ -18,21 +18,19 @@ class _CategoryAPI implements CategoryAPI {
   String? baseUrl;
 
   @override
-  Future<List<CategoryReponse>?> goGetAll() async {
+  Future<MessageResponse> addOrder(orderResquest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<CategoryReponse>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/display-category',
+    _data.addAll(orderResquest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MessageResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/order',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data
-        ?.map(
-            (dynamic i) => CategoryReponse.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = MessageResponse.fromJson(_result.data!);
     return value;
   }
 

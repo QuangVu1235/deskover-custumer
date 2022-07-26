@@ -11,15 +11,15 @@ abstract class ProductAPI{
   @factoryMethod
   factory ProductAPI(Dio dio) = _ProductAPI;
 
-  @GET('/v1/api/custumer/display-product-new')
+  @GET('/v1/api/customer/display-product-new')
   Future<DataProductResponse> goGetAll(@Query('page') int? page, @Query('size') int? size);
 
-  @GET('/v1/api/custumer/display-product-category')
+  @GET('/v1/api/customer/display-product-category')
   Future<DataProductResponse> doGetProductByCategoryId(@Query('categoryId') int? categoryId,@Query('page') int? page, @Query('size') int? size);
 
-  @GET('/v1/api/custumer/display-product-subcategory')
+  @GET('/v1/api/customer/display-product-subcategory')
   Future<DataProductResponse> doGetProductBySubId(@Query('subId') int? subId,@Query('page') int? page, @Query('size') int? size);
 
-  @GET('/v1/api/custumer/display-product/{id}')
+  @GET('/v1/api/customer/display-product/{id}')
   Future<Product> getById(@Path('id') int? id);
 }

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:badges/badges.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
@@ -11,12 +10,8 @@ import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ProductDetail extends StatefulWidget {
   ProductDetail({Key? key, required this.idProduct, required this.heroTag}) : super(key: key);
@@ -217,8 +212,8 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                     ),
                   ),
                   ),
-                  Obx(() {
-                    return Padding(
+                  Obx(() =>
+                      Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,13 +229,13 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                      formatCurrency.format(viewModel.productDetail.value?.price?.toDouble()),
+                                      formatCurrency.format(viewModel.productDetail.value?.price?.toDouble() ?? 0),
                                       style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w700,
                                           color: UIColors.brandA)),
                                   // Container(
-                                  //   padding:
+                                   //   padding:
                                   //   const EdgeInsets.only(left: 7, top: 7),
                                   //   child: Text(
                                   //     (viewModel.productDetail.value?.special_formatted ?? '').isNotEmpty ? (viewModel.productDetail.value?.price_formatted ?? '') : '',
@@ -298,242 +293,106 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                           const SizedBox(
                             height: 24,
                           ),
-                          // Visibility(
-                          //   visible: (viewModel.productDetail.value?.technical?.length ?? 0) > 0,
-                          //   child: Column(
-                          //     children: [
-                          //       Container(
-                          //         padding: const EdgeInsets.all(15),
-                          //         width: MediaQuery.of(context).size.width * 0.98,
-                          //         decoration: BoxDecoration(
-                          //             borderRadius: BorderRadius.circular(20),
-                          //             color: Colors.white),
-                          //         child: Column(
-                          //           children: [
-                          //             Container(
-                          //               alignment: Alignment.topLeft,
-                          //               child: const Text(
-                          //                 "Thông số kỹ thuật",
-                          //                 style: TextStyle(
-                          //                   fontSize: 13,
-                          //                   fontWeight: FontWeight.bold,
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //             const SizedBox(height: 10,),
-                          //             Obx(() {
-                          //               Widget result = (viewModel.productDetail.value?.description ?? '').isNotEmpty
-                          //                   ? Stack(
-                          //                 children: [
-                          //                   ListView.separated(
-                          //                     physics: const NeverScrollableScrollPhysics(),
-                          //                     shrinkWrap: true,
-                          //                     itemCount: viewModel.productDetail.value?.technical?.length ?? 0,
-                          //                     itemBuilder: (context, index) {
-                          //                       return Row(
-                          //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //                         children: [
-                          //                           Text(
-                          //                             viewModel.productDetail.value?.technical?[index].title ?? '',
-                          //                             style: const TextStyle(
-                          //                               fontSize: 12,
-                          //                               fontWeight: FontWeight.w700,
-                          //                               color: Colors.grey,
-                          //                             ),
-                          //                           ),
-                          //                           Text(
-                          //                             viewModel.productDetail.value?.technical?[index].content ?? '',
-                          //                             style: const TextStyle(
-                          //                               fontSize: 14,
-                          //                             ),
-                          //                           ),
-                          //                         ],
-                          //                       );
-                          //                     },
-                          //                     separatorBuilder: (BuildContext context, int index) {
-                          //                       return const SizedBox(height: SpaceValues.space8,);
-                          //                     },
-                          //                   ),
-                          //                   Visibility(
-                          //                     visible: !viewModel.showMoreTechnologyDetail.value,
-                          //                     child: Align(
-                          //                       alignment: Alignment.bottomCenter,
-                          //                       child: RotatedBox(
-                          //                         quarterTurns: 1,
-                          //                         child: Container(
-                          //                           width: 48,
-                          //                           decoration: BoxDecoration(
-                          //                             gradient: LinearGradient(
-                          //                               colors: [
-                          //                                 Colors.white.withOpacity(0),
-                          //                                 Colors.white.withOpacity(.5),
-                          //                                 UIColors.white,
-                          //                                 UIColors.white,
-                          //                               ],
-                          //                               stops: const [0, .5, .9, 1,],
-                          //                             ),
-                          //                           ),
-                          //                         ),
-                          //                       ),
-                          //                     ),
-                          //                   ),
-                          //                 ],
-                          //               )
-                          //                   : const Text('...');
-                          //               return ClipRect(
-                          //                 child: SizedBox(
-                          //                   height: viewModel.showMoreTechnologyDetail.value ? null : 96,
-                          //                   child: result,
-                          //                 ),
-                          //               );
-                          //             }),
-                          //             TextButton(
-                          //               style: TextButton.styleFrom(
-                          //                 padding: const EdgeInsets.symmetric(horizontal: 16,),
-                          //               ),
-                          //               onPressed: () {
-                          //                 viewModel.showMoreTechnologyDetail.value = !viewModel.showMoreTechnologyDetail.value;
-                          //               },
-                          //               child: Row(
-                          //                 mainAxisAlignment: MainAxisAlignment.center,
-                          //                 children: [
-                          //                   Obx(() {
-                          //                     return Text(
-                          //                       viewModel.showMoreTechnologyDetail.value
-                          //                           ? 'Thu gọn'
-                          //                           : "Xem tất cả",
-                          //                       style: const TextStyle(fontSize: 11),
-                          //                     );
-                          //                   }),
-                          //                   Obx(() {
-                          //                     return Padding(
-                          //                       padding: const EdgeInsets.only(left: 5),
-                          //                       child: RotatedBox(
-                          //                         quarterTurns: viewModel.showMoreTechnologyDetail.value ? 2 : 0,
-                          //                         child: SvgPicture.asset(
-                          //                           IconAssets.chervon1,
-                          //                           width: 10,
-                          //                           color: UIColors.brandA,
-                          //                         ),
-                          //                       ),
-                          //                     );
-                          //                   }),
-                          //                 ],
-                          //               ),
-                          //
-                          //             ),
-                          //             const Divider(),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       const SizedBox(height: 20,),
-                          //     ],
-                          //   ),
-                          // ),
-                          // Container(
-                          //   padding: const EdgeInsets.all(15),
-                          //   width: MediaQuery.of(context).size.width * 0.98,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(20),
-                          //     color: Colors.white,
-                          //   ),
-                          //   child: Column(
-                          //     children: [
-                          //       Container(
-                          //         alignment: Alignment.topLeft,
-                          //         child: const Text(
-                          //           "Mô tả sản phẩm",
-                          //           style: TextStyle(
-                          //             fontSize: 14,
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       Obx(() {
-                          //         Widget result = (viewModel.productDetail.value?.description ?? '').isNotEmpty
-                          //             ? SizedBox(
-                          //           width: double.infinity,
-                          //           child: Stack(
-                          //             children: [
-                          //               GlobalHtmlWidget(
-                          //                 data: viewModel.productDetail.value?.description ?? '',
-                          //               ),
-                          //               Visibility(
-                          //                 visible: !viewModel.showMoreDetail.value,
-                          //                 child: Align(
-                          //                   alignment: Alignment.bottomCenter,
-                          //                   child: RotatedBox(
-                          //                     quarterTurns: 1,
-                          //                     child: Container(
-                          //                       width: 48,
-                          //                       decoration: BoxDecoration(
-                          //                         gradient: LinearGradient(
-                          //                           colors: [
-                          //                             Colors.white.withOpacity(0),
-                          //                             Colors.white.withOpacity(.5),
-                          //                             UIColors.white,
-                          //                             UIColors.white,
-                          //                           ],
-                          //                           stops: const [0, .5, .9, 1,],
-                          //                         ),
-                          //                       ),
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ): const Text('...');
-                          //         return ClipRect(
-                          //           child: SizedBox(
-                          //             height: viewModel.showMoreDetail.value ? null : 320,
-                          //             child: result,
-                          //           ),
-                          //         );
-                          //       }),
-                          //       TextButton(
-                          //         style: TextButton.styleFrom(
-                          //           padding: const EdgeInsets.symmetric(horizontal: 16,),
-                          //         ),
-                          //         onPressed: () {
-                          //           viewModel.showMoreDetail.value = !viewModel.showMoreDetail.value;
-                          //         },
-                          //         child: Row(
-                          //           mainAxisAlignment: MainAxisAlignment.center,
-                          //           children: [
-                          //             Obx(() {
-                          //               return Text(
-                          //                 viewModel.showMoreDetail.value
-                          //                     ? 'Thu gọn'
-                          //                     : "Xem tất cả",
-                          //                 style: const TextStyle(fontSize: 11),
-                          //               );
-                          //             }),
-                          //             Obx(
-                          //                     () {
-                          //                   return Padding(
-                          //                     padding: const EdgeInsets.only(left: 5),
-                          //                     child: RotatedBox(
-                          //                       quarterTurns: viewModel.showMoreDetail.value ? 2 : 0,
-                          //                       child: SvgPicture.asset(
-                          //                         IconAssets.chervon1,
-                          //                         width: 10,
-                          //                         color: UIColors.brandA,
-                          //                       ),
-                          //                     ),
-                          //                   );
-                          //                 }
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                         ],
                       ),
-                    );
-                  }
+                    )
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    width: MediaQuery.of(context).size.width * 0.98,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            "Mô tả sản phẩm",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Obx(
+                             ()=> Visibility(
+                                visible: viewModel.productDetail.value != null,
+                                 child: SizedBox(
+                                   width: double.infinity,
+                                   child: Stack(
+                                     children: [
+                                       GlobalHtmlWidget(
+                                         data: viewModel.productDetail.value?.utility ?? '',
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               replacement: Text('123'),
+
+                             ),
+
+                        ),
+
+                        // Obx(() {
+                        //   Widget result = viewModel.productDetail.value?.spec != null
+                        //       ?
+                        //   SizedBox(
+                        //     width: double.infinity,
+                        //     child: Stack(
+                        //       children: [
+                        //         GlobalHtmlWidget(
+                        //           data: viewModel.productDetail.value?.spec ?? '',
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ): const Text('...');
+                        //   return ClipRect(
+                        //     child: SizedBox(
+                        //       height: viewModel.productDetail.value?.spec != null ? null : 320,
+                        //       child: result,
+                        //     ),
+                        //   );
+                        // }),
+                        // TextButton(
+                        //   style: TextButton.styleFrom(
+                        //     padding: const EdgeInsets.symmetric(horizontal: 16,),
+                        //   ),
+                        //   onPressed: () {
+                        //     viewModel.showMoreDetail.value = !viewModel.showMoreDetail.value;
+                        //   },
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Obx(() {
+                        //         return Text(
+                        //           viewModel.showMoreDetail.value
+                        //               ? 'Thu gọn'
+                        //               : "Xem tất cả",
+                        //           style: const TextStyle(fontSize: 11),
+                        //         );
+                        //       }),
+                        //       Obx(
+                        //               () {
+                        //             return Padding(
+                        //               padding: const EdgeInsets.only(left: 5),
+                        //               child: RotatedBox(
+                        //                 quarterTurns: viewModel.showMoreDetail.value ? 2 : 0,
+                        //                 child: SvgPicture.asset(
+                        //                   IconAssets.chervon1,
+                        //                   width: 10,
+                        //                   color: UIColors.brandA,
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           }
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

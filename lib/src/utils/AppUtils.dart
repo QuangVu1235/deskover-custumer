@@ -143,4 +143,85 @@ class AppUtils {
     ));
   }
 
+  Future<void> showPopupConfirm({String title = 'Bạn chắc chắn xoá giỏ quà?', String subtitle = 'Thông tin của giỏ quà sẽ mất đi', bool isSuccess = true, List<Widget>? action, EdgeInsets? insetPadding}) async {
+    await Get.dialog(AlertDialog(
+      insetPadding: insetPadding ?? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
+      titlePadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: UIColors.red,
+                      borderRadius: BorderRadius.circular(999)
+                  ),
+                  child: Center(child: SvgPicture.asset('resources/icons/change_point/DeleteOutlined.svg',height: 20,color: UIColors.white,)),
+
+                ),
+                SizedBox(width: 16,),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.center,
+
+                      ),
+                      SizedBox(height: SpaceValues.space8,),
+                      Visibility(
+                        visible: subtitle.isNotEmpty,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              subtitle,
+                              style: const TextStyle(
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 40,)
+              ],
+            ),
+          ),
+          const SizedBox(height: SpaceValues.space8,),
+          Divider(),
+          Visibility(
+            visible: (action ?? []).isNotEmpty,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: action ?? [const SizedBox.shrink()],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: SpaceValues.space24,
+          ),
+        ],
+      ),
+    ));
+  }
+
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cart_api.dart';
+part of 'user_address_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'cart_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-class _CartAPI implements CartAPI {
-  _CartAPI(this._dio, {this.baseUrl}) {
+class _UserAddressApi implements UserAddressApi {
+  _UserAddressApi(this._dio, {this.baseUrl}) {
     baseUrl ??= 'http://10.0.2.2:8080';
   }
 
@@ -18,38 +18,36 @@ class _CartAPI implements CartAPI {
   String? baseUrl;
 
   @override
-  Future<List<Cart>?> doGetAllCartOrder(username) async {
+  Future<List<UserAddress>?> doGetAddress(username) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'username': username};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Cart>>(
-        Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/v1/api/customer/cart',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<UserAddress>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/user/address',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
-        ?.map((dynamic i) => Cart.fromJson(i as Map<String, dynamic>))
+        ?.map((dynamic i) => UserAddress.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<MessageResponse> addToCart(username, productId, quantity) async {
+  Future<MessageResponse> doPostAddress(userAddress, username) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'username': username,
-      r'productId': productId,
-      r'quantity': quantity
-    };
+    final queryParameters = <String, dynamic>{r'username': username};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(userAddress.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/add-cart',
+                .compose(_dio.options, '/v1/api/customer/user/address',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
@@ -57,39 +55,36 @@ class _CartAPI implements CartAPI {
   }
 
   @override
-  Future<MessageResponse> minusCart(username, productId) async {
+  Future<List<UserAddress>?> changeActive(id, username) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'username': username,
-      r'productId': productId
-    };
+    final queryParameters = <String, dynamic>{r'username': username};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<MessageResponse>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/minus-cart',
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<UserAddress>>(
+            Options(method: 'PUT', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/user/address/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = MessageResponse.fromJson(_result.data!);
+    var value = _result.data
+        ?.map((dynamic i) => UserAddress.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
   @override
-  Future<MessageResponse> deleteCart(username, productId) async {
+  Future<MessageResponse> changeChoose(id, username) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'username': username,
-      r'productId': productId
-    };
+    final queryParameters = <String, dynamic>{r'username': username};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<MessageResponse>(
-            Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/cart',
+            Options(method: 'PUT', headers: _headers, extra: _extra)
+                .compose(
+                    _dio.options, '/v1/api/customer/user/address-choose/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);

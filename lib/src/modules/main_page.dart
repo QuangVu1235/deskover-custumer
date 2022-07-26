@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'exchange_points/creat_cart.dart';
-import 'exchange_points/exchange_points_screen.dart';
+import 'cart/creat_cart.dart';
 import 'homepage/homepage_screen.dart';
 import 'main_page_model.dart';
 
@@ -35,7 +34,6 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    ExchangePoints(),
     Text("1"),
     Text("1"),
 
@@ -132,26 +130,10 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                   label: "Trang chủ",
                 ),
                 BottomNavigationBarItem(
-                  icon: SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: viewModel.index == 1
-                        ? SvgPicture.asset(
-                            IconAssets.actionStore,
-                            color: UIColors.brandA,
-                            width: 10,
-                          )
-                        : SvgPicture.asset(IconAssets.actionStore,
-                            color: UIColors.black40),
-                  ),
-                  // icon: new Image.asset("resources/images/ic_dashboard_dashboard.png"),
-                  label: "Điểm đổi quà",
-                ),
-                BottomNavigationBarItem(
                     icon: SizedBox(
                       width: 24,
                       height: 24,
-                      child: viewModel.index == 2
+                      child: viewModel.index == 1
                           ? Icon(Icons.content_paste)
                           : Icon(Icons.content_paste),
                     ),
@@ -160,7 +142,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                     icon: SizedBox(
                       width: 24,
                       height: 24,
-                      child: viewModel.index == 3
+                      child: viewModel.index == 2
                           ? SvgPicture.asset(
                         SvgImageAssets.icAccount,
                         color: UIColors.brandA,

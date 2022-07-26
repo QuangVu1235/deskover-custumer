@@ -1,20 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:deskover_develop/src/core/dio_cache/dio_cache_manager.dart';
+import 'package:deskover_develop/src/modules/signin_signup/app/signin/app/signin_screen.dart';
+import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../core/dio_cache/dio_cache_manager.dart';
-import '../modules/signin_signup/app/signin/app/signin_screen.dart';
-import '../utils/AppUtils.dart';
-import 'base_api.dart';
 import 'injection_config.config.dart';
 
 final GetIt getIt = GetIt.instance;

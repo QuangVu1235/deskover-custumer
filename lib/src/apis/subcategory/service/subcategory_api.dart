@@ -12,7 +12,7 @@ abstract class SubCategoryAPI{
   @factoryMethod
   factory SubCategoryAPI(Dio dio) = _SubCategoryAPI;
 
-  @GET('/v1/api/custumer/display-subcategory')
+  @GET('/v1/api/customer/display-subcategory')
   Future<List<SubCategory>?> doGetSubByCategoryId(@Query('categoryId') int? categoryId);
 
 }
