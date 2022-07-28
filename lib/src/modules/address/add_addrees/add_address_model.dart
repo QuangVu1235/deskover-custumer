@@ -55,8 +55,8 @@ class AddAddressModel extends ViewModel{
 
      loading(() async => await  Future.wait([loadCities()])).then((value) async => {
 
-
        if(defaultAddress!= null){
+           provinceValue.value = provinces.firstWhere((element) => element.id == defaultAddress?.provinceId?.id),
            inputfullname.text = defaultAddress?.fullname ?? '',
            inputPhone.text = defaultAddress?.tel ?? '',
            inputEmail.text = defaultAddress?.email ?? '',
@@ -102,9 +102,6 @@ class AddAddressModel extends ViewModel{
       await loading(() => throw 'Vui lòng kiểm tra lại thông tin');
       return;
     }
-    await _addAddreesUserCase.doGetProVinceById(provincesId.value).then((value) async => provinceValue.value = value);
-    await _addAddreesUserCase.doGetDistrictById(districtId.value).then((value) async => districtsValue.value = value);
-    await _addAddreesUserCase.doGetWardById(wardId.value).then((value) async => wardsValue.value= value);
 
     if(defaultAddress == null){
       UserAddress request = UserAddress(
