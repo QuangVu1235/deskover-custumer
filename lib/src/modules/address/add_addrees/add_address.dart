@@ -142,22 +142,24 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                           errorText: viewModel.validDistrict.isNotEmpty ? '  ${viewModel.validDistrict.value}' : null,
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
+                          child: DropdownButton<District?>(
                             isExpanded: true,
-                            value: viewModel.districtId.value,
+                            value: viewModel.districtsValue.value,
                             items: viewModel.districts.map((e)
                             => DropdownMenuItem(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 6),
                                 child: Text(e.name ?? 'Chọn Quận/ Huyện',),
                               ),
-                              value: e.id,
+                              value: e,
                             ),
                             ).toList(),
                             onChanged: viewModel.districts.length > 1 ?
                                 (value) {
-                              viewModel.districtId.value = value!;
-                              viewModel.loadWards();
+                                  viewModel.inputAddress.text = '';
+                                  viewModel.districtsValue.value = value;
+                                  viewModel.districtId.value =  viewModel.districtsValue.value?.id ?? 1;
+                                  viewModel.loadWards();
                             } :
                             null,
                           ),
@@ -185,20 +187,22 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                           errorText: viewModel.validWard.isNotEmpty ? '  ${viewModel.validWard.value}' : null,
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
+                          child: DropdownButton<Ward?>(
                             isExpanded: true,
-                            value: viewModel.wardId.value,
+                            value: viewModel.wardsValue.value,
                             items: viewModel.wards.map((e)
                             => DropdownMenuItem(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 6),
                                 child: Text(e.name ?? 'Chọn Phường/ Xã'),
-                              ), value: e.id,
+                              ), value: e,
                             ),
                             ).toList(),
                             onChanged: viewModel.wards.length > 1 ?
                                 (value) {
-                              viewModel.wardId.value = value!;
+                                  viewModel.inputAddress.text = '';
+                                  viewModel.wardsValue.value = value;
+                                  viewModel.wardId.value =  viewModel.wardsValue.value?.id ?? 0;
                             } :
                             null,
                           ),

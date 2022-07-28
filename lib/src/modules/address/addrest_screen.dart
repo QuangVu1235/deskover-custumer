@@ -19,6 +19,7 @@ class NotAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('1111111111');
     viewModel.loadAddress();
     return Scaffold(
       appBar: AppBar(

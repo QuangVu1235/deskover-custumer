@@ -63,9 +63,11 @@ class AddAddressModel extends ViewModel{
            provincesId.value = defaultAddress?.provinceId?.id ?? 1,
            inputAddress.text = defaultAddress?.address ?? '',
            loadDistricts().then((value) {
-           districtId.value = defaultAddress?.districtId ?? 1;
+              districtId.value = defaultAddress?.districtId ?? 1;
+              districtsValue.value = districts.firstWhere((element) => element.id == defaultAddress?.districtId);
            loadWards().then((value){
-           wardId.value = defaultAddress?.wardId ?? 1;
+              wardId.value = defaultAddress?.wardId ?? 1;
+              wardsValue.value = wards.firstWhere((element) => element.id == defaultAddress?.wardId);
          });
        }),
   }
@@ -146,34 +148,10 @@ class AddAddressModel extends ViewModel{
       });
     }
 
-
-
-
   }
 
   bool validAll() {
     bool result = fromKey.currentState?.validate() ?? false;
-    // if (provincesId.value == 0) {
-    //   validCity.value = 'Vui lòng chọn Tỉnh/ Thành phố';
-    //   result = false;
-    // }
-    // else {
-    //   validCity.value = '';
-    // }
-    // if (district.value?.isEmpty ?? false) {
-    //   validDistrict.value = 'Vui lòng chọn Quận/ Huyện';
-    //   result = false;
-    // }
-    // else {
-    //   validDistrict.value = '';
-    // }
-    // if (ward.value?.isEmpty ?? false) {
-    //   validWard.value = 'Vui lòng chọn Phường/ Xã';
-    //   result = false;
-    // }
-    // else {
-    //   validWard.value = '';
-    // }
     return result;
   }
 
