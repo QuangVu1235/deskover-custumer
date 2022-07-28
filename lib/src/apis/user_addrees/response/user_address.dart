@@ -1,15 +1,18 @@
+import 'package:deskover_develop/src/apis/addrees/response/addrees_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user_address.g.dart';
 
 @JsonSerializable()
 class UserAddress{
   int? id;
-  Province? province_id;
+  Province? provinceId;
   String? address;
   String? fullname;
   String? province;
   String? district;
+  int? districtId;
   String? ward;
+  int? wardId;
   String? tel;
   String? email;
   bool? choose;
@@ -17,7 +20,7 @@ class UserAddress{
 
   UserAddress(
       {this.id,
-        this.province_id,
+        this.provinceId,
         this.address,
         this.fullname,
         this.province,
@@ -25,22 +28,12 @@ class UserAddress{
         this.ward,
         this.tel,
         this.email,
+        this.wardId,
+        this.districtId,
         this.choose,
         this.actived
       });
   factory UserAddress.fromJson(Map<String, dynamic> json) => _$UserAddressFromJson(json);
   Map<String, dynamic> toJson() => _$UserAddressToJson(this);
-
-}
-@JsonSerializable()
-class Province{
-  int? id;
-  String? name;
-  String? code;
-
-  Province({this.id,this.name,this.code});
-
-  factory Province.fromJson(Map<String, dynamic> json) => _$ProvinceFromJson(json);
-  Map<String, dynamic> toJson() => _$ProvinceToJson(this);
 
 }

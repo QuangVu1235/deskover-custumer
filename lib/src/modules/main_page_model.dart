@@ -34,7 +34,7 @@ class MainPageModel extends ViewModel {
   }
 
   Future<void> loadCart() async {
-    await _cartUserCase.doGetAllCartOrder('minhbd').then((value) async{
+    await _cartUserCase.doGetAllCartOrder().then((value) async{
       dataCartResponse.value =  value ?? [];
       print('>>>>>>>>>');
       print(dataCartResponse.value.length);

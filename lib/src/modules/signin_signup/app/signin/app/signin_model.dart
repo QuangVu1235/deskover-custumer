@@ -1,4 +1,7 @@
+import 'package:deskover_develop/src/apis/login/login_datasource.dart';
+import 'package:deskover_develop/src/apis/message_response.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
+import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:dio/dio.dart';
@@ -6,9 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class SigninModel extends ViewModel {
+  final SharedPreferences sharedPreferences;
+  final LoginDataSource loginDataSource;
 
 
   TextEditingController inputPhone = TextEditingController();
@@ -21,6 +27,8 @@ class SigninModel extends ViewModel {
   RxBool checkPass = false.obs;
   RxString titleMessPass = ''.obs;
   RxnString userSeletected = RxnString();
+
+  SigninModel(this.sharedPreferences, this.loginDataSource);
 
   void onShowPass() {
     isShowPass.value = !isShowPass.value;
@@ -42,31 +50,23 @@ class SigninModel extends ViewModel {
 
 
   void onLogin() {
-    Get.offAll(const MainPage(indexTab: 0,));
     // if (!(formKey.currentState?.validate() ?? false)) {
     //   // not validate or null
     //   return;
     // }
-    
-    // loading(() async {
-    //
-    //   Future.wait([
-    //     sharedPreferences.setString('uPhone', inputPhone.text),
-    //     sharedPreferences.setString('uToken', value.token ?? ''),
-    //     sharedPreferences.setString('uId', value.userId?.toString() ?? ''),
-    //     sharedPreferences.setString('uType', value.userType ?? ''),
-    //     sharedPreferences.setString('password', inputPassword.text),
-    //   ]);
-    //   getIt<Dio>().options = BaseOptions(headers: {
-    //     'Authorization': (value.token?.isNotEmpty ?? false)
-    //     ? 'Bearer ${value.token}'
-    //     : BaseApi.mutosiStoreToken,
-    //   });
-    //   await _cartUsecase.getProducts();
-    // },reCatchString: true)
-    // .then((value) async {
-    //   Get.offAll(const MainPage(indexTab: 0,));
-    // });
+    loading(() async {
+      MessageResponse response = await loginDataSource.doLogin(inputPhone.text, inputPassword.text);
+      sharedPreferences.setString('uToken', response.message ??'');
+      getIt<Dio>().options = BaseOptions(headers: {
+        'Authorization': (response.message?.isNotEmpty ?? false)
+        ? 'Bearer ${response.message}'
+        : '',
+      });
+      // await _cartUsecase.getProducts();
+    },reCatchString: true)
+    .then((value) async {
+      Get.offAll(const MainPage(indexTab: 0,));
+    });
   }
 
   void onRegistration() {

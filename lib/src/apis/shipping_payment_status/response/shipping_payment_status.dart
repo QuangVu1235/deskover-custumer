@@ -17,10 +17,10 @@ class Payment {
 @JsonSerializable()
 class Shipping {
   int? id;
-  String? shipping_id;
+  String? shippingId;
   String? name_shipping;
 
-  Shipping({this.id, this.shipping_id, this.name_shipping});
+  Shipping({this.id, this.shippingId, this.name_shipping});
 
   factory Shipping.fromJson(Map<String, dynamic> json) => _$ShippingFromJson(json);
   Map<String, dynamic> toJson() => _$ShippingToJson(this);

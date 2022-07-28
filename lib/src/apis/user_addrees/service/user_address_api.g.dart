@@ -18,10 +18,9 @@ class _UserAddressApi implements UserAddressApi {
   String? baseUrl;
 
   @override
-  Future<List<UserAddress>?> doGetAddress(username) async {
+  Future<List<UserAddress>?> doGetAddress() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'username': username};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
@@ -37,10 +36,9 @@ class _UserAddressApi implements UserAddressApi {
   }
 
   @override
-  Future<MessageResponse> doPostAddress(userAddress, username) async {
+  Future<MessageResponse> doPostAddress(userAddress) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'username': username};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(userAddress.toJson());
@@ -55,9 +53,26 @@ class _UserAddressApi implements UserAddressApi {
   }
 
   @override
-  Future<List<UserAddress>?> changeActive(id, username) async {
+  Future<MessageResponse> doPutAddrees(userAddress) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'username': username};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(userAddress.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MessageResponse>(
+            Options(method: 'PUT', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/user/address',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = MessageResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<UserAddress>?> changeActive(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -74,9 +89,9 @@ class _UserAddressApi implements UserAddressApi {
   }
 
   @override
-  Future<MessageResponse> changeChoose(id, username) async {
+  Future<MessageResponse> changeChoose(id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'username': username};
+    final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

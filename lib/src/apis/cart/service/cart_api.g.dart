@@ -18,10 +18,9 @@ class _CartAPI implements CartAPI {
   String? baseUrl;
 
   @override
-  Future<List<Cart>?> doGetAllCartOrder(username) async {
+  Future<List<Cart>?> doGetAllCartOrder() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'username': username};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Cart>>(
@@ -36,10 +35,9 @@ class _CartAPI implements CartAPI {
   }
 
   @override
-  Future<MessageResponse> addToCart(username, productId, quantity) async {
+  Future<MessageResponse> addToCart(productId, quantity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'username': username,
       r'productId': productId,
       r'quantity': quantity
     };
@@ -57,12 +55,9 @@ class _CartAPI implements CartAPI {
   }
 
   @override
-  Future<MessageResponse> minusCart(username, productId) async {
+  Future<MessageResponse> minusCart(productId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'username': username,
-      r'productId': productId
-    };
+    final queryParameters = <String, dynamic>{r'productId': productId};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -77,12 +72,9 @@ class _CartAPI implements CartAPI {
   }
 
   @override
-  Future<MessageResponse> deleteCart(username, productId) async {
+  Future<MessageResponse> deleteCart(productId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'username': username,
-      r'productId': productId
-    };
+    final queryParameters = <String, dynamic>{r'productId': productId};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

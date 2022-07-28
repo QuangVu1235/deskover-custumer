@@ -27,7 +27,7 @@ class _ProductAPI implements ProductAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataProductResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/display-product-new',
+                .compose(_dio.options, '/v1/api/display/product-new',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataProductResponse.fromJson(_result.data!);
@@ -49,8 +49,7 @@ class _ProductAPI implements ProductAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataProductResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(
-                    _dio.options, '/v1/api/customer/display-product-category',
+                .compose(_dio.options, '/v1/api/display/product-category',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataProductResponse.fromJson(_result.data!);
@@ -69,12 +68,11 @@ class _ProductAPI implements ProductAPI {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<DataProductResponse>(Options(
-                method: 'GET', headers: _headers, extra: _extra)
-            .compose(
-                _dio.options, '/v1/api/customer/display-product-subcategory',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<DataProductResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/display/product-subcategory',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataProductResponse.fromJson(_result.data!);
     return value;
   }
@@ -89,7 +87,7 @@ class _ProductAPI implements ProductAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Product>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/display-product/${id}',
+                .compose(_dio.options, '/v1/api/display/product/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Product.fromJson(_result.data!);

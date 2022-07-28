@@ -5,10 +5,11 @@ import 'package:injectable/injectable.dart';
 import '../message_response.dart';
 
 abstract class UserAddressDataSource{
-  Future<List<UserAddress>?> doGetAddress( String username);
-  Future<MessageResponse> doPostAddress(UserAddress userAddress, String username);
-  Future<List<UserAddress>?> changeActive(int id, String username);
-  Future<MessageResponse> changeChoose( int id, String username);
+  Future<List<UserAddress>?> doGetAddress();
+  Future<MessageResponse> doPostAddress(UserAddress userAddress);
+  Future<List<UserAddress>?> changeActive(int id);
+  Future<MessageResponse> changeChoose( int id);
+  Future<MessageResponse> doPutAddress(UserAddress userAddress,);
 
 }
 @LazySingleton(as: UserAddressDataSource)
@@ -18,18 +19,22 @@ class UserAddressDataSourceIpml extends UserAddressDataSource{
   UserAddressDataSourceIpml(this._userAddressApi);
 
   @override
-  Future<List<UserAddress>?> changeActive(int id, String username)
-  => _userAddressApi.changeActive(id, username);
+  Future<List<UserAddress>?> changeActive(int id)
+  => _userAddressApi.changeActive(id);
 
   @override
-  Future<MessageResponse> changeChoose(int id, String username)
-  => _userAddressApi.changeChoose(id, username);
+  Future<MessageResponse> changeChoose(int id )
+  => _userAddressApi.changeChoose(id);
 
   @override
-  Future<List<UserAddress>?> doGetAddress(String username)
-  => _userAddressApi.doGetAddress(username);
+  Future<List<UserAddress>?> doGetAddress()
+  => _userAddressApi.doGetAddress();
   @override
-  Future<MessageResponse> doPostAddress(UserAddress userAddress, String username)
-  => _userAddressApi.doPostAddress(userAddress, username);
+  Future<MessageResponse> doPostAddress(UserAddress userAddress, )
+  => _userAddressApi.doPostAddress(userAddress);
+
+  @override
+  Future<MessageResponse> doPutAddress(UserAddress userAddress)
+  => _userAddressApi.doPutAddrees(userAddress);
 
 }
