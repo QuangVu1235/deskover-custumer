@@ -36,8 +36,8 @@ class CartModel extends ViewModel{
   @override
   void initState() {
     super.initState();
-    loadCartOrder('minhbd');
-    loadAddress('minhbd');
+    loadCartOrder();
+    loadAddress();
     loadShippingMethod();
     loadPaymentMethod();
   }
@@ -60,8 +60,8 @@ class CartModel extends ViewModel{
     });
   }
 
-  Future<void> loadAddress(String username) async {
-    await _cartUserCase.doGetAddress(username).then((value) async{
+  Future<void> loadAddress() async {
+    await _cartUserCase.doGetAddress().then((value) async{
         dataAddress.value = value ?? [];
         dataAddress.value.forEach((item) {
             if(item.choose == true){
@@ -71,12 +71,10 @@ class CartModel extends ViewModel{
     });
   }
 
-  Future<void> loadCartOrder(String username) async{
-    await _cartUserCase.doGetAllCartOrder(username).then((value) async{
+  Future<void> loadCartOrder() async{
+    await _cartUserCase.doGetAllCartOrder().then((value) async{
           dataCartResponse.value = value ?? [];
            _mainPageModel.itemCart.value = dataCartResponse.value.length;
-           print('_mainPageModel.itemCart.value');
-          print(_mainPageModel.itemCart.value);
           if(dataCartResponse.value.isEmpty){
               AppUtils().showPopup(
                 title: 'Giỏ hàng trống',
@@ -119,26 +117,26 @@ class CartModel extends ViewModel{
     });
 
   }
-  Future<void> btnAddToCart(String username, int productId) async{
-      await _cartUserCase.addToCart(username, productId, 1).then((value) async{
+  Future<void> btnAddToCart(int productId) async{
+      await _cartUserCase.addToCart(productId, 1).then((value) async{
         Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
-        await loadCartOrder(username);
+        await loadCartOrder();
       });
   }
 
-  Future<void> btnMinusCart(String username, int productId) async{
-      await _cartUserCase.minusCart(username, productId).then((value) async{
-        await loadCartOrder(username);
+  Future<void> btnMinusCart( int productId) async{
+      await _cartUserCase.minusCart(productId).then((value) async{
+        await loadCartOrder();
         // Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
       });
   }
-  Future<void> btnChooseAddress(int id,  username)async {
-    await _cartUserCase.changeChoose(id, username).then((value) async{
-        await loadAddress(username);
+  Future<void> btnChooseAddress(int id)async {
+    await _cartUserCase.changeChoose(id).then((value) async{
+        await loadAddress();
         Get.back();
     });
   }
-  Future<void> btnDelete(String username, int productId) async{
+  Future<void> btnDelete( int productId) async{
     await AppUtils().showPopup(
       isSuccess: false,
       title: 'Bạn có muốn xoá sản phẩm \nkhỏi giỏ hàng',
@@ -166,10 +164,10 @@ class CartModel extends ViewModel{
                         )
                     ) ,
                     onPressed: () async {
-                      await _cartUserCase.deleteCart(username, productId).then((value) async{
+                      await _cartUserCase.deleteCart( productId).then((value) async{
                         Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
                       });
-                      await loadCartOrder(username);
+                      await loadCartOrder();
                       Get.back();
                     },
                     child: const Text(
@@ -186,8 +184,8 @@ class CartModel extends ViewModel{
     );
   }
   void checkShipping(){
-    if(address.value?.province_id?.code != 'SG'){
-      if(shipping.value?.shipping_id == 'DKV'){
+    if(address.value?.provinceId?.code != 'SG'){
+      if(shipping.value?.shippingId == 'DKV'){
         AppUtils().showPopup(
             isSuccess: false,
             title: 'Vị trí của bạn không hỗ trợ được giao',

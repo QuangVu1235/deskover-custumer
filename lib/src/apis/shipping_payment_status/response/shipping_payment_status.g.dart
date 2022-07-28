@@ -20,12 +20,12 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
 
 Shipping _$ShippingFromJson(Map<String, dynamic> json) => Shipping(
       id: json['id'] as int?,
-      shipping_id: json['shipping_id'] as String?,
+      shippingId: json['shippingId'] as String?,
       name_shipping: json['name_shipping'] as String?,
     );
 
 Map<String, dynamic> _$ShippingToJson(Shipping instance) => <String, dynamic>{
       'id': instance.id,
-      'shipping_id': instance.shipping_id,
+      'shippingId': instance.shippingId,
       'name_shipping': instance.name_shipping,
     };

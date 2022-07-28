@@ -13,14 +13,14 @@ abstract class CartAPI{
   factory CartAPI(Dio dio) = _CartAPI;
 
   @GET('/v1/api/customer/cart')
-  Future<List<Cart>?> doGetAllCartOrder(@Query('username') String? username);
+  Future<List<Cart>?> doGetAllCartOrder();
 
   @POST('/v1/api/customer/add-cart')
-  Future<MessageResponse> addToCart(@Query('username') String? username,@Query('productId') int? productId, @Query('quantity') int? quantity);
+  Future<MessageResponse> addToCart(@Query('productId') int? productId, @Query('quantity') int? quantity);
 
   @POST('/v1/api/customer/minus-cart')
-  Future<MessageResponse> minusCart(@Query('username') String? username,@Query('productId') int? productId);
+  Future<MessageResponse> minusCart(@Query('productId') int? productId);
 
   @DELETE('/v1/api/customer/cart')
-  Future<MessageResponse> deleteCart(@Query('username') String? username,@Query('productId') int? productId);
+  Future<MessageResponse> deleteCart(@Query('productId') int? productId);
 }

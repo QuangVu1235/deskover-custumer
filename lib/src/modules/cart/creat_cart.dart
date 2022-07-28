@@ -31,7 +31,12 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
   final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
 
   bool isChecked = false;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.loadAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +104,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                                         primary: UIColors.white,
                                                         elevation: 0.0,
                                                       ),
-                                                      onPressed: () async => await viewModel.btnDelete('minhbd', viewModel.dataCartResponse[index].product?.id ?? 0),
+                                                      onPressed: () async => await viewModel.btnDelete( viewModel.dataCartResponse[index].product?.id ?? 0),
                                                       child: SvgPicture.asset(SvgImageAssets.trash,height: 20),
                                                     ),
                                                   ),
@@ -158,7 +163,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                                           )
                                                       ),
                                                       onPressed: viewModel.dataCartResponse[index].quantity! > 1 ? () async {
-                                                        await viewModel.btnMinusCart('minhbd', viewModel.dataCartResponse[index].product?.id ?? 0);
+                                                        await viewModel.btnMinusCart( viewModel.dataCartResponse[index].product?.id ?? 0);
                                                       }: null,
                                                       child: Center(child: SvgPicture.asset(SvgImageAssets.minus,color: UIColors.white,height: 16,)),
                                                     ),
@@ -189,7 +194,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                                           )
                                                       ),
                                                       onPressed: viewModel.dataCartResponse[index].quantity! <10 ? () async {
-                                                        await viewModel.btnAddToCart('minhbd', viewModel.dataCartResponse[index].product?.id ?? 0);
+                                                        await viewModel.btnAddToCart( viewModel.dataCartResponse[index].product?.id ?? 0);
                                                       }:null,
                                                       child: Center(child: SvgPicture.asset(SvgImageAssets.plus,color: UIColors.white,height: 16,)),
                                                     ),

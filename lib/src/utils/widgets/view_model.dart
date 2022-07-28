@@ -46,7 +46,8 @@ class ViewModel {
       };
 
       if (showErrorDialog) {
-        String messageDialog = errorMap['onemessage'] ?? errorMap['message'] ??
+
+        String messageDialog = errorMap['message'] == 'Full authentication is required to access this resource' ? errorMap['message'] = 'Vui lòng đăng nhập để xử dụng tính năng' : errorMap['message']  ??
             errorMap['validMessage'] ??
             errorMap['statusMessage'] ??
             'Không thể xác định (${errorMap['status']})';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'method_order_api.dart';
+part of 'add_addrees_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'method_order_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-class _MethodOrderApi implements MethodOrderApi {
-  _MethodOrderApi(this._dio, {this.baseUrl}) {
+class _AddAddreesAPI implements AddAddreesAPI {
+  _AddAddreesAPI(this._dio, {this.baseUrl}) {
     baseUrl ??= 'http://10.0.2.2:8080';
   }
 
@@ -18,72 +18,110 @@ class _MethodOrderApi implements MethodOrderApi {
   String? baseUrl;
 
   @override
-  Future<List<Payment>?> doGetAllPayment() async {
+  Future<List<Province>?> doGetAllProVince() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Payment>>(
+        _setStreamType<List<Province>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/payment',
+                .compose(_dio.options, '/v0/client/province',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
-        ?.map((dynamic i) => Payment.fromJson(i as Map<String, dynamic>))
+        ?.map((dynamic i) => Province.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<Payment> doGetByIdPayment(id) async {
+  Future<Province> doGetProVinceById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Payment>(
+        _setStreamType<Province>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/payment/${id}',
+                .compose(_dio.options, '/v0/client/province/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Payment.fromJson(_result.data!);
+    final value = Province.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<Shipping>?> doGetAllShipping() async {
+  Future<List<District>?> doGetAllDistrict(provinceId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'provinceId': provinceId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Shipping>>(
+        _setStreamType<List<District>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/shipping',
+                .compose(_dio.options, '/v0/client/district',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
-        ?.map((dynamic i) => Shipping.fromJson(i as Map<String, dynamic>))
+        ?.map((dynamic i) => District.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<Shipping> doGetByIdShipping(id) async {
+  Future<District> doGetDistrictById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Shipping>(
+        _setStreamType<District>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/shipping/${id}',
+                .compose(_dio.options, '/v0/client/district/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Shipping.fromJson(_result.data!);
+    final value = District.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<Ward>?> doGetAllWard(provinceId, districtId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'provinceId': provinceId,
+      r'districtId': districtId
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Ward>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v0/client/ward',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data
+        ?.map((dynamic i) => Ward.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<Ward> doGetWardById(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Ward>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v0/client/ward/${id}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Ward.fromJson(_result.data!);
     return value;
   }
 

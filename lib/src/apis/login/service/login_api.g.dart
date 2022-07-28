@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'subcategory_api.dart';
+part of 'login_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'subcategory_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-class _SubCategoryAPI implements SubCategoryAPI {
-  _SubCategoryAPI(this._dio, {this.baseUrl}) {
+class _LoginAPI implements LoginAPI {
+  _LoginAPI(this._dio, {this.baseUrl}) {
     baseUrl ??= 'http://10.0.2.2:8080';
   }
 
@@ -18,21 +18,19 @@ class _SubCategoryAPI implements SubCategoryAPI {
   String? baseUrl;
 
   @override
-  Future<List<SubCategory>?> doGetSubByCategoryId(categoryId) async {
+  Future<MessageResponse> doLogin(map) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'categoryId': categoryId};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<SubCategory>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/subcategory',
+    _data.addAll(map);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MessageResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/auth/login',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data
-        ?.map((dynamic i) => SubCategory.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = MessageResponse.fromJson(_result.data!);
     return value;
   }
 

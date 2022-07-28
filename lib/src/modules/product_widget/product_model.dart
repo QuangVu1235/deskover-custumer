@@ -21,7 +21,7 @@ class ProductCartModel extends ViewModel{
 
   Future<void> btnAddToCart(String username, int productId) async{
      loading(() async{
-      await _cartUserCase.addToCart('minhbd', productId, 1).then((value) async{
+      await _cartUserCase.addToCart(productId, 1).then((value) async{
         Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
         await _mainPageModel.loadCart();
         Get.back();

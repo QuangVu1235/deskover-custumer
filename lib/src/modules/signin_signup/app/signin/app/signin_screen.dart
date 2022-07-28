@@ -47,6 +47,7 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
                 height: SpaceValues.space32,
                   ),
                   GlobalInputFormWidget(
+                    controller: viewModel.inputPhone,
                 textInputType:TextInputType.phone,
                 validator:(valueDy)=> Validator.phone(valueDy),
                 requireInput: '',
@@ -60,6 +61,7 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
                 height: SpaceValues.space12,
                   ),
                   GlobalInputFormWidget(
+                    controller: viewModel.inputPassword,
                 textInputType: TextInputType.visiblePassword,
                 // title: 'Số điện thoại',
                 hint: '*******',
@@ -75,7 +77,7 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
                children: [
                  Expanded(
                  child: ElevatedButton(
-                     onPressed: (){viewModel.openMainPage();},
+                     onPressed: (){viewModel.onLogin();},
                      child:const Padding(
                        padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),
                        child: Text("Đăng nhập"),

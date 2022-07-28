@@ -12,7 +12,7 @@ abstract class CategoryAPI {
   @factoryMethod
   factory CategoryAPI(Dio dio) = _CategoryAPI;
 
-  @GET('/v1/api/customer/display-category')
+  @GET('/v1/api/display/category')
   Future<List<CategoryReponse>?> goGetAll();
 
 }

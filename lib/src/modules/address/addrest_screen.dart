@@ -9,13 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import 'add_addrees/add_address.dart';
+
 class NotAddressScreen extends StatelessWidget {
   final CartModel viewModel;
 
   const NotAddressScreen({Key? key, required this.viewModel}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    viewModel.loadAddress();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -76,10 +80,11 @@ class NotAddressScreen extends StatelessWidget {
                                       onSelected: (val) {
                                         switch(val) {
                                           case 0: // edit
-                                            // viewModel.btnEditAddress(index);
+                                            Get.to(()=>NotAddressPage(defaultAddress: viewModel.dataAddress[index],));
                                             break;
                                           case 1:
-                                            viewModel.btnChooseAddress(viewModel.dataAddress[index].id ?? 0, 'minhbd');
+                                            viewModel.btnChooseAddress(viewModel.dataAddress[index].id ?? 0);
+                                            viewModel.address == null;
                                             break;
 
                                         }
@@ -166,7 +171,7 @@ class NotAddressScreen extends StatelessWidget {
               widthFactor: 1,
               child: ElevatedButton(
                 onPressed: (){
-
+                  Get.to(()=>NotAddressPage());
                 },
                 child: const Text('Thêm địa chỉ'),
               ),

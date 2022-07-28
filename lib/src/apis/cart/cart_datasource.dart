@@ -4,10 +4,10 @@ import 'package:deskover_develop/src/apis/message_response.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class CartDataSource{
-  Future<MessageResponse> addToCart(String username,int productId, int quantity );
-  Future<MessageResponse> minusCart(String username,int productId);
-  Future<MessageResponse> deleteCart(String username,int productId);
-  Future<List<Cart>?> doGetAllCartOrder(String username);
+  Future<MessageResponse> addToCart(int productId, int quantity );
+  Future<MessageResponse> minusCart(int productId);
+  Future<MessageResponse> deleteCart(int productId);
+  Future<List<Cart>?> doGetAllCartOrder();
 }
 @LazySingleton(as: CartDataSource)
 class CartDataSourceImpl extends CartDataSource{
@@ -15,20 +15,20 @@ class CartDataSourceImpl extends CartDataSource{
 
   CartDataSourceImpl(this._cartAPI);
   @override
-  Future<MessageResponse> addToCart(String username, int productId, int quantity)
-  => _cartAPI.addToCart(username, productId, quantity);
+  Future<MessageResponse> addToCart( int productId, int quantity)
+  => _cartAPI.addToCart( productId, quantity);
 
   @override
-  Future<List<Cart>?> doGetAllCartOrder(String username)
-  => _cartAPI.doGetAllCartOrder(username);
+  Future<List<Cart>?> doGetAllCartOrder()
+  => _cartAPI.doGetAllCartOrder();
 
   @override
-  Future<MessageResponse> minusCart(String username, int productId)
-  => _cartAPI.minusCart(username,productId);
+  Future<MessageResponse> minusCart( int productId)
+  => _cartAPI.minusCart(productId);
 
   @override
-  Future<MessageResponse> deleteCart(String username, int productId)
-  => _cartAPI.deleteCart(username, productId);
+  Future<MessageResponse> deleteCart( int productId)
+  => _cartAPI.deleteCart( productId);
 
 
 }

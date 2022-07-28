@@ -13,14 +13,17 @@ abstract class UserAddressApi{
   factory UserAddressApi(Dio dio) = _UserAddressApi;
 
   @GET('/v1/api/customer/user/address')
-  Future<List<UserAddress>?> doGetAddress(@Query('username') String? username);
+  Future<List<UserAddress>?> doGetAddress();
 
   @POST('/v1/api/customer/user/address')
-  Future<MessageResponse> doPostAddress(@Body() UserAddress userAddress,@Query('username') String? username);
+  Future<MessageResponse> doPostAddress(@Body() UserAddress userAddress,);
+
+  @PUT('/v1/api/customer/user/address')
+  Future<MessageResponse> doPutAddrees(@Body() UserAddress userAddress,);
 
   @PUT('/v1/api/customer/user/address/{id}')
-  Future<List<UserAddress>?> changeActive(@Path('id') int? id,@Query('username') String? username);
+  Future<List<UserAddress>?> changeActive(@Path('id') int? id,);
 
   @PUT('/v1/api/customer/user/address-choose/{id}')
-  Future<MessageResponse> changeChoose(@Path('id') int? id,@Query('username') String? username);
+  Future<MessageResponse> changeChoose(@Path('id') int? id,);
 }

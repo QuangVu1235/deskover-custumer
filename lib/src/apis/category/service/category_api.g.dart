@@ -26,7 +26,7 @@ class _CategoryAPI implements CategoryAPI {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<CategoryReponse>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/customer/display-category',
+                .compose(_dio.options, '/v1/api/display/category',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data
