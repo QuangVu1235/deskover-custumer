@@ -35,18 +35,18 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
     Text("1"),
-    Text("1"),
+    const ProfileScreen(),
 
     // const GarnitureScreen(),
     // const NewsCreen(),
     // const FlashSalePage(),
-    const ProfileScreen(),
+
   ];
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: [2,3].contains(viewModel.index.value)
+          appBar: [].contains(viewModel.index.value)
               ? null
               : AppBar(
                   backgroundColor: UIColors.white,
@@ -137,7 +137,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                           ? Icon(Icons.content_paste)
                           : Icon(Icons.content_paste),
                     ),
-                    label: "Đơn đổi quà"),
+                    label: "Danh mục"),
                 BottomNavigationBarItem(
                     icon: SizedBox(
                       width: 24,

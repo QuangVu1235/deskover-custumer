@@ -34,6 +34,7 @@ class Product {
   Discount? discount;
   SubCategory? subCategory;
   Brand? brand;
+  FlashSale? flashSale;
   // List<Null>? ratings;
   List<ProductThumbnails>? productThumbnails;
   int? averageRating;
@@ -58,6 +59,7 @@ class Product {
         this.discount,
         this.subCategory,
         this.brand,
+        this.flashSale,
         // this.ratings,
         this.productThumbnails,
         this.averageRating
@@ -93,6 +95,31 @@ class Discount {
 
   factory Discount.fromJson(Map<String, dynamic> json) => _$DiscountFromJson(json);
   Map<String, dynamic> toJson() => _$DiscountToJson(this);
+}
+
+@JsonSerializable()
+class FlashSale {
+  int? id;
+  String? name;
+  String? description;
+  int? percent;
+  String? startDate;
+  String? endDate;
+  bool? actived;
+  String? modifiedAt;
+  String? modifiedBy;
+
+  FlashSale(
+      {this.id,
+        this.name,
+        this.startDate,
+        this.endDate,
+        this.actived,
+        this.modifiedBy
+      });
+
+  factory FlashSale.fromJson(Map<String, dynamic> json) => _$FlashSaleFromJson(json);
+  Map<String, dynamic> toJson() => _$FlashSaleToJson(this);
 }
 
 @JsonSerializable()

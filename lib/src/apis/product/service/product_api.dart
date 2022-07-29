@@ -14,6 +14,9 @@ abstract class ProductAPI{
   @GET('/v1/api/display/product-new')
   Future<DataProductResponse> goGetAll(@Query('page') int? page, @Query('size') int? size);
 
+  @GET('/v1/api/display/product-new')
+  Future<DataProductResponse> goGetProductSale(@Query('page') int? page, @Query('size') int? size);
+
   @GET('/v1/api/display/product-category')
   Future<DataProductResponse> doGetProductByCategoryId(@Query('categoryId') int? categoryId,@Query('page') int? page, @Query('size') int? size);
 

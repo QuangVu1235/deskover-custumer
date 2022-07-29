@@ -45,158 +45,272 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
          title: Text('Giỏ hàng'),
          backgroundColor: UIColors.white  ,
        ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 1),
-        color: UIColors.white,
-        child: Column(
-          children: [
-            Obx(
-                ()=>Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                        child: ListView(
-                          children: [
-                            ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.dataCartResponse.length,
-                              itemBuilder: (context, int index) {
-                                return Card(
-                                  elevation: 0.0,
-                                  margin: EdgeInsets.zero,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.3,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: GlobalImage(BaseApi.baseUrl_product+'${viewModel.dataCartResponse[index].product?.img}') ,
+      body: RefreshIndicator(
+        onRefresh: ()=> viewModel.refresh(),
+        child: Container(
+          margin: const EdgeInsets.only(top: 1),
+          color: UIColors.white,
+          child: Column(
+            children: [
+              Obx(
+                  ()=>Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                          child: ListView(
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.dataCartResponse.length,
+                                itemBuilder: (context, int index) {
+                                  return Card(
+                                    elevation: 0.0,
+                                    margin: EdgeInsets.zero,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width*0.3,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(10),
+                                            child: GlobalImage(BaseApi.baseUrl_product+'${viewModel.dataCartResponse[index].product?.img}') ,
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children:  [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                     Expanded(
+                                                       child: Text(
+                                                        viewModel.dataCartResponse[index].product?.name ?? '',
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w700
+                                                        ),
+                                                    ),
+                                                     ),
+                                                    const SizedBox(width: 26,),
+                                                    SizedBox(
+                                                      width: 30,
+                                                      height: 24,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                          onSurface: Colors.red,
+                                                          minimumSize: Size.zero, // Set this
+                                                          padding: EdgeInsets.zero, // and this
+                                                          primary: UIColors.white,
+                                                          elevation: 0.0,
+                                                        ),
+                                                        onPressed: () async => await viewModel.btnDelete( viewModel.dataCartResponse[index].product?.id ?? 0),
+                                                        child: SvgPicture.asset(SvgImageAssets.trash,height: 20),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: SpaceValues.space16,),
+                                                //thêm loại thẻ
+                                                Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Giá:',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400,
+
+                                                      ),
+                                                    ),
+                                                     const SizedBox(width: 6,),
+                                                     Text(
+                                                       formatCurrency.format(viewModel.dataCartResponse[index].product?.price),
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w700,
+
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: SpaceValues.space4,),
+                                                //kun vận động
+                                                Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Số lượng:',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400,
+
+                                                      ),
+                                                    ),
+                                                    const Expanded(child: SizedBox(),),
+
+                                                    SizedBox(
+                                                      height: 25 ,
+                                                      width: 25,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            primary: UIColors.red,
+                                                            minimumSize: Size.zero, // Set this
+                                                            padding: EdgeInsets.zero, // and this
+                                                            elevation: 0.0,
+                                                            shadowColor: Colors.transparent,
+                                                            shape:   RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20),
+                                                                side: BorderSide(color: UIColors.black10,width: 1)
+                                                            )
+                                                        ),
+                                                        onPressed: viewModel.dataCartResponse[index].quantity! > 1 ? () async {
+                                                          await viewModel.btnMinusCart( viewModel.dataCartResponse[index].product?.id ?? 0);
+                                                        }: null,
+                                                        child: Center(child: SvgPicture.asset(SvgImageAssets.minus,color: UIColors.white,height: 16,)),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: SpaceValues.space8,),
+                                                    Obx(
+                                                         ()=>SizedBox(
+                                                              height: 25,
+                                                              child:  Padding(
+                                                                padding: const EdgeInsets.only(left: 15,right: 15),
+                                                                child: Center(child: Text(viewModel.dataCartResponse[index].quantity.toString(),style: TextStyle(fontSize:12 ),)),
+                                                              ),
+                                                            ),),
+
+                                                    const SizedBox(width: SpaceValues.space8,),
+                                                    SizedBox(
+                                                      height: 25 ,
+                                                      width: 25,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            minimumSize: Size.zero, // Set this
+                                                            padding: EdgeInsets.zero, // and this
+                                                            elevation: 0.0,
+                                                            shadowColor: Colors.transparent,
+                                                            shape:   RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20),
+                                                                side: BorderSide(color: UIColors.black10,width: 1)
+                                                            )
+                                                        ),
+                                                        onPressed: viewModel.dataCartResponse[index].quantity! <10 ? () async {
+                                                          await viewModel.btnAddToCart( viewModel.dataCartResponse[index].product?.id ?? 0);
+                                                        }:null,
+                                                        child: Center(child: SvgPicture.asset(SvgImageAssets.plus,color: UIColors.white,height: 16,)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Địa chỉ nhận hàng',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14
+                                    ),
+                                  ),
+                                  TextButton(
+                                      style: TextButton.styleFrom(
+                                        onSurface: UIColors.brandA,
+                                        primary: UIColors.brandA,
+                                      ) ,
+                                      onPressed: (){
+                                          Get.to(()=> NotAddressScreen(viewModel: viewModel,));
+                                      }
+                                      , child: Row(
+                                    children: [
+                                      SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
+                                      Text(' Thay đổi',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
+                                    ],
+
+                                  ))
+                                ],
+                              ),
+                              Obx(
+                               ()=>  Card(
+                                        elevation: 0.0,
+                                        margin: EdgeInsets.zero,
                                         child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                                          padding: const EdgeInsets.all(20),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children:  [
+
+                                            children: [
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                   Expanded(
-                                                     child: Text(
-                                                      viewModel.dataCartResponse[index].product?.name ?? '',
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight: FontWeight.w700
-                                                      ),
+                                                  Text(
+                                                    'Người nhận',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 12
+                                                    ),
                                                   ),
-                                                   ),
-                                                  const SizedBox(width: 26,),
-                                                  SizedBox(
-                                                    width: 30,
-                                                    height: 24,
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                        onSurface: Colors.red,
-                                                        minimumSize: Size.zero, // Set this
-                                                        padding: EdgeInsets.zero, // and this
-                                                        primary: UIColors.white,
-                                                        elevation: 0.0,
-                                                      ),
-                                                      onPressed: () async => await viewModel.btnDelete( viewModel.dataCartResponse[index].product?.id ?? 0),
-                                                      child: SvgPicture.asset(SvgImageAssets.trash,height: 20),
+                                                  Text(
+                                                    viewModel.address.value?.fullname ?? '',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w400,
+                                                        fontSize: 12
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(height: SpaceValues.space16,),
-                                              //thêm loại thẻ
+                                              SizedBox(height: 20,),
                                               Row(
-                                                children: [
-                                                  const Text(
-                                                    'Giá:',
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children:  [
+                                                  Text(
+                                                    'Số điện thoại',
                                                     style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w400,
-
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 12
                                                     ),
                                                   ),
-                                                   const SizedBox(width: 6,),
-                                                   Text(
-                                                     formatCurrency.format(viewModel.dataCartResponse[index].product?.price),
+                                                  Text(
+                                                    viewModel.address.value?.tel ?? '',
                                                     style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w700,
-
+                                                        fontWeight: FontWeight.w400,
+                                                        fontSize: 12
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              const SizedBox(height: SpaceValues.space4,),
-                                              //kun vận động
+                                              SizedBox(height: 20,),
                                               Row(
-                                                children: [
-                                                  const Text(
-                                                    'Số lượng:',
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children:  [
+                                                  Text(
+                                                    'Địa chỉ',
                                                     style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w400,
-
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 12
                                                     ),
                                                   ),
-                                                  const Expanded(child: SizedBox(),),
-
-                                                  SizedBox(
-                                                    height: 25 ,
-                                                    width: 25,
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                          primary: UIColors.red,
-                                                          minimumSize: Size.zero, // Set this
-                                                          padding: EdgeInsets.zero, // and this
-                                                          elevation: 0.0,
-                                                          shadowColor: Colors.transparent,
-                                                          shape:   RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(20),
-                                                              side: BorderSide(color: UIColors.black10,width: 1)
-                                                          )
+                                                  SizedBox(width: MediaQuery.of(context).size.width*0.2),
+                                                  Expanded(
+                                                    child: Text(
+                                                      viewModel.address.value?.address ?? '',
+                                                      // maxLines: 3,
+                                                      // overflow: TextOverflow.fade,
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.w400,
+                                                        fontSize: 12,
                                                       ),
-                                                      onPressed: viewModel.dataCartResponse[index].quantity! > 1 ? () async {
-                                                        await viewModel.btnMinusCart( viewModel.dataCartResponse[index].product?.id ?? 0);
-                                                      }: null,
-                                                      child: Center(child: SvgPicture.asset(SvgImageAssets.minus,color: UIColors.white,height: 16,)),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: SpaceValues.space8,),
-                                                  Obx(
-                                                       ()=>SizedBox(
-                                                            height: 25,
-                                                            child:  Padding(
-                                                              padding: const EdgeInsets.only(left: 15,right: 15),
-                                                              child: Center(child: Text(viewModel.dataCartResponse[index].quantity.toString(),style: TextStyle(fontSize:12 ),)),
-                                                            ),
-                                                          ),),
-
-                                                  const SizedBox(width: SpaceValues.space8,),
-                                                  SizedBox(
-                                                    height: 25 ,
-                                                    width: 25,
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                          minimumSize: Size.zero, // Set this
-                                                          padding: EdgeInsets.zero, // and this
-                                                          elevation: 0.0,
-                                                          shadowColor: Colors.transparent,
-                                                          shape:   RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(20),
-                                                              side: BorderSide(color: UIColors.black10,width: 1)
-                                                          )
-                                                      ),
-                                                      onPressed: viewModel.dataCartResponse[index].quantity! <10 ? () async {
-                                                        await viewModel.btnAddToCart( viewModel.dataCartResponse[index].product?.id ?? 0);
-                                                      }:null,
-                                                      child: Center(child: SvgPicture.asset(SvgImageAssets.plus,color: UIColors.white,height: 16,)),
                                                     ),
                                                   ),
                                                 ],
@@ -204,287 +318,176 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                             ],
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Địa chỉ nhận hàng',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14
-                                  ),
-                                ),
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      onSurface: UIColors.brandA,
-                                      primary: UIColors.brandA,
-                                    ) ,
-                                    onPressed: (){
-                                        Get.to(()=> NotAddressScreen(viewModel: viewModel,));
-                                    }
-                                    , child: Row(
-                                  children: [
-                                    SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
-                                    Text(' Thay đổi',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
-                                  ],
-
-                                ))
-                              ],
-                            ),
-                            Obx(
-                             ()=>  Card(
-                                      elevation: 0.0,
-                                      margin: EdgeInsets.zero,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20),
-                                        child: Column(
-
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Người nhận',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                                Text(
-                                                  viewModel.address.value?.fullname ?? '',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20,),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children:  [
-                                                Text(
-                                                  'Số điện thoại',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                                Text(
-                                                  viewModel.address.value?.tel ?? '',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20,),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children:  [
-                                                Text(
-                                                  'Địa chỉ',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                                SizedBox(width: MediaQuery.of(context).size.width*0.2),
-                                                Expanded(
-                                                  child: Text(
-                                                    viewModel.address.value?.address ?? '',
-                                                    // maxLines: 3,
-                                                    // overflow: TextOverflow.fade,
-                                                    textAlign: TextAlign.end,
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
                                       ),
-                                    ),
-                            ),
-                            SizedBox(height: 16,),
-                            const Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Vui lòng chọn phương thức vận chuyển:',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.center,
                               ),
-                            ),
-                            const SizedBox(height: SpaceValues.space16,),
-                            Obx(
-                                  ()=>Visibility(
-                                visible: true,
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        for (int i = 0;
-                                        i < viewModel.dataShipping.length;
-                                        i++)
-                                          ListTile(
-                                            visualDensity: const VisualDensity(
-                                                horizontal: 0, vertical: -4),
-                                            contentPadding: EdgeInsets.zero,
-                                            horizontalTitleGap: 0,
-                                            tileColor: Colors.transparent,
-                                            title: Text(
-                                              viewModel.dataShipping[i].name_shipping ?? '' ,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12
+                              SizedBox(height: 16,),
+                              const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Vui lòng chọn phương thức vận chuyển:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              const SizedBox(height: SpaceValues.space16,),
+                              Obx(
+                                    ()=>Visibility(
+                                  visible: true,
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          for (int i = 0;
+                                          i < viewModel.dataShipping.length;
+                                          i++)
+                                            ListTile(
+                                              visualDensity: const VisualDensity(
+                                                  horizontal: 0, vertical: -4),
+                                              contentPadding: EdgeInsets.zero,
+                                              horizontalTitleGap: 0,
+                                              tileColor: Colors.transparent,
+                                              title: Text(
+                                                viewModel.dataShipping[i].name_shipping ?? '' ,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12
+                                                ),
+                                              ),
+                                              leading: Radio(
+                                                value: viewModel.dataShipping[i],
+                                                groupValue: viewModel.shipping.value,
+                                                // activeColor: Color(0xFF6200EE),
+                                                onChanged: (value) {
+                                                  viewModel.shipping.value = value as Shipping? ;
+                                                  viewModel.checkShipping();
+
+                                                },
                                               ),
                                             ),
-                                            leading: Radio(
-                                              value: viewModel.dataShipping[i],
-                                              groupValue: viewModel.shipping.value,
-                                              // activeColor: Color(0xFF6200EE),
-                                              onChanged: (value) {
-                                                viewModel.shipping.value = value as Shipping? ;
-                                                viewModel.checkShipping();
-
-                                              },
-                                            ),
-                                          ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Vui lòng chọn phương thức thanh toán',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14
+                                ),),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Vui lòng chọn phương thức thanh toán',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14
+                                    ),
                                   ),
-                                ),
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      onSurface: UIColors.brandA,
-                                      primary: UIColors.brandA,
-                                    ) ,
-                                    onPressed: (){
-                                      viewModel.payment.value == null;
-                                      Get.bottomSheet(PaymentMethod(viewModel: viewModel,));
-                                    }
-                                    , child: Row(
-                                  children: [
-                                    SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
-                                    Text('Chọn',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
-                                  ],
+                                  TextButton(
+                                      style: TextButton.styleFrom(
+                                        onSurface: UIColors.brandA,
+                                        primary: UIColors.brandA,
+                                      ) ,
+                                      onPressed: (){
+                                        viewModel.payment.value == null;
+                                        Get.bottomSheet(PaymentMethod(viewModel: viewModel,));
+                                      }
+                                      , child: Row(
+                                    children: [
+                                      SvgPicture.asset(SvgImageAssets.driveFileRename,color: UIColors.brandA,height: 20,),
+                                      Text('Chọn',style: TextStyle(color: UIColors.brandA,fontSize: 12,fontWeight: FontWeight.w400),)
+                                    ],
 
-                                ))
-                              ],
-                            ),
-                            // IconAssets.actionStore
-                            const SizedBox(height: SpaceValues.space12,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  'Ghi chú',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                            const SizedBox(height: SpaceValues.space12,),
-                            TextField(
-                              controller: viewModel.inputNote,
-                              decoration: InputDecoration(
-                                  hintText: 'Nhập ghi chú (nếu có)',
-                                  hintStyle: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                  floatingLabelAlignment: FloatingLabelAlignment.center
+                                  ))
+                                ],
                               ),
-                              minLines: 3,
-                              maxLines: 3,
-                            ),
-                            const SizedBox(height: SpaceValues.space48,),
-                          ],
+                              // IconAssets.actionStore
+                              const SizedBox(height: SpaceValues.space12,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text(
+                                    'Ghi chú',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                              const SizedBox(height: SpaceValues.space12,),
+                              TextField(
+                                controller: viewModel.inputNote,
+                                decoration: InputDecoration(
+                                    hintText: 'Nhập ghi chú (nếu có)',
+                                    hintStyle: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                    floatingLabelAlignment: FloatingLabelAlignment.center
+                                ),
+                                minLines: 3,
+                                maxLines: 3,
+                              ),
+                              const SizedBox(height: SpaceValues.space48,),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),),
+                      ),),
 
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                child: Row(
-                  children: [
-                    // Expanded(
-                    //   child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //           primary: UIColors.white,
-                    //           // elevation: 0.0,
-                    //           shape:  RoundedRectangleBorder(
-                    //               borderRadius: BorderRadius.circular(5),
-                    //               side: BorderSide(color: UIColors.red,width: 1)
-                    //           )
-                    //       ) ,
-                    //       onPressed: (){
-                    //
-                    //       },
-                    //       child: Text(
-                    //         'Xoá giỏ quà',
-                    //         style: TextStyle(
-                    //             color: UIColors.red
-                    //         ),
-                    //       )),
-                    // ),
-                    // SizedBox(width: 8,),
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  child: Row(
+                    children: [
+                      // Expanded(
+                      //   child: ElevatedButton(
+                      //       style: ElevatedButton.styleFrom(
+                      //           primary: UIColors.white,
+                      //           // elevation: 0.0,
+                      //           shape:  RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(5),
+                      //               side: BorderSide(color: UIColors.red,width: 1)
+                      //           )
+                      //       ) ,
+                      //       onPressed: (){
+                      //
+                      //       },
+                      //       child: Text(
+                      //         'Xoá giỏ quà',
+                      //         style: TextStyle(
+                      //             color: UIColors.red
+                      //         ),
+                      //       )),
+                      // ),
+                      // SizedBox(width: 8,),
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
 
-                              // elevation: 0.0,
-                              shape:  RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                // elevation: 0.0,
+                                shape:  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
 
-                              )
-                          ) ,
-                          onPressed: () async {
-                             await viewModel.btnConfirmOrder();
-                          },
-                          child: Text(
-                            'Xác nhận mua hàng',
-                            style: TextStyle(
+                                )
+                            ) ,
+                            onPressed: () async {
+                               await viewModel.btnConfirmOrder();
+                            },
+                            child: Text(
+                              'Xác nhận mua hàng',
+                              style: TextStyle(
 
-                            ),
-                          )),
-                    )
-                  ],
-                ),
-              )
+                              ),
+                            )),
+                      )
+                    ],
+                  ),
+                )
 
-            //button add product
+              //button add product
 
-          ],
+            ],
+          ),
         ),
       ),
     );

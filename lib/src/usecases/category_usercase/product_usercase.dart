@@ -12,6 +12,9 @@ class ProductUserCase{
   Future<DataProductResponse> doGetAllProductNew(int page,int size)
   => _productDataSource.doGetProductNew(page,size);
 
+  Future<DataProductResponse> doGetAllProductSale(int page,int size)
+  => _productDataSource.doGetProductSale(page,size);
+
   Future<DataProductResponse> doGetProductByCategoryId(int categoryId, int page, int size)
   => _productDataSource.doGetProductByCategoryId(categoryId, page, size);
 

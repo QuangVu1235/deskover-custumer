@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class ProductDataSource{
   Future<DataProductResponse> doGetProductNew(int page,int size);
+  Future<DataProductResponse> doGetProductSale(int page,int size);
   Future<DataProductResponse> doGetProductByCategoryId(int categoryId,int page,int size);
   Future<DataProductResponse> doGetProductBySubId(int subId,int page,int size);
   Future<Product> getById(int id);
@@ -30,6 +31,10 @@ class ProductDataSourceImpl extends ProductDataSource{
   @override
   Future<Product> getById(int id)
   => _productAPI.getById(id);
+
+  @override
+  Future<DataProductResponse> doGetProductSale(int page, int size)
+  =>_productAPI.goGetProductSale(page,size);
 
 
 }

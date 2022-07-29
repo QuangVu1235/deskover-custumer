@@ -36,21 +36,25 @@ class CartModel extends ViewModel{
   @override
   void initState() {
     super.initState();
-    loadCartOrder();
-    loadAddress();
-    loadShippingMethod();
-    loadPaymentMethod();
+    refresh();
+
   }
+
+  Future<void> refresh() async {
+    // isLognin.value = _sharedPreferences.getString('uToken')?.isNotEmpty ?? false;
+    await Future.wait([
+    loadCartOrder(),
+    loadAddress(),
+    loadShippingMethod(),
+    loadPaymentMethod(),
+    ]);
+  }
+
 
   Future<void> loadShippingMethod() async {
     await _cartUserCase.doGetShipping().then((value) async{
            dataShipping.value = value ?? [];
            shipping.value = null as Shipping?;
-           // dataShipping.value.forEach((element) {
-           //   if(element.shipping_id == 'DKV'){
-           //     shipping.value = element;
-           //   }
-           // });
     });
   }
   Future<void> loadPaymentMethod() async {
