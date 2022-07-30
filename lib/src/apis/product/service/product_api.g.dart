@@ -44,7 +44,7 @@ class _ProductAPI implements ProductAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataProductResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/display/product-new',
+                .compose(_dio.options, '/v1/api/display/product-sale',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataProductResponse.fromJson(_result.data!);

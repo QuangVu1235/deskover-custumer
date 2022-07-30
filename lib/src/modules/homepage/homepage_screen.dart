@@ -173,7 +173,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                     Obx(
                             () {
                           return Visibility(
-                            visible: null != viewModel.dataProductFlashSale.value,
+                            visible: viewModel.dataProductFlashSale.length > 0,
                             child: Visibility(
                               visible: (viewModel.dataProductFlashSale.value.length) > 0,
                               child: Container(
@@ -214,16 +214,24 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                             ),
                                           ),
                                           CountdownTimer(
-                                            // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
-                                            //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
-                                            //     (viewModel.dataProductFlashSale.value.first.flashSale?.endDate
-                                            //         ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1))))
-                                            //         : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
-                                            endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 16:12:00').millisecondsSinceEpoch,
+                                            endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                                (viewModel.dataProductFlashSale.value).isNotEmpty ?
+                                                //viewModel.dataProductFlashSale.value.first.flashSale?.endDate
+                                                '2022-07-29 19:40:00'
+                                                    : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
+                                            // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 23:12:00').millisecondsSinceEpoch,
                                             onEnd: () async {
-                                              // await viewModel.getFlashsaleProduct();
+                                              await viewModel.loadProductSale();
                                             },
+
                                             widgetBuilder: (context, time) {
+                                              // if (time == null) {
+                                              //    // viewModel.loading(() async{
+                                              //    //    viewModel.loadProductSale();
+                                              //    // });
+                                              //
+                                              //    return Text("1");
+                                              // }
                                               return Row(
                                                 children: [
                                                   Container(
@@ -295,14 +303,16 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                         itemBuilder: (context, index) {
                                           return ProductWidget(
                                             productId: viewModel.dataProductFlashSale.value[index].id ?? 0,
-                                            avatar: viewModel.dataProductFlashSale.value[index].img ?? '',
+                                            avatar: BaseApi.baseUrl_product+ '${viewModel.dataProductFlashSale.value[index].img}',
                                             title: viewModel.dataProductFlashSale.value[index].name ?? '',
-                                            isCanBuy: (viewModel.dataProductFlashSale.value[index].price ?? 0) > 0,
-                                            promotion: viewModel.dataProductFlashSale.value[index].price.toString(),
-                                            price: (viewModel.dataProductFlashSale.value[index].price) != 0
-                                                ? viewModel.dataProductFlashSale.value[index].price ?? 0
+                                            isCanBuy: (viewModel.dataProductFlashSale.value[index].quantity ?? 0) > 0,
+                                            quantity: viewModel.dataProductFlashSale.value[index].quantity ?? 0,
+                                            promotion: '${viewModel.dataProductFlashSale.value[index].discount?.percent}%',
+                                            discount: viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0,
+                                            price: (viewModel.dataProductFlashSale.value[index].discount?.percent) != 0
+                                                ? viewModel.dataProductFlashSale.value[index].price! - (viewModel.dataProductFlashSale.value[index].price! * (viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0)/100)
                                                 :  viewModel.dataProductFlashSale.value[index].price ?? 0,
-                                            priceOrigin: (viewModel.dataProductFlashSale.value[index].price.toString()).isNotEmpty ? (viewModel.dataProductFlashSale.value[index].price.toString()) : '',
+                                            priceOrigin:viewModel.dataProductFlashSale.value[index].price ?? 0,
                                           );
                                         },
                                       ),
@@ -518,7 +528,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                             color: UIColors.brandA),
                       ),
                       onTap: () {
-                        Get.to(ListProductNew(viewModel: viewModel,title: "Sản phẩm mới",));
+                        Get.to(ListProductNew(categoryId:viewModel.dataProductNew.first.subCategory?.category?.id ?? 1 ,title: "Sản phẩm mới",));
                       },
                     ),
                     Obx(

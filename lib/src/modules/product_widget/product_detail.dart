@@ -6,6 +6,7 @@ import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_html_widget.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_detail_model.dart';
+import 'package:deskover_develop/src/modules/product_widget/product_selling/product_selling.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
@@ -86,63 +87,6 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                       ),
                       items: [GlobalImage(viewModel.productDetail.value?.productThumbnails?.toString(), width: MediaQuery.of(context).size.width,)],
                     ),
-                    ),
-                    Row(
-                      children: [
-                        // const SizedBox(width: SpaceValues.space12,),
-                        // InkWell(
-                        //   onTap: () {
-                        //     print('>>>>>>> 360 onTap');
-                        //   },
-                        //   child: Container(
-                        //     padding: const EdgeInsets.only(top: 6),
-                        //     alignment: Alignment.topLeft,
-                        //     child: SizedBox(
-                        //       width: 40,
-                        //       height: 40,
-                        //       child: Image.asset("resources/icons/360.png"),
-                        //     ),
-                        //   ),
-                        // ),
-                        const Spacer(),
-                        // Container(
-                        //   padding: const EdgeInsets.only(top: 6),
-                        //   alignment: Alignment.topRight,
-                        //   child: TextButton(
-                        //     onPressed: viewModel.productModel.isSignin ? () async {
-                        //       await viewModel.productModel.addFavorite(widget.idProduct);
-                        //     } : () {
-                        //       Fluttertoast.showToast(msg: 'Bạn chưa đăng nhập!', backgroundColor: UIColors.black70);
-                        //     },
-                        //     style: TextButton.styleFrom(
-                        //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        //       minimumSize: Size.zero,
-                        //
-                        //     ),
-                        //     child: Obx(
-                        //             () {
-                        //           viewModel.productModel.refreshFavourite.value;
-                        //           return AnimatedSwitcher(
-                        //             duration: const Duration(milliseconds: 250),
-                        //             transitionBuilder: (child, ani) => ScaleTransition(scale: ani, child: child,),
-                        //             child: viewModel.productModel.isLike(widget.idProduct)
-                        //                 ? SvgPicture.asset(
-                        //               IconAssets.actionFavoriteFill,color: Colors.red,
-                        //               key: const Key('an034207052022'),
-                        //               height: 29,
-                        //             )
-                        //                 : SvgPicture.asset(
-                        //               IconAssets.actionFavoriteBorder,
-                        //               key: const Key('noan034207052022'),
-                        //               height: 29,
-                        //             ),
-                        //           );
-                        //         }
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(width: SpaceValues.space12,),
-                      ],
                     ),
                     Positioned(
                       bottom: 16,
@@ -228,42 +172,61 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                      formatCurrency.format(viewModel.productDetail.value?.price?.toDouble() ?? 0),
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                          color: UIColors.brandA)),
-                                  // Container(
-                                   //   padding:
-                                  //   const EdgeInsets.only(left: 7, top: 7),
-                                  //   child: Text(
-                                  //     (viewModel.productDetail.value?.special_formatted ?? '').isNotEmpty ? (viewModel.productDetail.value?.price_formatted ?? '') : '',
-                                  //     style: const TextStyle(
-                                  //       fontSize: 10.0,
-                                  //       fontWeight: FontWeight.w400,
-                                  //       color: Colors.black54,
-                                  //       decoration: TextDecoration.lineThrough,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Visibility(
-                                  //   visible: (viewModel.productDetail.value?.special_percentage_formatted ?? '0%') != '0%',
-                                  //   child: Container(
-                                  //     margin: const EdgeInsets.only(left: 10),
-                                  //     decoration: BoxDecoration(
-                                  //       borderRadius: BorderRadius.circular(5),
-                                  //       color: UIColors.brandA,
-                                  //     ),
-                                  //     child: Padding(
-                                  //       padding: const EdgeInsets.all(5),
-                                  //       child: Text(
-                                  //           (viewModel.productDetail.value?.special_percentage_formatted ?? '0%'),
-                                  //           style: const TextStyle(
-                                  //               color: Colors.white, fontSize: 10)),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Visibility(
+                                      visible: (viewModel.productDetail.value?.discount?.percent ?? 0) !=0 ,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                              formatCurrency.format((viewModel.productDetail.value?.price ?? 0)
+                                                  - ((viewModel.productDetail.value?.price ?? 0) * (viewModel.productDetail.value?.discount?.percent ?? 0)/100)
+                                              ),
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: UIColors.brandA)
+                                          ),
+                                          Container(
+                                            padding:
+                                            const EdgeInsets.only(left: 7, top: 7),
+                                            child: Text(
+                                              formatCurrency.format(viewModel.productDetail.value?.price?.toDouble() ?? 0),
+                                              style: const TextStyle(
+                                                fontSize: 10.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black54,
+                                                decoration: TextDecoration.lineThrough,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    replacement: Text(
+                                        formatCurrency.format(viewModel.productDetail.value?.price?.toDouble() ?? 0),
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700,
+                                            color: UIColors.brandA)
+                                    ),
+                                  ),
+
+
+                                  Visibility(
+                                    visible: (viewModel.productDetail.value?.discount?.percent ?? 0) != 0,
+                                    child: Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: UIColors.brandA,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Text(
+                                            (viewModel.productDetail.value?.discount?.percent != 0 ? '${viewModel.productDetail.value?.discount?.percent.toString()}%':''),
+                                            style: const TextStyle(
+                                                color: Colors.white, fontSize: 10)),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
 
@@ -289,7 +252,7 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                             ),
                             onTap: () {},
                           ),
-                          // const ProductSellingScreen(),
+                           ProductSellingScreen(categoryId: viewModel.productDetail.value?.subCategory?.category?.id ?? 1),
                           const SizedBox(
                             height: 24,
                           ),

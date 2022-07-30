@@ -66,7 +66,7 @@ class HomePageModel extends ViewModel{
 
   Future<void> loadProductSale() async{
     loading(() async{
-      await _productUserCase.doGetAllProductNew(0,size.value).then((value) async{
+      await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
         dataProductFlashSale.value = value.content ?? [Product()];
       });
     });
