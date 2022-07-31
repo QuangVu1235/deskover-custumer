@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/action/search/search_screen.dart';
 import 'package:deskover_develop/src/modules/profile/profile_screen.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
@@ -34,19 +35,19 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    Text("1"),
-    Text("1"),
+    SearchPage(),
+    const ProfileScreen(),
 
     // const GarnitureScreen(),
     // const NewsCreen(),
     // const FlashSalePage(),
-    const ProfileScreen(),
+
   ];
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: [2,3].contains(viewModel.index.value)
+          appBar: [1].contains(viewModel.index.value)
               ? null
               : AppBar(
                   backgroundColor: UIColors.white,
@@ -137,7 +138,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                           ? Icon(Icons.content_paste)
                           : Icon(Icons.content_paste),
                     ),
-                    label: "Đơn đổi quà"),
+                    label: "Danh mục"),
                 BottomNavigationBarItem(
                     icon: SizedBox(
                       width: 24,

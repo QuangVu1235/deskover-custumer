@@ -1,6 +1,8 @@
 import 'package:deskover_develop/src/apis/category/response/category_response.dart';
 import 'package:deskover_develop/src/apis/product/response/product_response.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
+import 'package:deskover_develop/src/modules/homepage/homepage_screen.dart';
+import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/category_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/product_usercase.dart';
@@ -17,6 +19,8 @@ class HomePageModel extends ViewModel{
 
   RxList<CategoryReponse> DataCategory = RxList.empty();
   RxList<Product> dataProductNew = RxList.empty();
+  RxList<Product> dataProductFlashSale = RxList.empty();
+
   RxInt size = 8.obs;
 
   HomePageModel(this._categoryUserCase, this._productUserCase, this._cartUserCase);
@@ -24,8 +28,17 @@ class HomePageModel extends ViewModel{
   @override
   void initState() {
     super.initState();
-   loadCategory();
-   loadProductNew();
+    resfresh();
+
+  }
+
+  Future<void> resfresh()async {
+    await Future.wait([
+      loadCategory(),
+      loadProductNew(),
+      loadProductSale()
+
+    ]);
   }
 
 
@@ -51,6 +64,17 @@ class HomePageModel extends ViewModel{
      await _productUserCase.doGetAllProductNew(0,size.value).then((value) async{
         dataProductNew.value = value.content ?? [Product()];
       });
+    });
+  }
+
+  Future<void> loadProductSale() async{
+    await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
+      dataProductFlashSale.value = value.content ?? [Product()];
+      if(dataProductFlashSale.isEmpty){
+        Get.back();
+        Get.offAll(MainPage());
+      }
+      print(dataProductFlashSale.value.first.flashSale?.endDate);
     });
   }
 

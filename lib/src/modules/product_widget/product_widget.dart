@@ -23,7 +23,7 @@ class ProductWidget extends StatefulWidget {
     Key? key,
     required this.productId,
     this.title = '',
-    this.priceOrigin = '',
+    this.priceOrigin = 0,
     this.price = 0,
     this.avatar = '',
     this.promotion = '',
@@ -31,15 +31,16 @@ class ProductWidget extends StatefulWidget {
     this.qrCode = '',
     this.width = 180,
     this.height = 270,
-    this.quantity=0,
+    this.quantity=0, this.discount = 0,
   }) : super(key: key);
 
   final int productId;
   final String avatar;
   final String title;
   final String promotion;
-  final String priceOrigin;
+  final double priceOrigin;
   final double price;
+  final int discount;
   final int quantity;
   final bool isCanBuy;
   final double width;
@@ -66,6 +67,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
       height: MediaQuery.of(context).size.height*0.3,
       child: InkWell(
         onTap: () {
+          Get.back();
           Get.to(ProductDetail(
             idProduct: widget.productId,
             heroTag: herotag,
@@ -143,25 +145,17 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                   style: const TextStyle(fontSize: 12, color: UIColors.title, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: SpaceValues.space4),
-                // Text(
-                //   widget.priceOrigin,
-                //   maxLines: 1,
-                //   overflow: TextOverflow.ellipsis,
-                //   style: const TextStyle(fontSize: 12, color: UIColors.title, decoration: TextDecoration.lineThrough),
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Text("Số lượng còn",style:TextStyle(
-                //       fontSize: 10,
-                //       fontWeight: FontWeight.w400,),),
-                //     Text(widget.quantity,
-                //       style:TextStyle(
-                //         fontSize: 10,
-                //         fontWeight: FontWeight.w400,
-                //       ) ,),
-                //   ],
-                // ),
+                Visibility(
+                  visible: widget.discount > 0,
+                  child: Text(
+                    formatCurrency.format(widget.priceOrigin),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 12, color: UIColors.title, decoration: TextDecoration.lineThrough),
+                  ),
+                  replacement: const SizedBox.shrink(),
+                ),
+                const SizedBox(height: SpaceValues.space4),
                 RichText(
                   text: TextSpan(
                     text: 'Số lượng còn  ',
@@ -177,16 +171,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                     ],
                   ),
                 ),
-
-                // Text(
-                //   formatCurrency.format(widget.price.toDouble()),
-                //   maxLines: 1,
-                //   overflow: TextOverflow.ellipsis,
-                //   style: const TextStyle(fontSize: 12, color: UIColors.title, decoration: TextDecoration.lineThrough),
-                // ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: SpaceValues.space4),
                 RichText(
                   text: TextSpan(
                     text: 'Giá từ:  ',
@@ -202,7 +187,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(

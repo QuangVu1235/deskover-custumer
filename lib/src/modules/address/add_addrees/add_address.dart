@@ -1,3 +1,4 @@
+import 'package:deskover_develop/src/apis/addrees/response/addrees_response.dart';
 import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/address/add_addrees/add_address_model.dart';
@@ -99,19 +100,20 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                           // errorText: viewModel.validCity.isNotEmpty ? '  ${viewModel.validCity.value}' : null,
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
+                          child: DropdownButton<Province?>(
                             isExpanded: true,
-                            value: viewModel.provincesId.value,
+                            value: viewModel.provinceValue.value,
                             items: viewModel.provinces.map((e)
                             => DropdownMenuItem(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 6),
                                 child:  Text(e.name ?? 'Chọn Tỉnh/ Thành phố'),
-                              ), value: e.id,
+                              ), value: e,
                             ),
                             ).toList(),
                             onChanged: (value) async {
-                              viewModel.provincesId.value = value!;
+                              viewModel.provinceValue.value = value!;
+                              viewModel.provincesId.value = viewModel.provinceValue.value?.id ?? 1;
                               viewModel.inputAddress.text = '';
                              await viewModel.loadDistricts();
                             },
@@ -140,22 +142,24 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                           errorText: viewModel.validDistrict.isNotEmpty ? '  ${viewModel.validDistrict.value}' : null,
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
+                          child: DropdownButton<District?>(
                             isExpanded: true,
-                            value: viewModel.districtId.value,
+                            value: viewModel.districtsValue.value,
                             items: viewModel.districts.map((e)
                             => DropdownMenuItem(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 6),
                                 child: Text(e.name ?? 'Chọn Quận/ Huyện',),
                               ),
-                              value: e.id,
+                              value: e,
                             ),
                             ).toList(),
                             onChanged: viewModel.districts.length > 1 ?
                                 (value) {
-                              viewModel.districtId.value = value!;
-                              viewModel.loadWards();
+                                  viewModel.inputAddress.text = '';
+                                  viewModel.districtsValue.value = value;
+                                  viewModel.districtId.value =  viewModel.districtsValue.value?.id ?? 1;
+                                  viewModel.loadWards();
                             } :
                             null,
                           ),
@@ -183,20 +187,22 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                           errorText: viewModel.validWard.isNotEmpty ? '  ${viewModel.validWard.value}' : null,
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
+                          child: DropdownButton<Ward?>(
                             isExpanded: true,
-                            value: viewModel.wardId.value,
+                            value: viewModel.wardsValue.value,
                             items: viewModel.wards.map((e)
                             => DropdownMenuItem(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 6),
                                 child: Text(e.name ?? 'Chọn Phường/ Xã'),
-                              ), value: e.id,
+                              ), value: e,
                             ),
                             ).toList(),
                             onChanged: viewModel.wards.length > 1 ?
                                 (value) {
-                              viewModel.wardId.value = value!;
+                                  viewModel.inputAddress.text = '';
+                                  viewModel.wardsValue.value = value;
+                                  viewModel.wardId.value =  viewModel.wardsValue.value?.id ?? 0;
                             } :
                             null,
                           ),
@@ -213,7 +219,7 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                         maxLines: 4,
                         requireInput: '',
                       ),
-                   
+
                     ],
                   ),
                 ),

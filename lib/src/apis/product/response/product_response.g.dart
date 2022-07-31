@@ -45,6 +45,9 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       brand: json['brand'] == null
           ? null
           : Brand.fromJson(json['brand'] as Map<String, dynamic>),
+      flashSale: json['flashSale'] == null
+          ? null
+          : FlashSale.fromJson(json['flashSale'] as Map<String, dynamic>),
       productThumbnails: (json['productThumbnails'] as List<dynamic>?)
           ?.map((e) => ProductThumbnails.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -71,6 +74,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'discount': instance.discount,
       'subCategory': instance.subCategory,
       'brand': instance.brand,
+      'flashSale': instance.flashSale,
       'productThumbnails': instance.productThumbnails,
       'averageRating': instance.averageRating,
     };
@@ -94,6 +98,34 @@ Map<String, dynamic> _$DiscountToJson(Discount instance) => <String, dynamic>{
       'percent': instance.percent,
       'startDate': instance.startDate,
       'endDate': instance.endDate,
+      'actived': instance.actived,
+      'modifiedAt': instance.modifiedAt,
+      'modifiedBy': instance.modifiedBy,
+    };
+
+FlashSale _$FlashSaleFromJson(Map<String, dynamic> json) => FlashSale(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      startDate: json['startDate'] as String?,
+      endDate: json['endDate'] == null
+          ? null
+          : DateTime.parse(json['endDate'] as String),
+      actived: json['actived'] as bool?,
+      modifiedBy: json['modifiedBy'] as String?,
+      endDateFormat: json['endDateFormat'] as String?,
+    )
+      ..description = json['description'] as String?
+      ..percent = json['percent'] as int?
+      ..modifiedAt = json['modifiedAt'] as String?;
+
+Map<String, dynamic> _$FlashSaleToJson(FlashSale instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'description': instance.description,
+      'percent': instance.percent,
+      'startDate': instance.startDate,
+      'endDate': instance.endDate?.toIso8601String(),
+      'endDateFormat': instance.endDateFormat,
       'actived': instance.actived,
       'modifiedAt': instance.modifiedAt,
       'modifiedBy': instance.modifiedBy,
