@@ -104,7 +104,8 @@ class FlashSale {
   String? description;
   int? percent;
   String? startDate;
-  String? endDate;
+  DateTime? endDate;
+  String? endDateFormat;
   bool? actived;
   String? modifiedAt;
   String? modifiedBy;
@@ -115,7 +116,8 @@ class FlashSale {
         this.startDate,
         this.endDate,
         this.actived,
-        this.modifiedBy
+        this.modifiedBy,
+        this.endDateFormat
       });
 
   factory FlashSale.fromJson(Map<String, dynamic> json) => _$FlashSaleFromJson(json);

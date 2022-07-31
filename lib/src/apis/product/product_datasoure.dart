@@ -8,7 +8,7 @@ abstract class ProductDataSource{
   Future<DataProductResponse> doGetProductByCategoryId(int categoryId,int page,int size);
   Future<DataProductResponse> doGetProductBySubId(int subId,int page,int size);
   Future<Product> getById(int id);
-
+  Future<DataProductResponse> getSearch(String search, int page, int size);
 }
 @LazySingleton(as: ProductDataSource)
 class ProductDataSourceImpl extends ProductDataSource{
@@ -36,5 +36,8 @@ class ProductDataSourceImpl extends ProductDataSource{
   Future<DataProductResponse> doGetProductSale(int page, int size)
   =>_productAPI.goGetProductSale(page,size);
 
+  @override
+  Future<DataProductResponse> getSearch(String search, int page, int size)
+  => _productAPI.getSearch(search, page, size);
 
 }

@@ -24,4 +24,7 @@ class ProductUserCase{
   Future<Product> getById(int id)
   => _productDataSource.getById(id);
 
+  Future<DataProductResponse> getSearch(String search, int page, int size)
+  => _productDataSource.getSearch(search, page, size);
+
 }

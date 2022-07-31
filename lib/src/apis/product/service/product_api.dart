@@ -25,4 +25,7 @@ abstract class ProductAPI{
 
   @GET('/v1/api/display/product/{id}')
   Future<Product> getById(@Path('id') int? id);
+
+  @GET('/v1/api/display/product')
+  Future<DataProductResponse> getSearch(@Query('search') String? search,@Query('page') int? page, @Query('size') int? size);
 }

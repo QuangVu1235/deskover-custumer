@@ -28,6 +28,9 @@ class CartModel extends ViewModel{
   RxList<Payment> dataPayment = RxList.empty();
   Rxn<Payment> payment = Rxn();
 
+  RxDouble totalPriceOrigin = 0.0.obs;
+  RxDouble totalPercent = 0.0.obs;
+
   TextEditingController inputNote = TextEditingController();
 
 
@@ -49,6 +52,7 @@ class CartModel extends ViewModel{
     loadPaymentMethod(),
     ]);
   }
+
 
 
   Future<void> loadShippingMethod() async {
@@ -76,10 +80,14 @@ class CartModel extends ViewModel{
   }
 
   Future<void> loadCartOrder() async{
+    totalPriceOrigin.value = 0.0;
+    totalPercent.value = 0.0;
     await _cartUserCase.doGetAllCartOrder().then((value) async{
           dataCartResponse.value = value ?? [];
-           _mainPageModel.itemCart.value = dataCartResponse.value.length;
-          if(dataCartResponse.value.isEmpty){
+           _mainPageModel.itemCart.value = dataCartResponse.length;
+          if(dataCartResponse.isEmpty){
+            totalPriceOrigin.value == 0.0;
+            totalPercent.value == 0.0;
               AppUtils().showPopup(
                 title: 'Giỏ hàng trống',
                 action: [
@@ -92,6 +100,13 @@ class CartModel extends ViewModel{
                   ]
               );
           }
+          for (var cart in dataCartResponse.value) {
+            totalPriceOrigin.value +=  (cart.quantity?.toDouble() ?? 0) * (cart.product?.price ?? 0);
+            if((cart.product?.discount?.percent ?? 0) > 0){
+              totalPercent.value += (cart.quantity?.toDouble() ?? 0) * ((cart.product?.price ?? 0)* ((cart.product?.discount?.percent ?? 0))/100);
+            }
+          }
+
     });
   }
   OrderResquest? request;
@@ -154,9 +169,9 @@ class CartModel extends ViewModel{
                     onPressed: (){
                       Get.back();
                     },
-                    child: Text('Huỷ')),
+                    child: const Text('Huỷ')),
               ),
-              SizedBox(width: 8,),
+              const SizedBox(width: 8,),
               Expanded(
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -172,7 +187,12 @@ class CartModel extends ViewModel{
                         Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
                       });
                       await loadCartOrder();
-                      Get.back();
+                      if(dataCartResponse.isEmpty){
+                        Get.offAll(const MainPage());
+                      }else{
+                        Get.back();
+                      }
+
                     },
                     child: const Text(
                       'Xoá',

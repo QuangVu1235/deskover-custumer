@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/action/search/search_screen.dart';
 import 'package:deskover_develop/src/modules/profile/profile_screen.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
@@ -34,7 +35,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    Text("1"),
+    SearchPage(),
     const ProfileScreen(),
 
     // const GarnitureScreen(),
@@ -46,7 +47,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: [].contains(viewModel.index.value)
+          appBar: [1].contains(viewModel.index.value)
               ? null
               : AppBar(
                   backgroundColor: UIColors.white,

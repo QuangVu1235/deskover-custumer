@@ -113,28 +113,69 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                                   ],
                                                 ),
                                                 SizedBox(height: SpaceValues.space16,),
-                                                //thêm loại thẻ
-                                                Row(
-                                                  children: [
-                                                    const Text(
-                                                      'Giá:',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.w400,
-
+                                                Visibility(
+                                                  visible: (viewModel.dataCartResponse[index].product?.discount?.percent ?? 0) > 0,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        formatCurrency.format(viewModel.dataCartResponse[index].product?.price),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: const TextStyle(fontSize: 12, color: UIColors.title, decoration: TextDecoration.lineThrough),
                                                       ),
-                                                    ),
-                                                     const SizedBox(width: 6,),
-                                                     Text(
-                                                       formatCurrency.format(viewModel.dataCartResponse[index].product?.price),
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.w700,
+                                                      const SizedBox(height: 6,),
+                                                      Row(
+                                                        children: [
+                                                          const Text(
+                                                            'Giá:',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight: FontWeight.w400,
 
+                                                            ),
+                                                          ),
+                                                          const SizedBox(width: 6,),
+                                                          Text(
+                                                            formatCurrency.format(
+                                                                (viewModel.dataCartResponse[index].product?.price ?? 0)
+                                                                    -((viewModel.dataCartResponse[index].product?.price ?? 0) * (viewModel.dataCartResponse[index].product?.discount?.percent ?? 0)/100)
+                                                            ),
+                                                            style: const TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight: FontWeight.w700,
+
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
+                                                  replacement:   Row(
+                                                    children: [
+                                                      const Text(
+                                                        'Giá:',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.w400,
+
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 6,),
+                                                      Text(
+                                                        formatCurrency.format(
+                                                            (viewModel.dataCartResponse[index].product?.price ?? 0)
+                                                        ),
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.w700,
+
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
+                                                //thêm loại thẻ
                                                 const SizedBox(height: SpaceValues.space4,),
                                                 //kun vận động
                                                 Row(
@@ -460,26 +501,91 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                       //       )),
                       // ),
                       // SizedBox(width: 8,),
-                      Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
+                      Obx(()=>Expanded(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 6,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Tổng tiền:',
+                                  style: TextStyle(
+                                      fontSize: 14
+                                  ),
+                                ),
+                                Text(
+                                  formatCurrency.format(viewModel.totalPriceOrigin.value),
+                                  style: const TextStyle(fontWeight: FontWeight.w700,
+                                      fontSize: 14
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Tổng tiền giảm:',
+                                  style: TextStyle(
+                                      fontSize: 14
+                                  ),
+                                ),
+                                Text(
+                                  formatCurrency.format(viewModel.totalPercent.value),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(color: UIColors.black),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Tổng tiền thanh toán:',
+                                  style: TextStyle(
 
-                                // elevation: 0.0,
-                                shape:  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
+                                      fontSize: 14
+                                  ),
+                                ),
+                                Text(
+                                  formatCurrency.format(viewModel.totalPriceOrigin.value-viewModel.totalPercent.value),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6,),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
 
-                                )
-                            ) ,
-                            onPressed: () async {
-                               await viewModel.btnConfirmOrder();
-                            },
-                            child: Text(
-                              'Xác nhận mua hàng',
-                              style: TextStyle(
+                                    // elevation: 0.0,
+                                      shape:  RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
 
-                              ),
-                            )),
-                      )
+                                      )
+                                  ) ,
+                                  onPressed: () async {
+                                    await viewModel.btnConfirmOrder();
+                                  },
+                                  child: Text(
+                                    'Xác nhận mua hàng',
+                                    style: TextStyle(
+
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ))
+
                     ],
                   ),
                 )

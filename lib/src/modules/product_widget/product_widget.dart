@@ -146,7 +146,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                 ),
                 const SizedBox(height: SpaceValues.space4),
                 Visibility(
-                  visible: widget.discount != 0,
+                  visible: widget.discount > 0,
                   child: Text(
                     formatCurrency.format(widget.priceOrigin),
                     maxLines: 1,
@@ -187,7 +187,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(

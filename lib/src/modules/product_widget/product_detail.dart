@@ -5,6 +5,7 @@ import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_html_widget.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/modules/homepage/widgets/list_product_new.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_detail_model.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_selling/product_selling.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
@@ -242,7 +243,8 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                             tileColor: Colors.transparent,
                             trailing: GestureDetector(
                               onTap:(){
-                                // Get.to(const ProductListScreen());
+                                Get.back();
+                                Get.to(ListProductNew(categoryId: viewModel.productDetail.value?.subCategory?.category?.id ?? 1,title: viewModel.productDetail.value?.subCategory?.category?.name,));
                               },
                               child: const Text("Xem thêm >",
                                   style: TextStyle(

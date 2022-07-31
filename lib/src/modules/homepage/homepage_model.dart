@@ -1,6 +1,8 @@
 import 'package:deskover_develop/src/apis/category/response/category_response.dart';
 import 'package:deskover_develop/src/apis/product/response/product_response.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
+import 'package:deskover_develop/src/modules/homepage/homepage_screen.dart';
+import 'package:deskover_develop/src/modules/main_page.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/category_usercase.dart';
 import 'package:deskover_develop/src/usecases/category_usercase/product_usercase.dart';
@@ -35,6 +37,7 @@ class HomePageModel extends ViewModel{
       loadCategory(),
       loadProductNew(),
       loadProductSale()
+
     ]);
   }
 
@@ -65,10 +68,13 @@ class HomePageModel extends ViewModel{
   }
 
   Future<void> loadProductSale() async{
-    loading(() async{
-      await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
-        dataProductFlashSale.value = value.content ?? [Product()];
-      });
+    await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
+      dataProductFlashSale.value = value.content ?? [Product()];
+      if(dataProductFlashSale.isEmpty){
+        Get.back();
+        Get.offAll(MainPage());
+      }
+      print(dataProductFlashSale.value.first.flashSale?.endDate);
     });
   }
 

@@ -38,10 +38,11 @@ class _ProductSellingScreen extends ViewWidget<ProductSellingScreen, ProductSell
                   return ProductWidget(
                     productId: viewModel.dataProduct[index].id!,
                     title: viewModel.dataProduct[index].name ?? '',
-                    avatar: BaseApi.baseUrl +
-                        '/img/shop/products/${viewModel.dataProduct[index]
-                            .img}',
-                    price: viewModel.dataProduct[index].price!,
+                    discount: viewModel.dataProduct[index].discount?.percent ?? 0,
+                    avatar: BaseApi.baseUrl_product + '${viewModel.dataProduct[index].img}',
+                    price: ((viewModel.dataProduct.value[index].discount?.percent) ?? 0) !=0
+                        ? viewModel.dataProduct.value[index].price! - (viewModel.dataProduct.value[index].price! * (viewModel.dataProduct.value[index].discount?.percent ?? 0)/100)
+                        :  viewModel.dataProduct.value[index].price ?? 0,
                     quantity: viewModel.dataProduct[index].quantity!,
                   );
                 },

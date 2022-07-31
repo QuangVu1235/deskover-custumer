@@ -185,13 +185,14 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                            "resources/icons/thunder.svg",
-                                            height: 16,
-                                            width: 16,
+                                            "resources/icons/flash_on.svg",
+                                            height: 20,
+                                            width: 20,
+                                            color: Colors.yellow,
                                           ),
                                           const Expanded(
                                             child: Text(
-                                              '  Deal đang diễn ra',
+                                              ' Deal đang diễn ra',
                                               style: TextStyle(
                                                 color: UIColors.white,
                                                 fontWeight: FontWeight.w700,
@@ -215,25 +216,40 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                           ),
                                           CountdownTimer(
                                             endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
-                                                (viewModel.dataProductFlashSale.value).isNotEmpty ?
-                                                //viewModel.dataProductFlashSale.value.first.flashSale?.endDate
-                                                '2022-07-29 19:40:00'
+                                                (viewModel.dataProductFlashSale).isNotEmpty ?
+                                                viewModel.dataProductFlashSale.value.first.flashSale?.endDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
                                                     : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
+                                            // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                            //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
+                                            //     ('${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(0,10)} ${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(11,18)}')
+                                            //         : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
                                             // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 23:12:00').millisecondsSinceEpoch,
                                             onEnd: () async {
                                               await viewModel.loadProductSale();
                                             },
 
                                             widgetBuilder: (context, time) {
-                                              // if (time == null) {
-                                              //    // viewModel.loading(() async{
-                                              //    //    viewModel.loadProductSale();
-                                              //    // });
-                                              //
-                                              //    return Text("1");
-                                              // }
                                               return Row(
                                                 children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                                    decoration: BoxDecoration(
+                                                      color: UIColors.white,
+                                                      borderRadius: BorderRadius.circular(4),
+                                                    ),
+                                                    child: Text(
+                                                      (time?.days ?? 0).toString().length < 2 ? '0${time?.days ?? 0}' : '${time?.days ?? 0}',
+                                                      style: const TextStyle(
+                                                        color: UIColors.brandA,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const Text(
+                                                    ' : ',
+                                                    style: TextStyle(
+                                                      color: UIColors.white,
+                                                    ),
+                                                  ),
                                                   Container(
                                                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                                                     decoration: BoxDecoration(
@@ -298,7 +314,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                       child: ListView.separated(
                                         padding: const EdgeInsets.symmetric(horizontal: 12),
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: viewModel.dataProductFlashSale.value.length,
+                                        itemCount: viewModel.dataProductFlashSale.length,
                                         separatorBuilder: (context, index) => const SizedBox(width: 8),
                                         itemBuilder: (context, index) {
                                           return ProductWidget(
@@ -309,8 +325,9 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                             quantity: viewModel.dataProductFlashSale.value[index].quantity ?? 0,
                                             promotion: '${viewModel.dataProductFlashSale.value[index].discount?.percent}%',
                                             discount: viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0,
-                                            price: (viewModel.dataProductFlashSale.value[index].discount?.percent) != 0
-                                                ? viewModel.dataProductFlashSale.value[index].price! - (viewModel.dataProductFlashSale.value[index].price! * (viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0)/100)
+                                            price: ((viewModel.dataProductFlashSale.value[index].discount?.percent) ?? 0) !=0
+                                                ? viewModel.dataProductFlashSale.value[index].price! - (viewModel.dataProductFlashSale.value[index].price!
+                                                * (viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0)/100)
                                                 :  viewModel.dataProductFlashSale.value[index].price ?? 0,
                                             priceOrigin:viewModel.dataProductFlashSale.value[index].price ?? 0,
                                           );
@@ -544,8 +561,11 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                              return ProductWidget(
                                productId:  viewModel.dataProductNew[index].id!,
                                title: viewModel.dataProductNew[index].name ?? '',
+                               discount: viewModel.dataProductNew[index].discount?.percent ?? 0,
                                avatar: BaseApi.baseUrl+'/img/shop/products/${viewModel.dataProductNew[index].img}',
-                               price: viewModel.dataProductNew[index].price!,
+                               price: ((viewModel.dataProductNew.value[index].discount?.percent) ?? 0) !=0
+                                   ? viewModel.dataProductNew.value[index].price! - (viewModel.dataProductNew.value[index].price! * (viewModel.dataProductNew.value[index].discount?.percent ?? 0)/100)
+                                   :  viewModel.dataProductNew.value[index].price ?? 0,
                                quantity: viewModel.dataProductNew[index].quantity!,
                              );
                            },
