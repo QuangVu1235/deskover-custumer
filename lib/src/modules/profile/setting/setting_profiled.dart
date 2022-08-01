@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_input_form_widget.dart';
@@ -103,7 +104,7 @@ class _SettingProfile extends ViewWidget<SettingProfile, SettingProfileModel> {
                                         padding: const EdgeInsets.all(3.0),
                                         child: ClipOval(
                                           child: GlobalImage(
-                                            viewModel.user.value?.avatar ?? '',
+                                            BaseApi.baseUrlUser+'${viewModel.user.value?.avatar}',
                                             fit: BoxFit.cover,
                                             width: 120,
                                             height: 120,
@@ -272,7 +273,7 @@ class _SettingProfile extends ViewWidget<SettingProfile, SettingProfileModel> {
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xB2000000), minimumSize: const Size(0, 48)),
                   onPressed: () {
-                    // viewModel.updateProfile();
+                    viewModel.updateProfile();
                   },
                   child: const Text(
                     "Cập nhật thông tin",

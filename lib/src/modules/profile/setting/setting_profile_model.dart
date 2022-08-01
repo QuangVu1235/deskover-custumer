@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:deskover_develop/src/apis/user/response/user_response.dart';
-import 'package:deskover_develop/src/modules/profile/profile_model.dart';
 import 'package:deskover_develop/src/usecases/user_usercase.dart';
 import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,10 +41,13 @@ class SettingProfileModel extends ViewModel{
           phone.text = value.phone!;
           email.text = value.email!;
           id.text = 'CUSTOMER${value.id}';
-
-
     });
-    
+  }
+
+  void updateProfile() async{
+    loading(() async{
+     await _userUserCase.doPostUploadFile(File(imgUpload.value?.path ?? ''));
+    });
   }
 
 }

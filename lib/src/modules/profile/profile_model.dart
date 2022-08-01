@@ -1,8 +1,11 @@
 import 'package:deskover_develop/src/apis/user/response/user_response.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
+import 'package:deskover_develop/src/modules/signin_signup/app/signin/app/signin_screen.dart';
 import 'package:deskover_develop/src/usecases/user_usercase.dart';
 import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +43,16 @@ class ProfileModel extends ViewModel{
     } else {
       isLogin.value = false;
     }
+  }
+  void logout() async {
+    _sharedPreferences.remove("uToken");
+    if ((_sharedPreferences.getString("uToken") ?? '').isEmpty) {
+      isLogin.value = false;
+      Get.offAll(()=>const SigninPage());
+    } else {
+      isLogin.value = true;
+    }
+
   }
 
 

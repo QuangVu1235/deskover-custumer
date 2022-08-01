@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
 import 'package:deskover_develop/src/apis/message_response.dart';
 import 'package:deskover_develop/src/apis/user/response/user_response.dart';
@@ -19,5 +21,7 @@ abstract class LoginAPI{
   @GET('/v1/api/customer/auth/get-principal')
   Future<User> doGetProfiled();
 
+  @POST('/v1/api/customer/upload-file')
+  Future<void> doPostUploadFile(@Part(name: 'file', ) File file);
 
 }

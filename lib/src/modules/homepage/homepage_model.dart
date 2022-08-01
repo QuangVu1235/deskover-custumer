@@ -23,6 +23,8 @@ class HomePageModel extends ViewModel{
 
   RxInt size = 8.obs;
 
+  RxBool flashSale = true.obs;
+
   HomePageModel(this._categoryUserCase, this._productUserCase, this._cartUserCase);
 
   @override

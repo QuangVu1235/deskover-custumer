@@ -8,14 +8,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen({Key? key,}) : super(key: key);
+  const ChangePasswordScreen({Key? key,}) : super(key: key);
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
 class _ChangePasswordScreenState
-    extends ViewWidget<ChangePasswordScreen, ChangepasswordModel> {
+    extends ViewWidget<ChangePasswordScreen, ChangePasswordModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +66,7 @@ class _ChangePasswordScreenState
                             ),
                             child: GlobalInputFormWidget(
                               title: "Mật khẩu mới",
-                              controller: viewModel.inputPasswordnew,
+                              controller: viewModel.inputPasswordNew,
                               validator: Validator.password,
                               textInputType: TextInputType.visiblePassword,
                               // title: 'Số điện thoại',
@@ -84,8 +84,8 @@ class _ChangePasswordScreenState
                             ),
                             child: GlobalInputFormWidget(
                               title: "Nhập lại Mật khẩu mới",
-                              controller: viewModel.inputPasswordconfirm,
-                              validator:  (valueDy) => Validator.rePassword(valueDy, viewModel.inputPasswordnew.text),
+                              controller: viewModel.inputPasswordConfirm,
+                              validator:  (valueDy) => Validator.rePassword(valueDy, viewModel.inputPasswordNew.text),
                               textInputType: TextInputType.visiblePassword,
                               // title: 'Số điện thoại',
                               hint: 'Nhập mật khẩu',
@@ -111,7 +111,7 @@ class _ChangePasswordScreenState
                   primary: Color(0xB2000000),
                   minimumSize: const Size(0, 48)),
               onPressed: () {
-                // viewModel.changePassword(widget.pass);
+                viewModel.btnContinueOnPress();
               },
               child: const Text(
                 "Xác nhận",
@@ -125,5 +125,5 @@ class _ChangePasswordScreenState
   }
 
   @override
-  ChangepasswordModel createViewModel() => getIt<ChangepasswordModel>();
+  ChangePasswordModel createViewModel() => getIt<ChangePasswordModel>();
 }

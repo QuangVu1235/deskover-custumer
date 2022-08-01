@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
+import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/config/static_data.dart';
 import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
@@ -160,14 +161,14 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                                 const EdgeInsets.only(left: 8),
                                 child: Visibility(
                                   visible: viewModel.myProfile.value
-                                      ?.img !=
+                                      ?.avatar !=
                                       null,
                                   child: CircleAvatar(
                                     backgroundColor: Colors.grey,
                                     radius: 60,
                                     child: ClipOval(
                                       child: GlobalImage(
-                                        viewModel.myProfile.value?.img ?? ImageAssets.icAvatarUser2,
+                                        BaseApi.baseUrlUser+'${viewModel.myProfile.value?.avatar}',
                                         fit: BoxFit.cover,
                                         width: 120,
                                         height: 120,
@@ -189,7 +190,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                                   CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${viewModel.myProfile.value?.fullname ?? '...' }",
+                                      viewModel.myProfile.value?.fullname ?? '...',
                                       overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
                                           .textTheme
@@ -874,7 +875,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                         ),
                         tileColor: Colors.transparent,
                         onTap: () {
-                          // viewModel.logout();
+                          viewModel.logout();
                         },
                       ):Text(''),
                     ],

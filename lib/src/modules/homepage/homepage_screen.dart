@@ -79,7 +79,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                     ),
                     Obx(
                        ()=> Visibility(
-                         visible: viewModel.DataCategory.value.length > 0,
+                         visible: viewModel.DataCategory.value.isNotEmpty,
                          child: SizedBox(
                            height: (viewModel.DataCategory.value.length) > 8
                                ? 230
@@ -92,9 +92,9 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                  scrollDirection: Axis.horizontal,
                                  // physics: const NeverScrollableScrollPhysics(),
                                  padding: const EdgeInsets.all(0),
-                                 itemCount: viewModel.DataCategory.value.length,
+                                 itemCount: viewModel.DataCategory.length,
                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                   crossAxisCount: (viewModel.DataCategory.value.length) > 8
+                                   crossAxisCount: (viewModel.DataCategory.length) > 8
                                        ? 2
                                        : 1,
                                    mainAxisExtent: 80,
@@ -115,15 +115,14 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                        crossAxisAlignment: CrossAxisAlignment.center,
                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                        children: [
-                                         ClipRRect(
-                                           borderRadius: BorderRadius.circular(999),
-                                           child: Container(
-                                             color: UIColors.black10,
-                                             child:  SvgPicture.network(
+                                         SizedBox(
+                                           width: 60,
+                                           height: 60,
+                                           child: ClipRRect(
+                                             borderRadius: BorderRadius.circular(999),
+                                             child: GlobalImage(
                                                BaseApi.baseUrl+'/img/shop/categories/${viewModel.DataCategory[i].img}',
-                                               width: 53,
-                                               height: 60,
-                                               fit: BoxFit.none,
+                                               fit: BoxFit.cover,
                                              ),
                                            ),
                                          ),
@@ -132,7 +131,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                            child: Padding(
                                              padding: const EdgeInsets.symmetric(horizontal: 3),
                                              child: Text(
-                                               viewModel.DataCategory.value[i].name ?? '',
+                                               viewModel.DataCategory[i].name ?? '',
                                                textAlign: TextAlign.center,
                                                maxLines: 2,
                                                overflow: TextOverflow.ellipsis,
@@ -175,7 +174,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                           return Visibility(
                             visible: viewModel.dataProductFlashSale.length > 0,
                             child: Visibility(
-                              visible: (viewModel.dataProductFlashSale.value.length) > 0,
+                              visible: viewModel.flashSale.value,
                               child: Container(
                                 color: UIColors.brandA,
                                 child: Column(
@@ -192,7 +191,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                           ),
                                           const Expanded(
                                             child: Text(
-                                              ' Deal đang diễn ra',
+                                              ' Deal sắp diễn ra',
                                               style: TextStyle(
                                                 color: UIColors.white,
                                                 fontWeight: FontWeight.w700,
@@ -208,7 +207,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                         children: [
                                           const Expanded(
                                             child: Text(
-                                              'Thời gian kết thúc',
+                                              'Thời gian bắt đầu sau',
                                               style: TextStyle(
                                                 color: UIColors.white,
                                               ),
@@ -217,7 +216,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                           CountdownTimer(
                                             endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
                                                 (viewModel.dataProductFlashSale).isNotEmpty ?
-                                                viewModel.dataProductFlashSale.value.first.flashSale?.endDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
+                                                viewModel.dataProductFlashSale.value.first.flashSale?.startDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
                                                     : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
                                             // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
                                             //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
@@ -226,6 +225,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                             // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 23:12:00').millisecondsSinceEpoch,
                                             onEnd: () async {
                                               await viewModel.loadProductSale();
+                                              viewModel.flashSale.value = false;
                                             },
 
                                             widgetBuilder: (context, time) {
@@ -321,7 +321,8 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                             productId: viewModel.dataProductFlashSale.value[index].id ?? 0,
                                             avatar: BaseApi.baseUrl_product+ '${viewModel.dataProductFlashSale.value[index].img}',
                                             title: viewModel.dataProductFlashSale.value[index].name ?? '',
-                                            isCanBuy: (viewModel.dataProductFlashSale.value[index].quantity ?? 0) > 0,
+                                            isCanBuy: false,
+                                            flashSale: false,
                                             quantity: viewModel.dataProductFlashSale.value[index].quantity ?? 0,
                                             promotion: '${viewModel.dataProductFlashSale.value[index].discount?.percent}%',
                                             discount: viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0,
@@ -338,191 +339,192 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                   ],
                                 ),
                               ),
+                              replacement:
+                              Container(
+                              color: UIColors.brandA,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(16,12,16,0),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "resources/icons/flash_on.svg",
+                                          height: 20,
+                                          width: 20,
+                                          color: Colors.yellow,
+                                        ),
+                                        const Expanded(
+                                          child: Text(
+                                            ' Deal đang diễn ra',
+                                            style: TextStyle(
+                                              color: UIColors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(16,8,16,8),
+                                    child: Row(
+                                      children: [
+                                        const Expanded(
+                                          child: Text(
+                                            'Thời gian kết thúc',
+                                            style: TextStyle(
+                                              color: UIColors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        CountdownTimer(
+                                          endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                              (viewModel.dataProductFlashSale).isNotEmpty ?
+                                              viewModel.dataProductFlashSale.value.first.flashSale?.endDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
+                                                  : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
+                                          // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                          //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
+                                          //     ('${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(0,10)} ${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(11,18)}')
+                                          //         : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
+                                          // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 23:12:00').millisecondsSinceEpoch,
+                                          onEnd: () async {
+                                            await viewModel.loadProductSale();
+                                          },
+
+                                          widgetBuilder: (context, time) {
+                                            return Row(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: UIColors.white,
+                                                    borderRadius: BorderRadius.circular(4),
+                                                  ),
+                                                  child: Text(
+                                                    (time?.days ?? 0).toString().length < 2 ? '0${time?.days ?? 0}' : '${time?.days ?? 0}',
+                                                    style: const TextStyle(
+                                                      color: UIColors.brandA,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Text(
+                                                  ' : ',
+                                                  style: TextStyle(
+                                                    color: UIColors.white,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: UIColors.white,
+                                                    borderRadius: BorderRadius.circular(4),
+                                                  ),
+                                                  child: Text(
+                                                    (time?.hours ?? 0).toString().length < 2 ? '0${time?.hours ?? 0}' : '${time?.hours ?? 0}',
+                                                    style: const TextStyle(
+                                                      color: UIColors.brandA,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Text(
+                                                  ' : ',
+                                                  style: TextStyle(
+                                                    color: UIColors.white,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: UIColors.white,
+                                                    borderRadius: BorderRadius.circular(4),
+                                                  ),
+                                                  child: Text(
+                                                    (time?.min ?? 0).toString().length < 2 ? '0${time?.min ?? 0}' : '${time?.min ?? 0}',
+                                                    style: const TextStyle(
+                                                      color: UIColors.brandA,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Text(
+                                                  ' : ',
+                                                  style: TextStyle(
+                                                    color: UIColors.white,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: UIColors.white,
+                                                    borderRadius: BorderRadius.circular(4),
+                                                  ),
+                                                  child: Text(
+                                                    (time?.sec ?? 0).toString().length < 2 ? '0${time?.sec ?? 0}' : '${time?.sec ?? 0}',
+                                                    style: const TextStyle(
+                                                      color: UIColors.brandA,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12,),
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(maxHeight: 256),
+                                    child: ListView.separated(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: viewModel.dataProductFlashSale.length,
+                                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                                      itemBuilder: (context, index) {
+                                        return ProductWidget(
+                                          productId: viewModel.dataProductFlashSale.value[index].id ?? 0,
+                                          avatar: BaseApi.baseUrl_product+ '${viewModel.dataProductFlashSale.value[index].img}',
+                                          title: viewModel.dataProductFlashSale.value[index].name ?? '',
+                                          isCanBuy: (viewModel.dataProductFlashSale.value[index].quantity ?? 0) > 0,
+                                          quantity: viewModel.dataProductFlashSale.value[index].quantity ?? 0,
+                                          promotion: '${viewModel.dataProductFlashSale.value[index].discount?.percent}%',
+                                          discount: viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0,
+                                          price: ((viewModel.dataProductFlashSale.value[index].discount?.percent) ?? 0) !=0
+                                              ? viewModel.dataProductFlashSale.value[index].price! - (viewModel.dataProductFlashSale.value[index].price!
+                                              * (viewModel.dataProductFlashSale.value[index].discount?.percent ?? 0)/100)
+                                              :  viewModel.dataProductFlashSale.value[index].price ?? 0,
+                                          priceOrigin:viewModel.dataProductFlashSale.value[index].price ?? 0,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16,),
+                                  ListTile(
+                                    dense: true,
+                                    title: const Text(
+                                      "KHUYẾN MÃI CHO BẠN",
+                                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                                    ),
+                                    tileColor: Colors.transparent,
+                                    trailing: const Text(
+                                      "Xem thêm >",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: UIColors.brandA),
+                                    ),
+                                    onTap: () {
+                                      // Get.to(const FlashSalePage());
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
-                            replacement: const LoadingDialog(
-                              elevation: 0,
-                              message: 'Đang tìm Deal hot...',
                             ),
+                            replacement: SizedBox(child: Image.asset('resources/images/he-poco-720-220-720x220.png',fit: BoxFit.fill,))
                           );
                         }
                     ),
-                    ListTile(
-                      dense: true,
-                      title: const Text(
-                        "KHUYẾN MÃI CHO BẠN",
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-                      ),
-                      tileColor: Colors.transparent,
-                      trailing: const Text(
-                        "Xem thêm >",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: UIColors.brandA),
-                      ),
-                      onTap: () {
-                        // Get.to(const FlashSalePage());
-                      },
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 16, right: 16,),
-                    //   child: Obx(() {
-                    //     return Visibility(
-                    //       visible: null != viewModel.promotionProgramPresponse.value?.data,
-                    //       replacement: const LoadingDialog(
-                    //         insetPadding: EdgeInsets.zero,
-                    //         elevation: 0,
-                    //         message: '',
-                    //       ),
-                    //       child: Container(
-                    //         padding: const EdgeInsets.only(bottom: 16),
-                    //         child: SizedBox(
-                    //           height: 265,
-                    //           child: ListView.separated(
-                    //             scrollDirection: Axis.horizontal,
-                    //             itemCount: viewModel.promotionProgramPresponse.value.length ?? 0,
-                    //             separatorBuilder: (BuildContext context, int index) =>
-                    //             const SizedBox(
-                    //               width: SpaceValues.space16,
-                    //             ),
-                    //             itemBuilder: (context, index) => InkWell(
-                    //               onTap: () {
-                    //                 Get.to(SplashSaleDetails(
-                    //                   data: viewModel.promotionProgramPresponse.value!.data![index],
-                    //                 ));
-                    //               },
-                    //               child: SizedBox(
-                    //                 height: double.infinity,
-                    //                 width: 155,
-                    //                 child: Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       vertical: SpaceValues.space4),
-                    //                   child: Column(
-                    //                     children: [
-                    //                       AspectRatio(
-                    //                         aspectRatio: 4 / 3,
-                    //                         child: ClipRRect(
-                    //                           borderRadius:
-                    //                           const BorderRadius.only(
-                    //                             topLeft: Radius.circular(8),
-                    //                             topRight: Radius.circular(8),
-                    //                           ),
-                    //                           child: GlobalImage(
-                    //                               viewModel
-                    //                                   .promotionProgramPresponse
-                    //                                   .value
-                    //                                   [index]
-                    //                                   .thumbnail,
-                    //                               fit: BoxFit.cover),
-                    //                         ),
-                    //                       ),
-                    //                       Expanded(
-                    //                         child: Container(
-                    //                           decoration: const BoxDecoration(
-                    //                             borderRadius: BorderRadius.only(
-                    //                               bottomLeft: Radius.circular(8),
-                    //                               bottomRight: Radius.circular(8),
-                    //                             ),
-                    //                             color: UIColors.white,
-                    //                             boxShadow: <BoxShadow>[
-                    //                               BoxShadow(
-                    //                                 color: Colors.black12,
-                    //                                 blurRadius: 5,
-                    //                                 offset: Offset(0.0, 0),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           child: Column(
-                    //                             crossAxisAlignment:
-                    //                             CrossAxisAlignment.start,
-                    //                             children: [
-                    //                               Container(
-                    //                                 // constraints: BoxConstraints(maxHeight: 46),
-                    //                                 height: 48,
-                    //                                 padding: const EdgeInsets
-                    //                                     .only(
-                    //                                     left: SpaceValues.space8,
-                    //                                     top: SpaceValues.space8,
-                    //                                     right:
-                    //                                     SpaceValues.space8),
-                    //                                 child: Text(
-                    //                                   '${viewModel.promotionProgramPresponse.value[index].name} ',
-                    //                                   style: Theme.of(context)
-                    //                                       .textTheme
-                    //                                       .headline5,
-                    //                                   overflow:
-                    //                                   TextOverflow.ellipsis,
-                    //                                   maxLines: 2,
-                    //                                 ),
-                    //                               ),
-                    //                               Expanded(
-                    //                                 child: Padding(
-                    //                                   padding: const EdgeInsets
-                    //                                       .symmetric(
-                    //                                       horizontal:
-                    //                                       SpaceValues.space8),
-                    //                                   child: Text(
-                    //                                     viewModel
-                    //                                         .promotionProgramPresponse
-                    //                                         .value
-                    //                                         [index]
-                    //                                         .shortDescription ??
-                    //                                         '(Không có mô tả)',
-                    //                                     style: Theme.of(context)
-                    //                                         .textTheme
-                    //                                         .subtitle1,
-                    //                                     overflow:
-                    //                                     TextOverflow.ellipsis,
-                    //                                     maxLines: 3,
-                    //                                   ),
-                    //                                 ),
-                    //                                 // WebViewPlus(
-                    //                                 //   onWebViewCreated: (controller) => controller.loadString(Util.htlmWrapper(
-                    //                                 //     viewModel.promotionProgramPresponse.value[index].description ?? 'Không có mô tả...',
-                    //                                 //   )),
-                    //                                 //   zoomEnabled: false,
-                    //                                 // ),
-                    //                               ),
-                    //                               Padding(
-                    //                                 padding:
-                    //                                 const EdgeInsets.all(8.0),
-                    //                                 child: Row(
-                    //                                   children: [
-                    //                                     SvgPicture.asset(
-                    //                                         SvgImageAssets
-                    //                                             .imgDate),
-                    //                                     const SizedBox(
-                    //                                       width: SpaceValues.space4,
-                    //                                     ),
-                    //                                     Expanded(
-                    //                                       child: Text(
-                    //                                         (viewModel.promotionProgramPresponse.value[index].createdAt?? "").replaceAll("-", "/") ,
-                    //                                         maxLines: 1,
-                    //                                         overflow: TextOverflow.ellipsis,
-                    //                                         textAlign: TextAlign.left,
-                    //                                       ),
-                    //
-                    //                                     ),
-                    //                                     // Text(
-                    //                                     //     '${viewModel.promotionProgramPresponse.value[index].endDate}'),
-                    //                                   ],
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     );
-                    //   }),
-                    // ),
                   ],
                 ),
               ),
@@ -571,6 +573,57 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                            },
                          ),
                        ),),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: SpaceValues.space6),
+                color: UIColors.white,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: const Text(
+                        "KHUYẾN MÃI ƯU ĐÃI",
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      tileColor: Colors.transparent,
+                      trailing: const Text(
+                        "Xem thêm >",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: UIColors.brandA),
+                      ),
+                      onTap: () {
+                        Get.to(ListProductNew(categoryId:viewModel.dataProductNew.first.subCategory?.category?.id ?? 1 ,title: "Sản phẩm mới",));
+                      },
+                    ),
+                    Obx(
+                          ()=>    ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 256),
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: viewModel.dataProductNew.value.length,
+                          separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            return ProductWidget(
+                              productId:  viewModel.dataProductNew[index].id!,
+                              title: viewModel.dataProductNew[index].name ?? '',
+                              discount: viewModel.dataProductNew[index].discount?.percent ?? 0,
+                              avatar: BaseApi.baseUrl+'/img/shop/products/${viewModel.dataProductNew[index].img}',
+                              price: ((viewModel.dataProductNew.value[index].discount?.percent) ?? 0) !=0
+                                  ? viewModel.dataProductNew.value[index].price! - (viewModel.dataProductNew.value[index].price! * (viewModel.dataProductNew.value[index].discount?.percent ?? 0)/100)
+                                  :  viewModel.dataProductNew.value[index].price ?? 0,
+                              quantity: viewModel.dataProductNew[index].quantity!,
+                            );
+                          },
+                        ),
+                      ),),
                     const SizedBox(
                       height: 16,
                     ),

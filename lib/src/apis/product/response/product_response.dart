@@ -104,6 +104,7 @@ class FlashSale {
   String? description;
   int? percent;
   String? startDate;
+  String? startDateFormat;
   DateTime? endDate;
   String? endDateFormat;
   bool? actived;
@@ -114,6 +115,7 @@ class FlashSale {
       {this.id,
         this.name,
         this.startDate,
+        this.startDateFormat,
         this.endDate,
         this.actived,
         this.modifiedBy,
