@@ -5,8 +5,11 @@ part 'user_response.g.dart';
 class User {
   int? id;
   String? username;
+  String? img;
   String? fullname;
   String? avatar;
+  String? email;
+  String? phone;
   String? modifiedAt;
   String? lastLogin;
   bool? actived;
@@ -22,7 +25,10 @@ class User {
         this.lastLogin,
         this.actived,
         this.verify,
-        this.modifiedBy
+        this.modifiedBy,
+        this.img,
+        this.email,
+        this.phone
       });
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
