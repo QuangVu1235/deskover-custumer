@@ -1,8 +1,7 @@
+import 'package:deskover_develop/src/themes/space_values.dart';
+import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../../themes/space_values.dart';
-import '../../../themes/ui_colors.dart';
 
 
 class GlobalInputFormWidget extends StatefulWidget {
@@ -130,12 +129,6 @@ class _GlobalInputFormWidgetState extends State<GlobalInputFormWidget> {
             hintText: widget.hint ?? '',
             suffixIcon: widget.suffixIcon,
             prefixIcon: widget.prefixIcon,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-              color: UIColors.brandA,
-              width: 1.0,
-            ),
-          ),
           ),
           enabled: widget.enabled,
           maxLines: widget.maxLines,
@@ -144,8 +137,7 @@ class _GlobalInputFormWidgetState extends State<GlobalInputFormWidget> {
           onTap: widget.onTap,
           readOnly: widget.readOnly ?? false,
           onChanged: widget.onChanged,
-          cursorColor: UIColors.brandA,
-          inputFormatters: widget.inputFormatters 
+          inputFormatters: widget.inputFormatters
               ?? (TextInputType.phone == widget.textInputType ? [LengthLimitingTextInputFormatter(10)] : null),
           onFieldSubmitted: widget.onSubmit,
         ),
@@ -155,6 +147,76 @@ class _GlobalInputFormWidgetState extends State<GlobalInputFormWidget> {
 }
 
 class Validator {
+
+  static String? serial(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập mã serial';
+    }
+    // if (!RegExp(r'[0-9]').hasMatch(value)) {
+    //   return 'Vui lòng nhập mã serial là số từ 0-9';
+    // }
+    return null;
+  }
+
+
+  static String? pointCanEmpty(valueDy, {int? maxPoint, int? minPoint}) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return null;
+    }
+    return point(valueDy, maxPoint: maxPoint, minPoint: minPoint);
+  }
+
+  static String? point(valueDy, {int? maxPoint, int? minPoint}) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập điểm';
+    }
+    if (!RegExp(r'[0-9]')
+        .hasMatch(value)) {
+      return 'Vui lòng nhập điểm là số từ 0-9';
+    }
+    if (null != maxPoint) {
+      int point = int.parse(value);
+      if (point > maxPoint) {
+        return 'Vui lòng nhập điểm <=$maxPoint';
+      }
+    }
+    if (null != minPoint) {
+      int point = int.parse(value);
+      if (point < minPoint) {
+        return 'Vui lòng nhập điểm >=$minPoint';
+      }
+    }
+    return null;
+  }
+
+  static String? tax(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập mã số thuế';
+    }
+    return null;
+  }
+
+  static String? fullnameCompany(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập tên công ty';
+    }
+    return null;
+  }
+
+
+  static String? fullnameCanEmpty(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return null;
+    }
+    return fullname(valueDy);
+  }
+
   static String? emailCanEmpty(valueDy) {
     String value = valueDy ?? '';
     if (value.isEmpty) {
@@ -168,6 +230,7 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập tên sản phẩm';
     }
+    return null;
   }
 
   static String? bank(valueDy) {
@@ -175,6 +238,7 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập số tài khoản ngân hàng';
     }
+    return null;
   }
 
   static String? bankName(valueDy) {
@@ -182,6 +246,7 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập họ tên chủ tài khoản ngân hàng';
     }
+    return null;
   }
 
   static String? address(valueDy) {
@@ -189,6 +254,7 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập địa chỉ cụ thể';
     }
+    return null;
   }
 
   static String? idCard(valueDy) {
@@ -199,6 +265,7 @@ class Validator {
     if (value.length != 9 && value.length != 12) {
       return 'Vui lòng nhập đủ 9 hoặc 12 số CMND/ CCCD';
     }
+    return null;
   }
 
   static String? email(valueDy) {
@@ -206,11 +273,12 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập email';
     }
-    if (!RegExp(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$")
-        .hasMatch(value)) {
+    if (!RegExp(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$").hasMatch(value)) {
       return 'Vui lòng nhập đúng email';
     }
+    return null;
   }
+
 
   static String? birthday(valueDy) {
     String value = valueDy ?? '';
@@ -220,6 +288,7 @@ class Validator {
     if (!RegExp(r'\d{4}.\d{2}.\d{2}').hasMatch(value)) {
       return 'Vui lòng nhập ngày theo định dạng "yyyy-MM-dd"';
     }
+    return null;
   }
 
   static String? birthdayVn(valueDy) {
@@ -230,6 +299,7 @@ class Validator {
     if (!RegExp(r'\d{2}.\d{2}.\d{4}').hasMatch(value)) {
       return 'Vui lòng nhập ngày theo định dạng "dd/MM/yyyy"';
     }
+    return null;
   }
 
   static String? birthdayVnCanEmpty(valueDy) {
@@ -237,9 +307,7 @@ class Validator {
     if (value.isEmpty) {
       return null;
     }
-    if (!RegExp(r'\d{2}.\d{2}.\d{4}').hasMatch(value)) {
-      return 'Vui lòng nhập ngày theo định dạng "dd/MM/yyyy"';
-    }
+    return birthdayVn(valueDy);
   }
 
   static String? referralCode(valueDy) {
@@ -247,6 +315,7 @@ class Validator {
     if (value.isEmpty) {
       return 'Vui lòng nhập mã người giới thiệu';
     }
+    return null;
   }
 
   static String? fullname(valueDy) {
@@ -257,13 +326,9 @@ class Validator {
     if (!RegExp(r'\w+').hasMatch(value)) {
       return 'Vui lòng nhập đúng họ và tên';
     }
+    return null;
   }
-  static String? describe(valueDy) {
-    String value = valueDy ?? '';
-    if (value.isEmpty) {
-      return 'Vui lòng nhập mô tả chi tiết';
-    }
-  }
+
   static String? phone(valueDy) {
     String value = valueDy ?? '';
     if (value.isEmpty) {
@@ -276,6 +341,7 @@ class Validator {
         .hasMatch(value)) {
       return 'Vui lòng nhập đúng số điện thoại Việt Nam';
     }
+    return null;
   }
 
   static String? password(valueDy) {
@@ -295,13 +361,6 @@ class Validator {
     if (!RegExp(r'[!"#$%&'"'"'()*+,-./:;<=>?@[\\]^_`{|}~]').hasMatch(value)) {
       return 'Vui lòng nhập ít nhất 1 ký tự đặc biệt';
     }
-  }
-
-  static String? passwordEasy(valueDy) {
-    String value = valueDy ?? '';
-    if (value.isEmpty) {
-      return 'Vui lòng nhập mật khẩu!';
-    }
     return null;
   }
 
@@ -313,5 +372,22 @@ class Validator {
     if (value != rePassword) {
       return 'Mật khẩu xác nhận không khớp';
     }
+    return null;
   }
+
+  static String? describe(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập mô tả chi tiết';
+    }
+  }
+
+  static String? passwordEasy(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập mật khẩu!';
+    }
+    return null;
+  }
+
 }

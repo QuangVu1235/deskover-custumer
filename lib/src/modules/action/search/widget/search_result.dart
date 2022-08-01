@@ -86,13 +86,18 @@ class _SearchResultWidgetState
               itemCount: viewModel.listProduct.length,
               itemBuilder: (builder, index) {
                 return ProductWidget(
-                  productId: viewModel.listProduct[index].id!,
-                  title: viewModel.listProduct[index].name ?? '',
-                  // priceOrigin: (viewModel.listProduct[index].special_formatted ?? '').isNotEmpty ? viewModel.listProduct[index].original_price_formatted : '',
-                  // promotion: viewModel.listProduct[index].special_percentage_formatted ?? '',
-                  // price: viewModel.listProduct[index].special_formatted ?? viewModel.listProduct[index].original_price_formatted ?? '',
-                  avatar: BaseApi.baseUrl_product+'${viewModel.listProduct[index].img}',
-                  // isCanBuy: '${viewModel.listProduct[index].qty ?? '0'}' != '0',
+                  productId: viewModel.listProduct.value[index].id ?? 0,
+                  avatar: BaseApi.baseUrl_product+ '${viewModel.listProduct.value[index].img}',
+                  title: viewModel.listProduct.value[index].name ?? '',
+                  isCanBuy: (viewModel.listProduct.value[index].quantity ?? 0) > 0,
+                  quantity: viewModel.listProduct.value[index].quantity ?? 0,
+                  promotion: viewModel.listProduct.value[index].discount?.percent !=null ? '${viewModel.listProduct.value[index].discount?.percent}%' : '',
+                  discount: viewModel.listProduct.value[index].discount?.percent ?? 0,
+                  price: ((viewModel.listProduct.value[index].discount?.percent) ?? 0) !=0
+                      ? viewModel.listProduct.value[index].price! - (viewModel.listProduct.value[index].price!
+                      * (viewModel.listProduct.value[index].discount?.percent ?? 0)/100)
+                      :  viewModel.listProduct.value[index].price ?? 0,
+                  priceOrigin:viewModel.listProduct.value[index].price ?? 0,
                 );
               },
             ),

@@ -47,7 +47,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: [1].contains(viewModel.index.value)
+          appBar: [1,2].contains(viewModel.index.value)
               ? null
               : AppBar(
                   backgroundColor: UIColors.white,
@@ -56,16 +56,9 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
             actions: [
               IconButton(
                 onPressed: () {
-                  // Get.to(const SearchPage());
+                  Get.to(const SearchPage());
                 },
                 icon:  SvgPicture.asset('resources/icons/change_point/search.svg',color: UIColors.black.withOpacity(1.0), ),
-              ),
-              IconButton(
-                onPressed: () => viewModel.openNotification(),
-                icon: Badge(
-                    showBadge: viewModel.notification.value,
-                    position: BadgePosition.topEnd(top: 0, end: 1),
-                    child: const Icon(Icons.notifications_none, size: 26)),
               ),
               Obx(()=>Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 16, 8.0),
@@ -135,10 +128,16 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                       width: 24,
                       height: 24,
                       child: viewModel.index == 1
-                          ? Icon(Icons.content_paste)
-                          : Icon(Icons.content_paste),
+                          ? Badge(
+                          showBadge: viewModel.notification.value,
+                          position: BadgePosition.topEnd(top: 0, end: 1),
+                          child: const Icon(Icons.notifications_none, size: 26))
+                          : Badge(
+                          showBadge: viewModel.notification.value,
+                          position: BadgePosition.topEnd(top: 0, end: 1),
+                          child: const Icon(Icons.notifications_none, size: 24)),
                     ),
-                    label: "Danh mục"),
+                    label: "Thông báo"),
                 BottomNavigationBarItem(
                     icon: SizedBox(
                       width: 24,
@@ -153,7 +152,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
                         color: UIColors.black40,
                       ),
                     ),
-                    label: "Tải khoản")
+                    label: "Tài khoản")
               ],
               currentIndex: viewModel.index.value,
               onTap: (index) {

@@ -28,6 +28,7 @@ class ProductWidget extends StatefulWidget {
     this.avatar = '',
     this.promotion = '',
     this.isCanBuy = true,
+    this.flashSale =true,
     this.qrCode = '',
     this.width = 180,
     this.height = 270,
@@ -43,6 +44,7 @@ class ProductWidget extends StatefulWidget {
   final int discount;
   final int quantity;
   final bool isCanBuy;
+  final bool flashSale;
   final double width;
   final double height;
   final String qrCode;
@@ -207,7 +209,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                               padding: EdgeInsets.zero,
                             ),
                             onPressed: () async
-                            => await viewModel.btnAddToCart('minhbd', widget.productId).then((value) async{
+                            => await viewModel.btnAddToCart(widget.productId).then((value) async{
                                 Get.to(()=> CreateChangePointCart());
                             })
                             ,
@@ -223,7 +225,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                         ),
                         InkWell(
                           onTap: ()
-                          async => await viewModel.btnAddToCart('minhbd', widget.productId).then((value) async{
+                          async => await viewModel.btnAddToCart( widget.productId).then((value) async{
 
                           }),
                           child: Container(
@@ -246,26 +248,50 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                         ),
                       ],
                     ),
-                    replacement: Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              textStyle: const TextStyle(
-                                fontSize: 12,
+                    replacement: Visibility(
+                      visible: widget.flashSale,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.zero,
                               ),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: EdgeInsets.zero,
-                            ),
-                            onPressed: null,
-                            child: const Text(
-                              'Hết hàng',
-                              style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w400),
+                              onPressed: null,
+                              child: const Text(
+                                'Hết hàng',
+                                style: TextStyle(
+                                    fontSize: 10, fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      replacement: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: null,
+                              child: const Text(
+                                'Deal sắp diễn ra',
+                                style: TextStyle(
+                                    fontSize: 10, fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

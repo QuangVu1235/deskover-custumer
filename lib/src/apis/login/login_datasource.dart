@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
 import 'package:deskover_develop/src/apis/cart/service/cart_api.dart';
 import 'package:deskover_develop/src/apis/login/service/login_api.dart';
 import 'package:deskover_develop/src/apis/message_response.dart';
+import 'package:deskover_develop/src/apis/user/response/user_response.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class LoginDataSource{
   Future<MessageResponse> doLogin(String username, String password);
+  Future<User> doGetProfiled();
+  Future<void> doPostUploadFile(File file);
 
 }
 @LazySingleton(as: LoginDataSource)
@@ -20,6 +25,14 @@ class LoginDataSourceImpl extends LoginDataSource{
           "username": username,
           "password": password
       });
+
+  @override
+  Future<User> doGetProfiled()
+  => _loginAPI.doGetProfiled();
+
+  @override
+  Future<void> doPostUploadFile(File file)
+  => _loginAPI.doPostUploadFile(file);
 
 
 }

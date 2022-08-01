@@ -10,6 +10,7 @@ abstract class UserAddressDataSource{
   Future<List<UserAddress>?> changeActive(int id);
   Future<MessageResponse> changeChoose( int id);
   Future<MessageResponse> doPutAddress(UserAddress userAddress,);
+  Future<MessageResponse> changePassword(dynamic body);
 
 }
 @LazySingleton(as: UserAddressDataSource)
@@ -36,5 +37,9 @@ class UserAddressDataSourceIpml extends UserAddressDataSource{
   @override
   Future<MessageResponse> doPutAddress(UserAddress userAddress)
   => _userAddressApi.doPutAddrees(userAddress);
+
+  @override
+  Future<MessageResponse> changePassword(body)
+  => _userAddressApi.changePassword(body);
 
 }

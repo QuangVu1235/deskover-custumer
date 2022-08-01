@@ -19,7 +19,7 @@ class ProductCartModel extends ViewModel{
     super.initState();
   }
 
-  Future<void> btnAddToCart(String username, int productId) async{
+  Future<void> btnAddToCart(int productId) async{
      loading(() async{
       await _cartUserCase.addToCart(productId, 1).then((value) async{
         Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);

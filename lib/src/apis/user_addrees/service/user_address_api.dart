@@ -26,4 +26,7 @@ abstract class UserAddressApi{
 
   @PUT('/v1/api/customer/user/address-choose/{id}')
   Future<MessageResponse> changeChoose(@Path('id') int? id,);
+
+  @PUT('/v1/api/customer/user/password')
+  Future<MessageResponse> changePassword(@Body() dynamic body);
 }

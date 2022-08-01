@@ -36,194 +36,187 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: UIColors.white,
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: 16 / 7,
-              child: ImageSlideshow(
-                  width: double.infinity,
-                  initialPage: 0,
-                  indicatorColor: UIColors.brandA,
-                  indicatorBackgroundColor: Colors.grey,
-                  onPageChanged: (value) {
-                    //debugPrint('Page changed: $value');
-                  },
-                  autoPlayInterval: 3000,
-                  isLoop: true,
-                  children: const [
-                    GlobalImage(
-                      'https://lh3.googleusercontent.com/cdnMLTetZOOkCWEN83BekbmqHlzSqJp3NZrhVFn3OBQT7e8urrMHjlRWrZ-EadW6k3JK48wKJYLK9k8ZV-fRG7kztC12oZ1XuA=rw-w1920',
-                      fit: BoxFit.fill,
-                    )
-                  ]),
-            ),
-            Container(
-              color: UIColors.white,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: SpaceValues.space16,
-                  ),
-                  const Center(
-                    child: Text(
-                      "DANH MỤC",
-                      textAlign: TextAlign.center,
-                      style:
-                      TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-                    ),
-                  ),
-                  Obx(
-                        ()=> Visibility(
-                      visible: viewModel.dataSubCategory.value.length > 0,
-                      child: SizedBox(
-                        height: (viewModel.dataSubCategory.value.length) > 8
-                            ? 230
-                            : 230 / 2,
-                        child: Center(
-                          child: Obx(
-                                ()=> GridView.builder(
-                              // primary: false,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              // physics: const NeverScrollableScrollPhysics(),
-                              padding: const EdgeInsets.all(0),
-                              itemCount: viewModel.dataSubCategory.value.length,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: (viewModel.dataSubCategory.value.length) > 8
-                                    ? 2
-                                    : 1,
-                                mainAxisExtent: 80,
-                                childAspectRatio: 2,
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: 8,
-                              ),
-                              itemBuilder: (context, i) {
-                                return TextButton(
-                                  style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: Size.zero),
-                                  onPressed: () async
-                                  => await viewModel.loadProductBySubId(viewModel.dataSubCategory[i].id!),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(999),
-                                        child: Container(
-                                          color: UIColors.black10,
-                                          child:  SvgPicture.network(
-                                            BaseApi.baseUrl+'/img/shop/categories/${viewModel.dataSubCategory[i].img}',
-                                            width: 53,
+        child: Container(
+          margin: EdgeInsets.only(top: 6),
+          child: Column(
+            children: [
+              // AspectRatio(
+              //   aspectRatio: 16 / 7,
+              //   child: ImageSlideshow(
+              //       width: double.infinity,
+              //       initialPage: 0,
+              //       indicatorColor: UIColors.brandA,
+              //       indicatorBackgroundColor: Colors.grey,
+              //       onPageChanged: (value) {
+              //         //debugPrint('Page changed: $value');
+              //       },
+              //       autoPlayInterval: 3000,
+              //       isLoop: true,
+              //       children: const [
+              //         GlobalImage(
+              //           'https://lh3.googleusercontent.com/cdnMLTetZOOkCWEN83BekbmqHlzSqJp3NZrhVFn3OBQT7e8urrMHjlRWrZ-EadW6k3JK48wKJYLK9k8ZV-fRG7kztC12oZ1XuA=rw-w1920',
+              //           fit: BoxFit.fill,
+              //         )
+              //       ]),
+              // ),
+              Container(
+                color: UIColors.white,
+                child: Column(
+                  children: [
+                    Obx(
+                          ()=> Visibility(
+                        visible: viewModel.dataSubCategory.value.length > 0,
+                        child: SizedBox(
+                          height: (viewModel.dataSubCategory.value.length) > 8
+                              ? 230
+                              : 230 / 2,
+                          child: Center(
+                            child: Obx(
+                                  ()=> GridView.builder(
+                                // primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                // physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.all(0),
+                                itemCount: viewModel.dataSubCategory.value.length,
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: (viewModel.dataSubCategory.value.length) > 8
+                                      ? 2
+                                      : 1,
+                                  mainAxisExtent: 80,
+                                  childAspectRatio: 2,
+                                  mainAxisSpacing: 12,
+                                  crossAxisSpacing: 8,
+                                ),
+                                itemBuilder: (context, i) {
+                                  return TextButton(
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero,
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        minimumSize: Size.zero),
+                                    onPressed: () async
+                                    => await viewModel.loadProductBySubId(viewModel.dataSubCategory[i].id!),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(999),
+                                          child: Container(
+                                            width: 60,
                                             height: 60,
-                                            fit: BoxFit.scaleDown,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 31,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 3),
-                                          child: Text(
-                                            viewModel.dataSubCategory.value[i].name ?? '',
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              color: UIColors.black,
+                                            color: UIColors.black10,
+                                            child:  GlobalImage(
+                                              BaseApi.baseUrl+'/img/shop/categories/${viewModel.dataSubCategory[i].img}',
+                                              fit: BoxFit.fill,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                        SizedBox(
+                                          height: 31,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                                            child: Text(
+                                              viewModel.dataSubCategory.value[i].name ?? '',
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w400,
+                                                color: UIColors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
+                          ),
+                        ),
+                        replacement: const Center(
+                          child: LoadingDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            message: 'Đang tìm các danh mục...',
+                          ),
+                        ),
+                      ),),
+
+                  ],
+                ),
+              ),
+              Container(
+                color: UIColors.white,
+                margin: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.only(top: 16),
+                child: Obx(
+                      ()=>    Visibility(
+                        visible: viewModel.dataProductByCategory.value.length > 0 ,
+                        child: Column(
+                          children: [
+                            GridView.builder(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisSpacing: 6,
+                                crossAxisSpacing: 2,
+                                crossAxisCount: 2,
+                                mainAxisExtent: 270,
+                                // childAspectRatio: 0.4,
+                              ),
+                              itemCount: viewModel.dataProductByCategory.value.length,
+                              itemBuilder: (context, index) {
+                                return ProductWidget(
+                                  productId:  viewModel.dataProductByCategory[index].id!,
+                                  title: viewModel.dataProductByCategory[index].name ?? '',
+                                  avatar: BaseApi.baseUrl+'/img/shop/products/${viewModel.dataProductByCategory[index].img}',
+                                  price: viewModel.dataProductByCategory[index].price!,
+                                  quantity: viewModel.dataProductByCategory[index].quantity!,
                                 );
                               },
                             ),
-                          ),
-
-                        ),
-                      ),
-                      replacement: const Center(
-                        child: LoadingDialog(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          message: 'Đang tìm các danh mục...',
-                        ),
-                      ),
-                    ),),
-
-                ],
-              ),
-            ),
-            Container(
-              color: UIColors.white,
-              margin: EdgeInsets.only(top: 5),
-              padding: EdgeInsets.only(top: 16),
-              child: Obx(
-                    ()=>    Visibility(
-                      visible: viewModel.dataProductByCategory.value.length > 0 ,
-                      child: Column(
-                        children: [
-                          GridView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 6,
-                              crossAxisSpacing: 2,
-                              crossAxisCount: 2,
-                              mainAxisExtent: 270,
-                              // childAspectRatio: 0.4,
-                            ),
-                            itemCount: viewModel.dataProductByCategory.value.length,
-                            itemBuilder: (context, index) {
-                              return ProductWidget(
-                                productId:  viewModel.dataProductByCategory[index].id!,
-                                title: viewModel.dataProductByCategory[index].name ?? '',
-                                avatar: BaseApi.baseUrl+'/img/shop/products/${viewModel.dataProductByCategory[index].img}',
-                                price: viewModel.dataProductByCategory[index].price!,
-                                quantity: viewModel.dataProductByCategory[index].quantity!,
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 30,
-                            child: TextButton(
-                                style: TextButton.styleFrom(
-                                  elevation: 0.0,
-                                  padding: EdgeInsets.zero,
-                                ),
-                                onPressed:() async{
-
-                                },
-                                child: Text(
-                                  'Xem thêm....',
-                                  style: TextStyle(
-                                      color: UIColors.brandA
+                            SizedBox(
+                              height: 30,
+                              child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    elevation: 0.0,
+                                    padding: EdgeInsets.zero,
                                   ),
-                                )),
-                          )
-                        ],
-                      ),
-                      replacement: const Center(
-                        child: LoadingDialog(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          message: 'Danh mục trống...',
-                        ),
-                      ),
-                    ),),
-            ),
+                                  onPressed:() async{
 
-          ],
+                                  },
+                                  child: Text(
+                                    'Xem thêm....',
+                                    style: TextStyle(
+                                        color: UIColors.brandA
+                                    ),
+                                  )),
+                            )
+                          ],
+                        ),
+                        replacement: const Center(
+                          child: LoadingDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            message: 'Danh mục trống...',
+                          ),
+                        ),
+                      ),),
+              ),
+
+            ],
+          ),
         ),
       ),
     );
