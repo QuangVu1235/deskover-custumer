@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
@@ -103,11 +104,18 @@ class _SettingProfile extends ViewWidget<SettingProfile, SettingProfileModel> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
                                         child: ClipOval(
-                                          child: GlobalImage(
+                                          child: Image.network(
                                             BaseApi.baseUrlUser+'${viewModel.user.value?.avatar}',
                                             fit: BoxFit.cover,
                                             width: 120,
                                             height: 120,
+                                            errorBuilder: (BuildContext context, Object exception,
+                                                StackTrace? stackTrace) {
+                                              return Image.asset(
+                                                ImageAssets.imgPlaceholder,
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),

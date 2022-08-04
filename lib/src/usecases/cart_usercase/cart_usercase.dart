@@ -29,7 +29,7 @@ class CartUserCase{
   => _cartDataSource.doGetAllCartOrder();
 
  
-  Future<List<UserAddress>?> changeActive(int id)
+  Future<MessageResponse> changeActive(int id)
   => _userAddressDataSource.changeActive(id);
 
  

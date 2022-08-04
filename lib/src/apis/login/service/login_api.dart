@@ -11,10 +11,10 @@ part 'login_api.g.dart';
 
 @RestApi(baseUrl: BaseApi.baseUrl)
 @LazySingleton()
-abstract class LoginAPI{
+abstract class LoginAPI {
   @factoryMethod
   factory LoginAPI(Dio dio) = _LoginAPI;
-  
+
   @POST('/v1/api/customer/auth/login')
   Future<MessageResponse> doLogin(@Body() Map<String, dynamic> map);
 
@@ -22,6 +22,12 @@ abstract class LoginAPI{
   Future<User> doGetProfiled();
 
   @POST('/v1/api/customer/upload-file')
-  Future<void> doPostUploadFile(@Part(name: 'file', ) File file);
+  Future<void> doPostUploadFile(
+      @Part(
+    name: 'file',
+  )
+          File file);
 
+  @PUT('/v1/api/customer/user')
+  Future<MessageResponse> doPutUpdate(@Body() User user);
 }

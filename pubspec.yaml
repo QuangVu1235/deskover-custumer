@@ -40,7 +40,7 @@ dependencies:
   dio: ^4.0.4 # for restAPI Connect
   pretty_dio_logger: ^1.1.1 # for Rest API Logger
 #  dio_http_cache: ^0.3.0 # for dio cache
-  cached_network_image: ^3.2.0
+#  cached_network_image: ^3.2.0
 #  flutter_cache_manager: ^3.3.0 # for Image cache
   sqflite: ^2.0.2+1 # for save data to local
   # Dependency injection (DI)
@@ -96,6 +96,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_countdown_timer: ^4.1.0
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:

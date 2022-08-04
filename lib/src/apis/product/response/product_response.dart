@@ -105,7 +105,7 @@ class FlashSale {
   int? percent;
   String? startDate;
   String? startDateFormat;
-  DateTime? endDate;
+  String? endDate;
   String? endDateFormat;
   bool? actived;
   String? modifiedAt;

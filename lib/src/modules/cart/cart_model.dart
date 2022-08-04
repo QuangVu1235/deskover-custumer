@@ -53,8 +53,6 @@ class CartModel extends ViewModel{
     ]);
   }
 
-
-
   Future<void> loadShippingMethod() async {
     await _cartUserCase.doGetShipping().then((value) async{
            dataShipping.value = value ?? [];
@@ -149,12 +147,7 @@ class CartModel extends ViewModel{
         // Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
       });
   }
-  Future<void> btnChooseAddress(int id)async {
-    await _cartUserCase.changeChoose(id).then((value) async{
-        await loadAddress();
-        Get.back();
-    });
-  }
+
   Future<void> btnDelete( int productId) async{
     await AppUtils().showPopup(
       isSuccess: false,

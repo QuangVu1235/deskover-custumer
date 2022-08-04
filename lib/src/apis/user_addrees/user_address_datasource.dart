@@ -7,7 +7,7 @@ import '../message_response.dart';
 abstract class UserAddressDataSource{
   Future<List<UserAddress>?> doGetAddress();
   Future<MessageResponse> doPostAddress(UserAddress userAddress);
-  Future<List<UserAddress>?> changeActive(int id);
+  Future<MessageResponse> changeActive(int id);
   Future<MessageResponse> changeChoose( int id);
   Future<MessageResponse> doPutAddress(UserAddress userAddress,);
   Future<MessageResponse> changePassword(dynamic body);
@@ -20,7 +20,7 @@ class UserAddressDataSourceIpml extends UserAddressDataSource{
   UserAddressDataSourceIpml(this._userAddressApi);
 
   @override
-  Future<List<UserAddress>?> changeActive(int id)
+  Future<MessageResponse> changeActive(int id)
   => _userAddressApi.changeActive(id);
 
   @override

@@ -31,6 +31,10 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
   void initState() {
     super.initState();
     viewModel.loadCart();
+    // WidgetsBinding.instance
+    //     ?.addPostFrameCallback((_) => setState(() {
+    //   viewModel.index.value = widget.indexTab ?? viewModel.index.value;
+    // }));
   }
 
   static final List<Widget> _widgetOptions = <Widget>[

@@ -72,12 +72,11 @@ class HomePageModel extends ViewModel{
   Future<void> loadProductSale() async{
     await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
       dataProductFlashSale.value = value.content ?? [Product()];
-      if(dataProductFlashSale.isEmpty){
-        Get.back();
-        Get.offAll(MainPage());
+      if(value.content == null){
+        Get.offAll( const MainPage(indexTab: 0,));
       }
-      print(dataProductFlashSale.value.first.flashSale?.endDate);
     });
+
   }
 
 }

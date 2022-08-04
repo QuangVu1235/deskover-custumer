@@ -214,9 +214,9 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                             ),
                                           ),
                                           CountdownTimer(
-                                            endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                            endTime: DateTime.parse(
                                                 (viewModel.dataProductFlashSale).isNotEmpty ?
-                                                viewModel.dataProductFlashSale.value.first.flashSale?.startDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
+                                                viewModel.dataProductFlashSale.value.first.flashSale?.startDate ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
                                                     : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
                                             // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
                                             //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
@@ -379,17 +379,13 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                           ),
                                         ),
                                         CountdownTimer(
-                                          endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
+                                          endTime: DateTime.parse(
                                               (viewModel.dataProductFlashSale).isNotEmpty ?
-                                              viewModel.dataProductFlashSale.value.first.flashSale?.endDateFormat ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
+                                              viewModel.dataProductFlashSale.value.first.flashSale?.endDate ?? DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))
                                                   : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
-                                          // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(
-                                          //     (viewModel.dataProductFlashSale.value).isNotEmpty ?
-                                          //     ('${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(0,10)} ${viewModel.dataProductFlashSale.value.first.flashSale?.endDate?.substring(11,18)}')
-                                          //         : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().add(const Duration(minutes: 1)))).millisecondsSinceEpoch,
-                                          // endTime: DateFormat('yyyy-MM-dd HH:mm:ss').parse(viewModel.dataProductFlashSale.value.first.flashSale?.endDate.toString() ?? '2022-07-29 23:12:00').millisecondsSinceEpoch,
                                           onEnd: () async {
-                                            await viewModel.loadProductSale();
+                                           await viewModel.loadProductSale();
+                                            viewModel.dataProductFlashSale.value = [];
                                           },
 
                                           widgetBuilder: (context, time) {

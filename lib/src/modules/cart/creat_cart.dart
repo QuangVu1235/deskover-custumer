@@ -270,7 +270,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                         primary: UIColors.brandA,
                                       ) ,
                                       onPressed: (){
-                                          Get.to(()=> NotAddressScreen(viewModel: viewModel,));
+                                          Get.to(()=> NotAddressScreen());
                                       }
                                       , child: Row(
                                     children: [
