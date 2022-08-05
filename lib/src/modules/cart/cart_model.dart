@@ -76,7 +76,11 @@ class CartModel extends ViewModel{
         });
     });
   }
-
+  Future<void> btnChooseAddress(int id)async {
+    await _cartUserCase.changeChoose(id).then((value) async{
+      await loadAddress();
+    });
+  }
   Future<void> loadCartOrder() async{
     totalPriceOrigin.value = 0.0;
     totalPercent.value = 0.0;

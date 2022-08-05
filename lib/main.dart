@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       // locale: DevicePreview.locale(context),
       // builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      title: 'MUTOSI Shop',
+      title: 'Deskover',
       theme: Themes.mainTheme,
       home: SplashScreen(
           nextScreen:

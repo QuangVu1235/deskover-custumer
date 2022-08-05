@@ -21,6 +21,17 @@ class NotAddressModel extends ViewModel{
     });
   }
 
+  Future<void> loadAddressCart() async {
+    await _cartUserCase.doGetAddress().then((value) async{
+      _cartModel.dataAddress.value = value ?? [];
+      _cartModel.dataAddress.value.forEach((item) {
+        if(item.choose == true){
+          _cartModel.address.value = item;
+        }
+      });
+    });
+  }
+
   void removeAddressAndPayment() async{
     _cartModel.shipping.value = null;
     _cartModel.payment.value = null;

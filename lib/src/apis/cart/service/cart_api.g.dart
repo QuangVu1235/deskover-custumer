@@ -10,7 +10,7 @@ part of 'cart_api.dart';
 
 class _CartAPI implements CartAPI {
   _CartAPI(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.0.2.2:8080';
+    baseUrl ??= 'http://localhost:8080';
   }
 
   final Dio _dio;

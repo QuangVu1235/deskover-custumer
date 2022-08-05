@@ -126,6 +126,8 @@ class AddAddressModel extends ViewModel{
           Get.back();
         });
     }else{
+      print('>>>>>>');
+      print(inputAddress.text);
       UserAddress request = UserAddress(
         id:  defaultAddress?.id,
         fullname: inputfullname.text,
@@ -136,7 +138,7 @@ class AddAddressModel extends ViewModel{
         ward: '${wardsValue.value?.prefix} ${wardsValue.value?.name}',
         wardId: wardsValue.value?.id,
         email: inputEmail.text,
-        address: '${inputAddress.text}, ${wardsValue.value?.prefix} ${wardsValue.value?.name}, ${districtsValue.value?.prefix} ${districtsValue.value?.name}, ${provinceValue.value?.name}',
+        address: inputAddress.text == defaultAddress?.address  ?  defaultAddress?.address : '${inputAddress.text}, ${wardsValue.value?.prefix} ${wardsValue.value?.name}, ${districtsValue.value?.prefix} ${districtsValue.value?.name}, ${provinceValue.value?.name}',
         tel: inputPhone.text,
         actived: defaultAddress?.actived,
         choose: defaultAddress?.choose

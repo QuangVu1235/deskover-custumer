@@ -1,3 +1,4 @@
+import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/apis/user/response/user_response.dart';
 import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
@@ -94,6 +95,7 @@ class _NotAddressScreen extends ViewWidget<NotAddressScreen,NotAddressModel> {
                                             case 1:
                                               viewModel.btnChooseAddress(viewModel.dataAddress[index].id ?? 0);
                                               viewModel.removeAddressAndPayment();
+                                              viewModel.loadAddressCart();
                                               Get.back();
                                               break;
                                             case 2:

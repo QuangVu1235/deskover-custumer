@@ -3,6 +3,7 @@ import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/action/search/search_screen.dart';
+import 'package:deskover_develop/src/modules/notification/notification.dart';
 import 'package:deskover_develop/src/modules/profile/profile_screen.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
@@ -31,6 +32,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
   void initState() {
     super.initState();
     viewModel.loadCart();
+    viewModel.loadNotify();
     // WidgetsBinding.instance
     //     ?.addPostFrameCallback((_) => setState(() {
     //   viewModel.index.value = widget.indexTab ?? viewModel.index.value;
@@ -39,7 +41,7 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    SearchPage(),
+    const Notify(),
     const ProfileScreen(),
 
     // const GarnitureScreen(),
@@ -161,7 +163,8 @@ class _MainPageState extends ViewWidget<MainPage, MainPageModel> {
               currentIndex: viewModel.index.value,
               onTap: (index) {
                 viewModel.index.value = index;
-                // viewModel.loadCart();
+                viewModel.loadCart();
+                viewModel.loadNotify();
               },
             ),
           )),

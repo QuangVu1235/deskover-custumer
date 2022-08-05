@@ -4,6 +4,7 @@ import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipp
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
+import 'package:deskover_develop/src/modules/cart/address_cart.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/utils/AppUtils.dart';
@@ -33,7 +34,6 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
   bool isChecked = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     viewModel.loadAddress();
   }
@@ -270,7 +270,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                         primary: UIColors.brandA,
                                       ) ,
                                       onPressed: (){
-                                          Get.to(()=> NotAddressScreen());
+                                          Get.to(AddressCart());
                                       }
                                       , child: Row(
                                     children: [
