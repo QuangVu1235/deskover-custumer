@@ -36,9 +36,8 @@ abstract class ModuleRegister {
       return client;
     };
     dio.options = BaseOptions(headers: {
-      'Authorization': (sharedPreferences.getString('uToken') ?? '').isNotEmpty
-          ? 'Bearer ${sharedPreferences.getString('uToken')}'
-          : '',
+      'Authorization': (sharedPreferences.getString('uToken') ?? '').isNotEmpty ? 'Bearer ${sharedPreferences.getString('uToken')}' : '',
+      'Token':'',
     });
     dio.interceptors.add(dioCacheManager.interceptor);
     dio.interceptors.add(InterceptorsWrapper(

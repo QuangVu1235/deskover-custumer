@@ -1,4 +1,0 @@
-#Fri Aug 05 14:14:40 ICT 2022
-base.0=D\:\\A_DOANTOTNGHIEP\\deskover_develop\\android\\app\\build\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

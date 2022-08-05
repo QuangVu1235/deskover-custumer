@@ -4,27 +4,27 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:dio/dio.dart' as _i10;
+import 'package:dio/dio.dart' as _i9;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:shared_preferences/shared_preferences.dart' as _i9;
+import 'package:shared_preferences/shared_preferences.dart' as _i8;
 
-import '../../main.dart' as _i14;
+import '../../main.dart' as _i13;
 import '../apis/addrees/add_addrees_datasource.dart' as _i32;
 import '../apis/addrees/service/add_addrees_api.dart' as _i31;
 import '../apis/cart/cart_datasource.dart' as _i35;
 import '../apis/cart/service/cart_api.dart' as _i34;
 import '../apis/category/category_datasource.dart' as _i37;
 import '../apis/category/service/category_api.dart' as _i36;
-import '../apis/login/login_datasource.dart' as _i12;
-import '../apis/login/service/login_api.dart' as _i11;
-import '../apis/notify/service/notify_api.dart' as _i15;
-import '../apis/order/order_datasource.dart' as _i19;
-import '../apis/order/service/order_api.dart' as _i18;
+import '../apis/login/login_datasource.dart' as _i11;
+import '../apis/login/service/login_api.dart' as _i10;
+import '../apis/notify/service/notify_api.dart' as _i14;
+import '../apis/order/order_datasource.dart' as _i18;
+import '../apis/order/service/order_api.dart' as _i17;
 import '../apis/product/product_datasoure.dart' as _i22;
 import '../apis/product/service/product_api.dart' as _i21;
 import '../apis/shipping_payment_status/method_datasource.dart' as _i41;
-import '../apis/shipping_payment_status/service/method_order_api.dart' as _i13;
+import '../apis/shipping_payment_status/service/method_order_api.dart' as _i12;
 import '../apis/subcategory/service/subcategory_api.dart' as _i26;
 import '../apis/subcategory/subcategory_datasource.dart' as _i27;
 import '../apis/user_addrees/service/user_address_api.dart' as _i28;
@@ -37,15 +37,15 @@ import '../modules/cart/cart_model.dart' as _i54;
 import '../modules/homepage/homepage_model.dart' as _i50;
 import '../modules/homepage/widgets/list_product_model.dart' as _i40;
 import '../modules/main_page_model.dart' as _i51;
-import '../modules/notification/datasource/notify_datasource.dart' as _i16;
-import '../modules/notification/notifi_model.dart' as _i17;
-import '../modules/order/order_manager_model.dart' as _i7;
+import '../modules/notification/datasource/notify_datasource.dart' as _i15;
+import '../modules/notification/notifi_model.dart' as _i16;
+import '../modules/order/order_manager_model.dart' as _i19;
 import '../modules/product_widget/product_detail_model.dart' as _i42;
 import '../modules/product_widget/product_model.dart' as _i52;
 import '../modules/product_widget/product_selling/product_selling_model.dart'
     as _i43;
 import '../modules/profile/managerorder/manager_model.dart' as _i5;
-import '../modules/profile/product/pur_product_model.dart' as _i8;
+import '../modules/profile/product/pur_product_model.dart' as _i7;
 import '../modules/profile/profile_model.dart' as _i44;
 import '../modules/profile/setting/password/change_password_model.dart' as _i39;
 import '../modules/profile/setting/setting_profile_model.dart' as _i46;
@@ -75,58 +75,59 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       dispose: (i) => i.disposeCartNumberStream());
   gh.singleton<_i6.NumCartPoint>(_i6.NumCartPoint(),
       dispose: (i) => i.disposeCartNumberStream());
-  gh.factory<_i7.OrderManagerModel>(() => _i7.OrderManagerModel());
-  gh.factory<_i8.PurchasedProductModel>(() => _i8.PurchasedProductModel());
-  await gh.factoryAsync<_i9.SharedPreferences>(
+  gh.factory<_i7.PurchasedProductModel>(() => _i7.PurchasedProductModel());
+  await gh.factoryAsync<_i8.SharedPreferences>(
       () => moduleRegister.sharedPreferences(),
       preResolve: true);
-  gh.lazySingleton<_i10.Dio>(() => moduleRegister.getDio(
-      get<_i9.SharedPreferences>(), get<_i3.DioCacheManager>()));
-  gh.lazySingleton<_i11.LoginAPI>(() => _i11.LoginAPI(get<_i10.Dio>()));
-  gh.lazySingleton<_i12.LoginDataSource>(
-      () => _i12.LoginDataSourceImpl(get<_i11.LoginAPI>()));
-  gh.lazySingleton<_i13.MethodOrderApi>(
-      () => _i13.MethodOrderApi(get<_i10.Dio>()));
-  gh.factory<_i14.MyApp>(() => _i14.MyApp(get<_i9.SharedPreferences>()));
-  gh.lazySingleton<_i15.NotifyApi>(() => _i15.NotifyApi(get<_i10.Dio>()));
-  gh.lazySingleton<_i16.NotifyDatasoure>(
-      () => _i16.NotifyDatasoureImpl(get<_i15.NotifyApi>()));
-  gh.factory<_i17.NotifyModel>(() =>
-      _i17.NotifyModel(get<_i15.NotifyApi>(), get<_i16.NotifyDatasoure>()));
-  gh.lazySingleton<_i18.OrderAPI>(() => _i18.OrderAPI(get<_i10.Dio>()));
-  gh.lazySingleton<_i19.OrderDataSource>(
-      () => _i19.OrderDataSourceImpl(get<_i18.OrderAPI>()));
+  gh.lazySingleton<_i9.Dio>(() => moduleRegister.getDio(
+      get<_i8.SharedPreferences>(), get<_i3.DioCacheManager>()));
+  gh.lazySingleton<_i10.LoginAPI>(() => _i10.LoginAPI(get<_i9.Dio>()));
+  gh.lazySingleton<_i11.LoginDataSource>(
+      () => _i11.LoginDataSourceImpl(get<_i10.LoginAPI>()));
+  gh.lazySingleton<_i12.MethodOrderApi>(
+      () => _i12.MethodOrderApi(get<_i9.Dio>()));
+  gh.factory<_i13.MyApp>(() => _i13.MyApp(get<_i8.SharedPreferences>()));
+  gh.lazySingleton<_i14.NotifyApi>(() => _i14.NotifyApi(get<_i9.Dio>()));
+  gh.lazySingleton<_i15.NotifyDatasoure>(
+      () => _i15.NotifyDatasoureImpl(get<_i14.NotifyApi>()));
+  gh.factory<_i16.NotifyModel>(() =>
+      _i16.NotifyModel(get<_i14.NotifyApi>(), get<_i15.NotifyDatasoure>()));
+  gh.lazySingleton<_i17.OrderAPI>(() => _i17.OrderAPI(get<_i9.Dio>()));
+  gh.lazySingleton<_i18.OrderDataSource>(
+      () => _i18.OrderDataSourceImpl(get<_i17.OrderAPI>()));
+  gh.factory<_i19.OrderManagerModel>(() => _i19.OrderManagerModel(
+      get<_i18.OrderDataSource>(), get<_i14.NotifyApi>()));
   gh.lazySingleton<_i20.OrderUserCase>(
-      () => _i20.OrderUserCase(get<_i19.OrderDataSource>()));
-  gh.lazySingleton<_i21.ProductAPI>(() => _i21.ProductAPI(get<_i10.Dio>()));
+      () => _i20.OrderUserCase(get<_i18.OrderDataSource>()));
+  gh.lazySingleton<_i21.ProductAPI>(() => _i21.ProductAPI(get<_i9.Dio>()));
   gh.lazySingleton<_i22.ProductDataSource>(
       () => _i22.ProductDataSourceImpl(get<_i21.ProductAPI>()));
   gh.lazySingleton<_i23.ProductUserCase>(
       () => _i23.ProductUserCase(get<_i22.ProductDataSource>()));
   gh.factory<_i24.SigninModel>(() => _i24.SigninModel(
-      get<_i9.SharedPreferences>(), get<_i12.LoginDataSource>()));
+      get<_i8.SharedPreferences>(), get<_i11.LoginDataSource>()));
   gh.lazySingleton<_i25.SplashsreenModel>(() =>
-      _i25.SplashsreenModel(get<_i9.SharedPreferences>(), get<_i10.Dio>()));
+      _i25.SplashsreenModel(get<_i8.SharedPreferences>(), get<_i9.Dio>()));
   gh.lazySingleton<_i26.SubCategoryAPI>(
-      () => _i26.SubCategoryAPI(get<_i10.Dio>()));
+      () => _i26.SubCategoryAPI(get<_i9.Dio>()));
   gh.lazySingleton<_i27.SubCategoryDataSource>(
       () => _i27.SubCategoryDataSourceImpl(get<_i26.SubCategoryAPI>()));
   gh.lazySingleton<_i28.UserAddressApi>(
-      () => _i28.UserAddressApi(get<_i10.Dio>()));
+      () => _i28.UserAddressApi(get<_i9.Dio>()));
   gh.lazySingleton<_i29.UserAddressDataSource>(
       () => _i29.UserAddressDataSourceIpml(get<_i28.UserAddressApi>()));
   gh.lazySingleton<_i30.UserUserCase>(() => _i30.UserUserCase(
-      get<_i12.LoginDataSource>(), get<_i29.UserAddressDataSource>()));
+      get<_i11.LoginDataSource>(), get<_i29.UserAddressDataSource>()));
   gh.lazySingleton<_i31.AddAddreesAPI>(
-      () => _i31.AddAddreesAPI(get<_i10.Dio>()));
+      () => _i31.AddAddreesAPI(get<_i9.Dio>()));
   gh.lazySingleton<_i32.AddAddreesDataSource>(
       () => _i32.AddAddreesDataSourceImpl(get<_i31.AddAddreesAPI>()));
   gh.lazySingleton<_i33.AddAddreesUserCase>(
       () => _i33.AddAddreesUserCase(get<_i32.AddAddreesDataSource>()));
-  gh.lazySingleton<_i34.CartAPI>(() => _i34.CartAPI(get<_i10.Dio>()));
+  gh.lazySingleton<_i34.CartAPI>(() => _i34.CartAPI(get<_i9.Dio>()));
   gh.lazySingleton<_i35.CartDataSource>(
       () => _i35.CartDataSourceImpl(get<_i34.CartAPI>()));
-  gh.lazySingleton<_i36.CategoryAPI>(() => _i36.CategoryAPI(get<_i10.Dio>()));
+  gh.lazySingleton<_i36.CategoryAPI>(() => _i36.CategoryAPI(get<_i9.Dio>()));
   gh.lazySingleton<_i37.CategoryDataSource>(
       () => _i37.CategoryDataSourceImpl(get<_i36.CategoryAPI>()));
   gh.lazySingleton<_i38.CategoryUserCase>(
@@ -136,13 +137,13 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   gh.factory<_i40.ListProductModel>(
       () => _i40.ListProductModel(get<_i23.ProductUserCase>()));
   gh.lazySingleton<_i41.MethodDataSource>(
-      () => _i41.MethodDataSourceImpl(get<_i13.MethodOrderApi>()));
+      () => _i41.MethodDataSourceImpl(get<_i12.MethodOrderApi>()));
   gh.factory<_i42.ProductDetailModel>(
       () => _i42.ProductDetailModel(get<_i23.ProductUserCase>()));
   gh.factory<_i43.ProductSellingModel>(
       () => _i43.ProductSellingModel(get<_i23.ProductUserCase>()));
   gh.factory<_i44.ProfileModel>(() => _i44.ProfileModel(
-      get<_i9.SharedPreferences>(), get<_i30.UserUserCase>()));
+      get<_i8.SharedPreferences>(), get<_i30.UserUserCase>()));
   gh.lazySingleton<_i45.SearchModel>(() => _i45.SearchModel(
       get<_i23.ProductUserCase>(), get<_i38.CategoryUserCase>()));
   gh.factory<_i46.SettingProfileModel>(
@@ -161,8 +162,8 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       get<_i49.CartUserCase>()));
   gh.lazySingleton<_i51.MainPageModel>(() => _i51.MainPageModel(
       get<_i49.CartUserCase>(),
-      get<_i15.NotifyApi>(),
-      get<_i16.NotifyDatasoure>()));
+      get<_i14.NotifyApi>(),
+      get<_i15.NotifyDatasoure>()));
   gh.factory<_i52.ProductCartModel>(() => _i52.ProductCartModel(
       get<_i49.CartUserCase>(), get<_i51.MainPageModel>()));
   gh.factory<_i53.AddAddressModel>(() => _i53.AddAddressModel(

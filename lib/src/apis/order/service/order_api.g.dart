@@ -10,7 +10,7 @@ part of 'order_api.dart';
 
 class _OrderAPI implements OrderAPI {
   _OrderAPI(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://localhost:8080';
+    baseUrl ??= 'http://10.0.2.2:8080';
   }
 
   final Dio _dio;
@@ -31,6 +31,23 @@ class _OrderAPI implements OrderAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<OrderReponse> getOrderByUser(orderCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OrderReponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/order/${orderCode}',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OrderReponse.fromJson(_result.data!);
     return value;
   }
 

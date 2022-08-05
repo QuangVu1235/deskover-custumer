@@ -27,7 +27,11 @@ class UIColors {
   static const Color border10 = Color(0x1A011222);
   static const Color divider5 = Color(0x0d011222);
   static const Color gray5 = Color(0x0de0e0e0);
-  static const Color login = Color(0x80B4B4B4);
+  static const Color login = Color(0x17B4B4B4);
+
+  static const Color yellow40 = Color(0x73FFD740);
+  static const Color yellow = Color(0xFFFC7E00);
+  static const Color green = Color(0xF202A95C);
 
   // color in screen
   static const Color backgroundAppBar = Color(0xFFB6118E);

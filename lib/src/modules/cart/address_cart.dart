@@ -1,14 +1,7 @@
-import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
-import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
-import 'package:deskover_develop/src/apis/user/response/user_response.dart';
-import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
-import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/address/add_addrees/add_address.dart';
-import 'package:deskover_develop/src/modules/address/address_model.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
-import 'package:deskover_develop/src/modules/cart/creat_cart.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';

@@ -1,5 +1,6 @@
 import 'package:deskover_develop/src/apis/cart/cart_datasource.dart';
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/apis/cart/response/fee.dart';
 import 'package:deskover_develop/src/apis/message_response.dart';
 import 'package:deskover_develop/src/apis/shipping_payment_status/method_datasource.dart';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
@@ -27,6 +28,9 @@ class CartUserCase{
 
   Future<List<Cart>?> doGetAllCartOrder()
   => _cartDataSource.doGetAllCartOrder();
+
+  Future<FeeGHTK> getFee(body)
+  =>_cartDataSource.getFee(body);
 
  
   Future<MessageResponse> changeActive(int id)

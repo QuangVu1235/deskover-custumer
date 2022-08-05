@@ -29,7 +29,6 @@ class MainPageModel extends ViewModel {
   @override
   void initState() {
     super.initState();
-    loadNotify();
   }
 
   void openLogin() {
@@ -49,13 +48,12 @@ class MainPageModel extends ViewModel {
   }
 
   Future<void> loadNotify() async{
+    notification.value = false;
    await _notifyApi.doGetNotifyByUser().then((value)  async{
       listNotify.value = value ?? [];
       for (var element in listNotify) {
         if(element.isWatched == false){
-          notification.value == true;
-          print('>>>>>>>>');
-          print(notification.value );
+          notification.value = true;
           break;
         };
       }

@@ -1,4 +1,5 @@
 import 'package:deskover_develop/src/apis/message_response.dart';
+import 'package:deskover_develop/src/apis/order/request/order/order_response.dart';
 import 'package:deskover_develop/src/apis/order/request/order_resquest.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:dio/dio.dart';
@@ -16,5 +17,8 @@ abstract class OrderAPI{
 
   @POST('/v1/api/customer/order')
   Future<MessageResponse> addOrder(@Body() OrderResquest orderResquest);
+
+  @GET('/v1/api/customer/order/{orderCode}')
+  Future<OrderReponse> getOrderByUser(@Path('orderCode') String? orderCode);
 
 }

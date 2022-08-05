@@ -7,6 +7,7 @@ import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image_netword.dart';
 import 'package:deskover_develop/src/modules/main_page.dart';
+import 'package:deskover_develop/src/modules/order/all_order/list_order.dart';
 import 'package:deskover_develop/src/modules/profile/product/purchased_product.dart';
 import 'package:deskover_develop/src/modules/profile/profile_model.dart';
 import 'package:deskover_develop/src/modules/profile/setting/setting_profiled.dart';
@@ -526,7 +527,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                             () => InkWell(
                           onTap: () {
                             isLogin.value
-                                ? Get.to(ManagerOrderSreen())
+                                ? Get.to(ListOrder())
                                 : print("pl login");
                           },
                           child: Column(

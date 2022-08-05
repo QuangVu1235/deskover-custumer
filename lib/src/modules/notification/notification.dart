@@ -36,7 +36,7 @@ class _Notify extends ViewWidget<Notify,NotifyModel>{
                  return InkWell(
                    onTap: (){
                       viewModel.changeNotify(viewModel.listNotify[index].id ?? 0);
-                      Get.to(const OrderManager());
+                      Get.to( OrderManager(orderCode: viewModel.listNotify[index].orderCode ?? ''));
                    },
                    child: Container(
                      margin: const EdgeInsets.only(top: 6),
