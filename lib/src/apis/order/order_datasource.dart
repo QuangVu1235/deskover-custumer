@@ -12,7 +12,7 @@ abstract class OrderDataSource{
   Future<OrderReponse> getOrderByUser(String orderCode);
   Future<List<NotifyResponse>?> doGetAllNotify(String orderCode);
   Future<List<OrderReponse>?> getAllOrderByStatusCode( String statusCode);
-  Future<MessageResponse> canCelOrder(String orderCode);
+  Future<MessageResponse> canCelOrder(String orderCode,String statusOrder);
 
 }
 @LazySingleton(as: OrderDataSource)
@@ -39,6 +39,6 @@ class OrderDataSourceImpl extends OrderDataSource{
   => _orderAPI.getAllOrderByStatusCode(statusCode);
 
   @override
-  Future<MessageResponse> canCelOrder(String orderCode)
-  => _orderAPI.canCelOrder(orderCode);
+  Future<MessageResponse> canCelOrder(String orderCode,statusOrder)
+  => _orderAPI.canCelOrder(orderCode,statusOrder);
 }

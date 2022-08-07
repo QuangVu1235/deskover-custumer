@@ -25,6 +25,7 @@ class _OrderTab extends ViewWidget<OrderTab,ListOrderModel>{
     viewModel.statusCode.value = widget.orderStatus;
     viewModel.loadOrderByStatus();
   }
+  final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,7 @@ class _OrderTab extends ViewWidget<OrderTab,ListOrderModel>{
                                             )),
                                       ),
                                       Text(
-                                        "${viewModel.orders[i].unitPrice}",
+                                        formatCurrency.format(viewModel.orders[i].unitPrice),
                                         style: const TextStyle(
                                             color: UIColors.brandA,
                                             fontSize: 12,

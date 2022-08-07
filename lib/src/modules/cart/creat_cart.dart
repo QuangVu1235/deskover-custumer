@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
-import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
 import 'package:deskover_develop/src/modules/cart/address_cart.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
@@ -17,7 +16,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 
-import '../../config/assets/icon_assets.dart';
 import '../../config/assets/image_asset.dart';
 import '../../themes/space_values.dart';
 import '../../themes/ui_colors.dart';
@@ -608,9 +606,9 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   onPressed: () async {
                                     await viewModel.btnConfirmOrder();
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: const Text(
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(6.0),
+                                    child: Text(
                                       'Xác nhận mua hàng',
                                       style: TextStyle(
 

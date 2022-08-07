@@ -410,7 +410,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                                             || viewModel.orderReponese.value?.orderStatus?.code == 'GH-TC' ) ?
                                                         ElevatedButton(
                                                             onPressed: (){
-
+                                                              viewModel.addProductToCart(viewModel.orderReponese.value?.id ?? 1);
                                                             },
                                                             style: ElevatedButton.styleFrom(
                                                             ),
@@ -518,7 +518,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                             padding: const EdgeInsets.only(left: 16,right: 16),
                             child: ElevatedButton(
                               onPressed: (){
-                                viewModel.cancelOrder();
+                                viewModel.cancelOrder('C-HUY');
                               },
                               child: const Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -527,7 +527,26 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                             ),
                           ),
                         ),
-                      ) : const SizedBox()
+                      ) : viewModel.orderReponese.value?.orderStatus?.code == 'C-HUY'
+                          ? Container(
+                        color: UIColors.white,
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 16,bottom: 16),
+                        child: SizedBox(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16,right: 16),
+                            child: ElevatedButton(
+                              onPressed: (){
+                                viewModel.cancelOrder('CANCEL-C-HUY');
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Hoàn tác đơn hàng'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ) : SizedBox.shrink()
                     ],
                   ),
                 ),

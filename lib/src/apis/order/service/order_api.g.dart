@@ -35,9 +35,9 @@ class _OrderAPI implements OrderAPI {
   }
 
   @override
-  Future<MessageResponse> canCelOrder(orderCode) async {
+  Future<MessageResponse> canCelOrder(orderCode, statusOrder) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'statusOrder': statusOrder};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

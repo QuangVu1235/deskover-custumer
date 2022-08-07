@@ -19,7 +19,7 @@ abstract class OrderAPI{
   Future<MessageResponse> addOrder(@Body() OrderResquest orderResquest);
 
   @POST('/v1/api/customer/order/cancel/{orderCode}')
-  Future<MessageResponse> canCelOrder(@Path('orderCode') String? orderCode);
+  Future<MessageResponse> canCelOrder(@Path('orderCode') String? orderCode, @Query('statusOrder') String statusOrder);
 
   @GET('/v1/api/customer/order/{orderCode}')
   Future<OrderReponse> getOrderByUser(@Path('orderCode') String? orderCode);
