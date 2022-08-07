@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 abstract class ProductDataSource{
   Future<DataProductResponse> doGetProductNew(int page,int size);
   Future<DataProductResponse> doGetProductSale(int page,int size);
-  Future<DataProductResponse> doGetProductByCategoryId(int categoryId,int page,int size);
-  Future<DataProductResponse> doGetProductBySubId(int subId,int page,int size);
+  Future<DataProductResponse> doGetProductByCategoryId(int categoryId,int page,int size,String keySort);
+  Future<DataProductResponse> doGetProductBySubId(int subId,int page,int size,String keySort);
   Future<Product> getById(int id);
   Future<DataProductResponse> getSearch(String search, int page, int size);
 }
@@ -21,12 +21,12 @@ class ProductDataSourceImpl extends ProductDataSource{
   => _productAPI.goGetAll(page,size);
 
   @override
-  Future<DataProductResponse> doGetProductByCategoryId(int categoryId, int page, int size)
-  => _productAPI.doGetProductByCategoryId(categoryId, page, size);
+  Future<DataProductResponse> doGetProductByCategoryId(int categoryId, int page, int size,String keySort)
+  => _productAPI.doGetProductByCategoryId(categoryId, page, size,keySort);
 
   @override
-  Future<DataProductResponse> doGetProductBySubId(int subId, int page, int size)
-  => _productAPI.doGetProductBySubId(subId, page, size);
+  Future<DataProductResponse> doGetProductBySubId(int subId, int page, int size,String keySort)
+  => _productAPI.doGetProductBySubId(subId, page, size,keySort);
 
   @override
   Future<Product> getById(int id)

@@ -13,6 +13,8 @@ class SubCategoryModel extends ViewModel{
   RxList<SubCategory> dataSubCategory = RxList.empty();
   RxList<Product> dataProductByCategory = RxList.empty();
   RxInt categoryId = 0.obs;
+  RxInt subcategoryId = 0.obs;
+  RxString keySort = 'DESC'.obs;
   RxInt size = 8.obs;
 
   SubCategoryModel(this._productUserCase, this._subCateUserCase);
@@ -23,14 +25,14 @@ class SubCategoryModel extends ViewModel{
   }
 
   Future<void> loadByCategory() async{
-    await _productUserCase.doGetProductByCategoryId(categoryId.value, 0, size.value).then((value) async{
+    subcategoryId.value = 0;
+    await _productUserCase.doGetProductByCategoryId(categoryId.value, 0, size.value,keySort.value).then((value) async{
       dataProductByCategory.value = value.content ?? [Product()];
     });
   }
 
-  Future<void> loadProductBySubId(int subId) async{
-    size.value = 8;
-    await _productUserCase.doGetProductBySubId(subId, 0, size.value).then((value) async{
+  Future<void> loadProductBySubId() async{
+    await _productUserCase.doGetProductBySubId(subcategoryId.value, 0, size.value,keySort.value).then((value) async{
       dataProductByCategory.value = value.content ?? [Product()];
     });
   }

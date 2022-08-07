@@ -53,12 +53,13 @@ class _ProductAPI implements ProductAPI {
 
   @override
   Future<DataProductResponse> doGetProductByCategoryId(
-      categoryId, page, size) async {
+      categoryId, page, size, keySort) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'categoryId': categoryId,
       r'page': page,
-      r'size': size
+      r'size': size,
+      r'keySort': keySort
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
@@ -74,12 +75,14 @@ class _ProductAPI implements ProductAPI {
   }
 
   @override
-  Future<DataProductResponse> doGetProductBySubId(subId, page, size) async {
+  Future<DataProductResponse> doGetProductBySubId(
+      subId, page, size, keySort) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'subId': subId,
       r'page': page,
-      r'size': size
+      r'size': size,
+      r'keySort': keySort
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

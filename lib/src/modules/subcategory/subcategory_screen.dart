@@ -1,19 +1,13 @@
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
-import 'package:deskover_develop/src/modules/homepage/widgets/list_product_new.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_widget.dart';
 import 'package:deskover_develop/src/modules/subcategory/subcategory_model.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
-import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class SubCategoryScreen extends StatefulWidget{
@@ -33,6 +27,7 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
       viewModel.loadSubCategory();
   }
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -41,37 +36,18 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 6),
+          margin: const EdgeInsets.only(top: 6),
           child: Column(
             children: [
-              // AspectRatio(
-              //   aspectRatio: 16 / 7,
-              //   child: ImageSlideshow(
-              //       width: double.infinity,
-              //       initialPage: 0,
-              //       indicatorColor: UIColors.brandA,
-              //       indicatorBackgroundColor: Colors.grey,
-              //       onPageChanged: (value) {
-              //         //debugPrint('Page changed: $value');
-              //       },
-              //       autoPlayInterval: 3000,
-              //       isLoop: true,
-              //       children: const [
-              //         GlobalImage(
-              //           'https://lh3.googleusercontent.com/cdnMLTetZOOkCWEN83BekbmqHlzSqJp3NZrhVFn3OBQT7e8urrMHjlRWrZ-EadW6k3JK48wKJYLK9k8ZV-fRG7kztC12oZ1XuA=rw-w1920',
-              //           fit: BoxFit.fill,
-              //         )
-              //       ]),
-              // ),
               Container(
                 color: UIColors.white,
                 child: Column(
                   children: [
                     Obx(
                           ()=> Visibility(
-                        visible: viewModel.dataSubCategory.value.length > 0,
+                        visible: viewModel.dataSubCategory.isNotEmpty,
                         child: SizedBox(
-                          height: (viewModel.dataSubCategory.value.length) > 8
+                          height: (viewModel.dataSubCategory.length) > 8
                               ? 230
                               : 230 / 2,
                           child: Center(
@@ -82,9 +58,9 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
                                 scrollDirection: Axis.horizontal,
                                 // physics: const NeverScrollableScrollPhysics(),
                                 padding: const EdgeInsets.all(0),
-                                itemCount: viewModel.dataSubCategory.value.length,
+                                itemCount: viewModel.dataSubCategory.length,
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: (viewModel.dataSubCategory.value.length) > 8
+                                  crossAxisCount: (viewModel.dataSubCategory.length) > 8
                                       ? 2
                                       : 1,
                                   mainAxisExtent: 80,
@@ -98,8 +74,11 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
                                         padding: EdgeInsets.zero,
                                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                         minimumSize: Size.zero),
-                                    onPressed: () async
-                                    => await viewModel.loadProductBySubId(viewModel.dataSubCategory[i].id!),
+                                    onPressed: () async{
+                                      viewModel.subcategoryId.value = viewModel.dataSubCategory[i].id!;
+                                      viewModel.loadProductBySubId();
+                                    }
+                                   ,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -121,7 +100,7 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 3),
                                             child: Text(
-                                              viewModel.dataSubCategory.value[i].name ?? '',
+                                              viewModel.dataSubCategory[i].name ?? '',
                                               textAlign: TextAlign.center,
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
@@ -156,13 +135,74 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
               ),
               Container(
                 color: UIColors.white,
-                margin: EdgeInsets.only(top: 5),
-                padding: EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.only(top: 6),
                 child: Obx(
                       ()=>    Visibility(
-                        visible: viewModel.dataProductByCategory.value.length > 0 ,
+                        visible: viewModel.dataProductByCategory.isNotEmpty ,
                         child: Column(
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16,right: 16),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: viewModel.keySort.value == 'DESC' ? UIColors.brandA: UIColors.white,
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                              color: UIColors.brandA
+                                          ),
+                                          borderRadius: BorderRadius.circular(32.0),
+                                        ),
+                                      ),
+                                      onPressed: (){
+                                        viewModel.keySort.value = 'DESC';
+                                        if(viewModel.subcategoryId.value <= 0){
+                                          viewModel.loadByCategory();
+                                        }else if(viewModel.subcategoryId.value > 0){
+                                          viewModel.loadProductBySubId();
+                                        }
+                                      },
+                                      child: Text(
+                                          'Giảm dần',
+                                        style: TextStyle(
+                                            color: viewModel.keySort.value == 'DESC' ? UIColors.white : UIColors.brandA
+                                        ),
+                                      )
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: viewModel.keySort.value == 'ASC' ? UIColors.brandA: UIColors.white,
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                            color: UIColors.brandA
+                                          ),
+                                          borderRadius: BorderRadius.circular(32.0),
+                                        ),
+                                      ),
+                                      onPressed: (){
+                                        viewModel.keySort.value = 'ASC';
+                                        if(viewModel.subcategoryId.value <= 0){
+                                          viewModel.loadByCategory();
+                                        }else if(viewModel.subcategoryId.value > 0){
+                                          viewModel.loadProductBySubId();
+                                        }
+                                      },
+                                      child: Text(
+                                          'Tăng dần',
+                                        style: TextStyle(
+                                          color: viewModel.keySort.value == 'ASC' ? UIColors.white : UIColors.brandA
+                                        ),
+                                      )
+                                  ),
+
+
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 6,),
                             GridView.builder(
                               padding: const EdgeInsets.symmetric(horizontal: 12),
                               shrinkWrap: true,
@@ -175,7 +215,7 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
                                 mainAxisExtent: 270,
                                 // childAspectRatio: 0.4,
                               ),
-                              itemCount: viewModel.dataProductByCategory.value.length,
+                              itemCount: viewModel.dataProductByCategory.length,
                               itemBuilder: (context, index) {
                                 return ProductWidget(
                                   productId:  viewModel.dataProductByCategory[index].id!,
@@ -187,17 +227,23 @@ class _SubCategoryScreen extends ViewWidget<SubCategoryScreen, SubCategoryModel>
                               },
                             ),
                             SizedBox(
-                              height: 30,
+                              height: 40,
                               child: TextButton(
                                   style: TextButton.styleFrom(
                                     elevation: 0.0,
                                     padding: EdgeInsets.zero,
                                   ),
                                   onPressed:() async{
-
+                                    if(viewModel.subcategoryId.value <= 0){
+                                      viewModel.size+=8;
+                                      viewModel.loadByCategory();
+                                    }else if(viewModel.subcategoryId.value > 0){
+                                      viewModel.size+=8;
+                                      viewModel.loadProductBySubId();
+                                    }
                                   },
-                                  child: Text(
-                                    'Xem thêm....',
+                                  child: const Text(
+                                    'Xem thêm >',
                                     style: TextStyle(
                                         color: UIColors.brandA
                                     ),

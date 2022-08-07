@@ -558,41 +558,6 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                           ),
                         ),
                       ),
-                      Obx(
-                            () => InkWell(
-                          onTap: () {
-                            isLogin.value
-                                ? Get.to(PurchasedProductScreen())
-                                : print("pl login");
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                IconAssets.actionUpdate,
-                                width: 30,
-                                color: isLogin.value
-                                    ? UIColors.black
-                                    : UIColors.border10,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              SizedBox(
-                                  child: Text(
-                                    "Sản phẩm đã mua",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: isLogin.value
-                                            ? UIColors.black
-                                            : UIColors.border10,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

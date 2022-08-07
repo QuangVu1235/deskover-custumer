@@ -17,7 +17,7 @@ class ProductSellingModel extends ViewModel{
 
   Future<void> doGetProductByCate() async{
       loading(() async {
-        await _productUserCase.doGetProductByCategoryId(categoryId.value, 0, size.value)
+        await _productUserCase.doGetProductByCategoryId(categoryId.value, 0, size.value, 'DESC')
             .then((value) => dataProduct.value = value.content ?? []);
       });
   }

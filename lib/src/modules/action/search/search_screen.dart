@@ -27,42 +27,42 @@ class _SearchPageState extends ViewWidget<SearchPage, SearchModel> {
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
         backgroundColor: UIColors.white,
         actions: [
-          IconButton(
-            onPressed: () {
-              // Get.to(FilterPage(viewModel: viewModel,codeCategorychose: List.from(viewModel.listCateroryFilter),codeWereHouseChose: List.from(viewModel.listWareHouseFilter),));
-            },
-            icon: SvgPicture.asset(IconAssets.actionFilterAlt),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8, 8, 8.0),
-            child: StreamBuilder(
-              initialData: getIt<NumCartDetail>().number,
-              stream: getIt<NumCartDetail>().getStreamController.stream,
-              builder: (context, snapshot) {
-                return Badge(
-                  showBadge: (snapshot.data ?? 0) != 0,
-                  shape: BadgeShape.circle,
-                  position: BadgePosition.topEnd(top: 0, end: 3),
-                  badgeContent: Text(
-                    '${snapshot.data ?? ''}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
-                  ),
-                  badgeColor: UIColors.brandA,
-                  animationType: BadgeAnimationType.fade,
-                  child: IconButton(
-                    onPressed: () {
-                      // Get.to(const CardManagerScreen());
-                    },
-                    icon: SvgPicture.asset(SvgImageAssets.imgcard),
-                  ),
-                );
-              },
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     // Get.to(FilterPage(viewModel: viewModel,codeCategorychose: List.from(viewModel.listCateroryFilter),codeWereHouseChose: List.from(viewModel.listWareHouseFilter),));
+          //   },
+          //   icon: SvgPicture.asset(IconAssets.actionFilterAlt),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(0, 8, 8, 8.0),
+          //   child: StreamBuilder(
+          //     initialData: getIt<NumCartDetail>().number,
+          //     stream: getIt<NumCartDetail>().getStreamController.stream,
+          //     builder: (context, snapshot) {
+          //       return Badge(
+          //         showBadge: (snapshot.data ?? 0) != 0,
+          //         shape: BadgeShape.circle,
+          //         position: BadgePosition.topEnd(top: 0, end: 3),
+          //         badgeContent: Text(
+          //           '${snapshot.data ?? ''}',
+          //           style: const TextStyle(
+          //             color: Colors.white,
+          //             fontWeight: FontWeight.w700,
+          //             fontSize: 10,
+          //           ),
+          //         ),
+          //         badgeColor: UIColors.brandA,
+          //         animationType: BadgeAnimationType.fade,
+          //         child: IconButton(
+          //           onPressed: () {
+          //             // Get.to(const CardManagerScreen());
+          //           },
+          //           icon: SvgPicture.asset(SvgImageAssets.imgcard),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
       backgroundColor: Colors.white,
