@@ -498,33 +498,25 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                           ),
                         ),
                       ),),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  child: Row(
-                    children: [
-                      // Expanded(
-                      //   child: ElevatedButton(
-                      //       style: ElevatedButton.styleFrom(
-                      //           primary: UIColors.white,
-                      //           // elevation: 0.0,
-                      //           shape:  RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.circular(5),
-                      //               side: BorderSide(color: UIColors.red,width: 1)
-                      //           )
-                      //       ) ,
-                      //       onPressed: (){
-                      //
-                      //       },
-                      //       child: Text(
-                      //         'Xoá giỏ quà',
-                      //         style: TextStyle(
-                      //             color: UIColors.red
-                      //         ),
-                      //       )),
-                      // ),
-                      // SizedBox(width: 8,),
-                      Obx(()=>Expanded(
+                Row(
+                  children: [
+                    Obx(()=>Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                        decoration: const BoxDecoration(
+                          color: UIColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 218, 218, 218),
+                              blurRadius: 15, // soften the shadow
+                              spreadRadius: -10, //extend the shadow
+                              offset: Offset(
+                                0.0, // Move to right 10  horizontally
+                                -16.0, // Move to bottom 10 Vertically
+                              ),
+                            ),
+                          ],
+                        ),
                         child: Column(
                           children: [
                             const SizedBox(height: 6,),
@@ -581,7 +573,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ),
                               ],
                             ),
-                            Divider(color: UIColors.black),
+                            const Divider(color: UIColors.black),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -601,7 +593,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6,),
+                            const SizedBox(height: 8,),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
@@ -616,19 +608,21 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   onPressed: () async {
                                     await viewModel.btnConfirmOrder();
                                   },
-                                  child: const Text(
-                                    'Xác nhận mua hàng',
-                                    style: TextStyle(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: const Text(
+                                      'Xác nhận mua hàng',
+                                      style: TextStyle(
 
+                                      ),
                                     ),
                                   )),
                             ),
                           ],
                         ),
-                      ))
-
-                    ],
-                  ),
+                      ),
+                    ))
+                  ],
                 )
 
               //button add product

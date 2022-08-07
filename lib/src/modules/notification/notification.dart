@@ -1,9 +1,8 @@
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/notification/get_time.dart';
 import 'package:deskover_develop/src/modules/notification/notifi_model.dart';
-import 'package:deskover_develop/src/modules/order/order_screen.dart';
+import 'package:deskover_develop/src/modules/notification/notification_order.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
-import 'package:deskover_develop/src/utils/widgets/view_model.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ class _Notify extends ViewWidget<Notify,NotifyModel>{
        appBar: AppBar(
          backgroundColor: UIColors.white,
          title: const Text('Thông báo'),
+         shadowColor: Colors.grey.withOpacity(0.5),
        ),
        body:
            Obx(()=>  RefreshIndicator(
@@ -36,7 +36,7 @@ class _Notify extends ViewWidget<Notify,NotifyModel>{
                  return InkWell(
                    onTap: (){
                       viewModel.changeNotify(viewModel.listNotify[index].id ?? 0);
-                      Get.to( OrderManager(orderCode: viewModel.listNotify[index].orderCode ?? ''));
+                      Get.to( NotificationOrder(orderCode: viewModel.listNotify[index].orderCode ?? ''));
                    },
                    child: Container(
                      margin: const EdgeInsets.only(top: 6),

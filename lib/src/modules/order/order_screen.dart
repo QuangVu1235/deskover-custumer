@@ -3,12 +3,14 @@ import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/modules/notification/get_time.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +30,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
     super.initState();
     viewModel.orderCode.value = widget.orderCode;
     viewModel.loadOrder();
+    viewModel.loadNotifyByOrderCode();
   }
   final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
   @override
@@ -49,91 +52,178 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                 padding: const EdgeInsets.fromLTRB(SpaceValues.space32, SpaceValues.space16, SpaceValues.space32, SpaceValues.space16),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: SpaceValues.space56,),
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: UIColors.brandA,
-                              width: 2,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: UIColors.brandA,
-                            child: Image.asset(
-                              SvgImageAssets.icInfomation0,
-                              color: UIColors.white,
-                              width: 30,
-                            ),
+                    Visibility(
+                      visible: viewModel.cancel.value,
+                      child:  Visibility(
+                        visible: viewModel.indexAction.value == 4,
+                        child:SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            children: [
+                              AnimatedContainer(
+                                duration: const Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: UIColors.black10,
+                                  child: SvgPicture.asset(
+                                    SvgImageAssets.icCacel,
+                                    color: UIColors.black70,
+                                  ),
+                                ),
+                              ),
+                              Text('Chờ huỷ')
+                            ],
                           ),
                         ),
-                        Expanded(
-                          child: viewModel.indexAction.value >=1 ? Divider(height: 50, thickness: 3, color: UIColors.brandA) : SizedBox(),
-                        ),
-                        Obx(() => AnimatedContainer(
-                          duration: const Duration(seconds: 1),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: UIColors.brandA,
-                              width: 2,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: viewModel.indexAction.value >= 1 ? UIColors.brandA : UIColors.white,
-                            child: SvgPicture.asset(
-                              SvgImageAssets.icInfomation1,
-                              color: viewModel.indexAction.value >= 1 ? UIColors.white : UIColors.black70,
-                            ),
-                          ),
-                        )),
-                        Expanded(
-                          child:viewModel.indexAction.value >=2 ? Divider(height: 50, thickness: 3, color: UIColors.brandA) : const SizedBox(),
-                        ),
-                        Obx(() => AnimatedContainer(
-                          duration: const Duration(seconds: 1),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: UIColors.brandA,
-                              width: 1,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: viewModel.indexAction.value >= 2 ? UIColors.brandA : UIColors.white,
-                            child: SvgPicture.asset(
-                              SvgImageAssets.icInfomation2,
-                              width: 30,
-                              color: viewModel.indexAction.value >= 2 ? UIColors.white : UIColors.black,
-                            ),
+                        replacement:  Obx(() => SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            children: [
+                              AnimatedContainer(
+                                duration: const Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: UIColors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: viewModel.indexAction.value >=5 ? UIColors.black10 : UIColors.white,
+                                  child: SvgPicture.asset(
+                                    SvgImageAssets.icInfomation00,
+                                    color: UIColors.green,
+                                  ),
+                                ),
+                              ),
+                              Text('Đã huỷ')
+                            ],
                           ),
                         )),
-                        const SizedBox(width: SpaceValues.space56,),
-                      ],
+                      ),
+                      replacement: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: SpaceValues.space24,),
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: UIColors.brandA,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: UIColors.brandA,
+                                  child: Image.asset(
+                                    SvgImageAssets.icInfomation0,
+                                    color: UIColors.white,
+                                    width: 30,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: viewModel.indexAction.value >=1 ? Divider(height: 50, thickness: 3, color: UIColors.brandA) : SizedBox(),
+                              ),
+                              Obx(() => AnimatedContainer(
+                                duration: const Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: UIColors.brandA,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: viewModel.indexAction.value >= 1 ? UIColors.brandA : UIColors.white,
+                                  child: SvgPicture.asset(
+                                    SvgImageAssets.icInfomation00,
+                                    color: viewModel.indexAction.value >= 1 ? UIColors.white : UIColors.black70,
+                                  ),
+                                ),
+                              )),
+                              Expanded(
+                                child:viewModel.indexAction.value >=2 ? Divider(height: 50, thickness: 3, color: UIColors.brandA) : const SizedBox(),
+                              ),
+                              Obx(() => AnimatedContainer(
+                                duration: const Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: UIColors.brandA,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: viewModel.indexAction.value >= 2 ? UIColors.brandA : UIColors.white,
+                                  child: SvgPicture.asset(
+                                    SvgImageAssets.icInfomation1,
+                                    color: viewModel.indexAction.value >= 2 ? UIColors.white : UIColors.black70,
+                                  ),
+                                ),
+                              )),
+                              Expanded(
+                                child:viewModel.indexAction.value >=3 ? Divider(height: 50, thickness: 3, color: UIColors.brandA) : const SizedBox(),
+                              ),
+                              Obx(() => AnimatedContainer(
+                                duration: const Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: UIColors.brandA,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: viewModel.indexAction.value >= 3 ? UIColors.brandA : UIColors.white,
+                                  child: SvgPicture.asset(
+                                    SvgImageAssets.icInfomation2,
+                                    width: 30,
+                                    color: viewModel.indexAction.value >= 3 ? UIColors.white : UIColors.black,
+                                  ),
+                                ),
+                              )),
+                              const SizedBox(width: SpaceValues.space24,),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              SizedBox(width: 10,),
+                              Text(
+                                "Chờ xác nhận",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 15,),
+                              Text(
+                                "Đã xác nhận",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 20,),
+                              Text(
+                                "Đang giao",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 30,),
+                              Text(
+                                "Đã giao",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        SizedBox(width: 40,),
-                        Text(
-                          "Chờ xác nhận",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        SizedBox(width: 30,),
-                        Text(
-                          "Đang giao",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        SizedBox(width: 45,),
-                        Text(
-                          "Đã giao",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
+
                   ],
                 ),
               ),
@@ -144,9 +234,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
               child:
               Obx(()=>   Visibility(
                 visible: viewModel.orderReponese.value != null,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 4),
-                  color: UIColors.white,
+                child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height,
                   child:Column(
@@ -154,17 +242,9 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                       Expanded(
                         child: ListView(
                           children: [
-                            Card(
-                              elevation: 0.0,
-                              margin:  EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: UIColors.black10,
-                                    width: 1
-                                ),
-                                borderRadius: BorderRadius.circular(0),
-                              ),
+                            Container(
+                              margin: EdgeInsets.only(top: 6),
+                              color: UIColors.white,
                               child: SizedBox(
                                 child: Padding(
                                   padding: const EdgeInsets.all(20),
@@ -190,7 +270,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 24,),
+                                      const SizedBox(height: 24,),
                                       Row(
                                         children: [
                                           Container(
@@ -222,7 +302,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                                         fontSize: 12,
                                                         fontWeight: FontWeight.w700),
                                                   ),
-                                                  SizedBox(height: 4,),
+                                                  const SizedBox(height: 4,),
                                                   Text(
                                                     viewModel.orderReponese.value?.orderDetail?.address ?? '',
                                                     style: const TextStyle(
@@ -288,8 +368,9 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                               children: [
                                                 SizedBox(
                                                   width: MediaQuery.of(context).size.width*0.2,
+                                                  height: MediaQuery.of(context).size.width*0.2,
                                                   child: Padding(
-                                                    padding: EdgeInsets.all(10),
+                                                    padding: const EdgeInsets.all(10),
                                                     child: GlobalImage(BaseApi.baseUrl_product+ (viewModel.orderReponese.value?.products?[index].product?.img ?? '')),
                                                   ),
                                                 ),
@@ -325,11 +406,22 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                                             fontSize: 12,
                                                           ),
                                                         ),
+                                                        (viewModel.orderReponese.value?.orderStatus?.code == 'HUY'
+                                                            || viewModel.orderReponese.value?.orderStatus?.code == 'GH-TC' ) ?
+                                                        ElevatedButton(
+                                                            onPressed: (){
+
+                                                            },
+                                                            style: ElevatedButton.styleFrom(
+                                                            ),
+                                                            child: const Padding(
+                                                              padding: EdgeInsets.only(left: 10,right: 10),
+                                                              child: Text('Mua lại'),
+                                                            )) : SizedBox.shrink()
                                                       ],
                                                     ),
                                                   ),
                                                 ),
-
                                               ],
                                             ),
 
@@ -343,9 +435,99 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 6),
+                              padding: const EdgeInsets.only(left: 16,right: 16,top: 16,bottom: 16),
+                              color: UIColors.white,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:   [
+                                  const Text(
+                                    'Phương thức vận chuyển:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500
+                                  ),),
+                                  Text(viewModel.orderReponese.value?.shipping?.name_shipping ?? '')
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 6),
+                              padding: const EdgeInsets.only(left: 16,right: 16,top: 16,bottom: 16),
+                              color: UIColors.white,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:   [
+                                  const Text(
+                                    'Phương thức thanh toán:',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500
+                                    ),),
+                                  Text(viewModel.orderReponese.value?.payment?.name_payment ?? '')
+                                ],
+                              ),
+                            ),
+                            Container(
+                              color: UIColors.white,
+                              margin: const EdgeInsets.only(top: 6),
+                              child: ListView.separated(
+                                  padding: const EdgeInsets.all(8),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                  itemCount: viewModel.notifyResponse.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundColor: UIColors.white,
+                                              child: Icon(Icons.circle_rounded,color: (viewModel.notifyResponse.length -1) == index ? UIColors.brandA : UIColors.black10 ,),
+                                            ),
+                                            Expanded(child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  child: Text(viewModel.notifyResponse[index].title ?? ''),
+                                                ),
+                                                Text(GetTime.parse(DateTime.parse(viewModel.notifyResponse[index].createdAt ?? '')
+                                                )),
+                                              ],
+                                            ),)
+                                          ],
+                                        )
+
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
                           ],
                         ),
                       ),
+                      viewModel.orderReponese.value?.orderStatus?.code == 'C-XN'
+                      ? Container(
+                        color: UIColors.white,
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 16,bottom: 16),
+                        child: SizedBox(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16,right: 16),
+                            child: ElevatedButton(
+                              onPressed: (){
+                                viewModel.cancelOrder();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Huỷ đơn hàng'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ) : const SizedBox()
                     ],
                   ),
                 ),
@@ -353,19 +535,7 @@ class _OrderManager extends ViewWidget<OrderManager,OrderManagerModel>{
               ),),
 
             )
-            : Text('..'),
-            const Divider(color: UIColors.black70,height: 2),
-            Expanded(
-              flex: 2,
-              child: Container(
-                  color: UIColors.white,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Text('Trạng thái đơn hàng'),
-                    ],
-                  )),
-            )
+            : Text('...'),
 
           ],
         ),)

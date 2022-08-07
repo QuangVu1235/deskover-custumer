@@ -18,7 +18,7 @@ class OrderReponse {
   double? unitPrice;
   int? orderQuantity;
   String? label;
-  String? fee;
+  double? fee;
   String? estimatedPickTime;
   String? estimatedDeliverTime;
   User? user;

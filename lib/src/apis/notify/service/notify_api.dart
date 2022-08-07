@@ -14,7 +14,11 @@ abstract class NotifyApi {
   @GET('/v1/api/customer/notify')
   Future<List<NotifyResponse>?> doGetNotifyByUser();
 
+  @GET('/v1/api/customer/notify/ordercode')
+  Future<List<NotifyResponse>?> doGetNotifyByUserAndOrderCode(@Query('orderCode') String? orderCode);
+
   @PUT('/v1/api/customer/notify/{notifyId}')
   Future<void> changeNotify(@Path('notifyId') int? notifyId);
+
 
 }

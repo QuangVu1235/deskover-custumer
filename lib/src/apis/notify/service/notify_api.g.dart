@@ -36,6 +36,25 @@ class _NotifyApi implements NotifyApi {
   }
 
   @override
+  Future<List<NotifyResponse>?> doGetNotifyByUserAndOrderCode(orderCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'orderCode': orderCode};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<NotifyResponse>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/customer/notify/ordercode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data
+        ?.map((dynamic i) => NotifyResponse.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
   Future<void> changeNotify(notifyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

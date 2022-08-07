@@ -19,7 +19,7 @@ OrderReponse _$OrderReponseFromJson(Map<String, dynamic> json) => OrderReponse(
       unitPrice: (json['unitPrice'] as num?)?.toDouble(),
       orderQuantity: json['orderQuantity'] as int?,
       label: json['label'] as String?,
-      fee: json['fee'] as String?,
+      fee: (json['fee'] as num?)?.toDouble(),
       estimatedPickTime: json['estimatedPickTime'] as String?,
       estimatedDeliverTime: json['estimatedDeliverTime'] as String?,
       user: json['user'] == null

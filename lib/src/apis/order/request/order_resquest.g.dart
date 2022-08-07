@@ -15,6 +15,7 @@ OrderResquest _$OrderResquestFromJson(Map<String, dynamic> json) =>
           ? null
           : Shipping.fromJson(json['shipping'] as Map<String, dynamic>),
       note: json['note'] as String?,
+      fee: (json['fee'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$OrderResquestToJson(OrderResquest instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$OrderResquestToJson(OrderResquest instance) =>
       'payment': instance.payment,
       'shipping': instance.shipping,
       'note': instance.note,
+      'fee': instance.fee,
     };
