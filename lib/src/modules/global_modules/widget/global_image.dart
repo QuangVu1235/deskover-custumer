@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/assets/image_asset.dart';
 
 class GlobalImage extends StatelessWidget {
   final String? url;
@@ -37,8 +37,8 @@ class GlobalImage extends StatelessWidget {
         : urlX;
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      width: width,
-      height: height,
+       width: width,
+       height: height,
       fit: fit,
       placeholder: (context, url) => Image.asset(
         placeholder,

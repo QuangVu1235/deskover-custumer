@@ -22,7 +22,7 @@ abstract class UserAddressApi{
   Future<MessageResponse> doPutAddrees(@Body() UserAddress userAddress,);
 
   @PUT('/v1/api/customer/user/address/{id}')
-  Future<List<UserAddress>?> changeActive(@Path('id') int? id,);
+  Future<MessageResponse> changeActive(@Path('id') int? id);
 
   @PUT('/v1/api/customer/user/address-choose/{id}')
   Future<MessageResponse> changeChoose(@Path('id') int? id,);

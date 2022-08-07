@@ -29,9 +29,13 @@ class SettingProfileModel extends ViewModel{
   SettingProfileModel(this._userUserCase);
 
   @override
-  void initState() {
-    super.initState();
-    loadProfiled();
+   initState() {
+    loading(() async {
+      await Future.wait([
+       loadProfiled(),
+      ]);
+    });
+
 
   }
   Future<void> loadProfiled()async {
@@ -41,13 +45,34 @@ class SettingProfileModel extends ViewModel{
           phone.text = value.phone!;
           email.text = value.email!;
           id.text = 'CUSTOMER${value.id}';
+          print( user.value?.avatar);
     });
   }
 
   void updateProfile() async{
     loading(() async{
-     await _userUserCase.doPostUploadFile(File(imgUpload.value?.path ?? ''));
+      if((imgUpload.value?.path ?? '').isNotEmpty){
+        await _userUserCase.doPostUploadFile(File(imgUpload.value?.path ?? ''));
+        if ((imgUpload.value?.path.isEmpty ?? false)) {
+          throw 'Có lỗi khi upload hình ảnh';
+        }
+        await _userUserCase.doGetProfiled().then((value) async{
+              user.value = value;
+        });
+        User? users = user.value;
+        users?.fullname = fullname.text;
+        users?.email = email.text;
+        await _userUserCase.doPutUpdate(users!);
+      }else{
+        User? users = user.value;
+        users?.fullname = fullname.text;
+        users?.email = email.text;
+        await _userUserCase.doPutUpdate(users!);
+      }
+
     });
+
+
   }
 
 }

@@ -23,6 +23,11 @@ class UserUserCase{
   Future<void> doPostUploadFile(File file)
   => _loginDataSource.doPostUploadFile(file);
 
+  Future<MessageResponse> doPutUpdate(User user)
+  => _loginDataSource.doPutUpdate(user);
+
+
+
 
 
 }

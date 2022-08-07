@@ -5,8 +5,8 @@ part 'user_response.g.dart';
 class User {
   int? id;
   String? username;
-  String? img;
   String? fullname;
+  @JsonKey(name: 'avatar')
   String? avatar;
   String? email;
   String? phone;
@@ -26,7 +26,6 @@ class User {
         this.actived,
         this.verify,
         this.modifiedBy,
-        this.img,
         this.email,
         this.phone
       });

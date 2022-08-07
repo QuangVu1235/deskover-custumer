@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
-import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
+import 'package:deskover_develop/src/modules/cart/address_cart.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
 import 'package:deskover_develop/src/utils/AppUtils.dart';
@@ -16,7 +16,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 
-import '../../config/assets/icon_assets.dart';
 import '../../config/assets/image_asset.dart';
 import '../../themes/space_values.dart';
 import '../../themes/ui_colors.dart';
@@ -33,7 +32,6 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
   bool isChecked = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     viewModel.loadAddress();
   }
@@ -270,7 +268,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                         primary: UIColors.brandA,
                                       ) ,
                                       onPressed: (){
-                                          Get.to(()=> NotAddressScreen(viewModel: viewModel,));
+                                          Get.to(AddressCart());
                                       }
                                       , child: Row(
                                     children: [
@@ -381,6 +379,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                     constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
                                     child: SingleChildScrollView(
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           for (int i = 0;
                                           i < viewModel.dataShipping.length;
@@ -402,18 +401,40 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                                 value: viewModel.dataShipping[i],
                                                 groupValue: viewModel.shipping.value,
                                                 // activeColor: Color(0xFF6200EE),
-                                                onChanged: (value) {
+                                                onChanged: i < 1 ? (value) {
                                                   viewModel.shipping.value = value as Shipping? ;
                                                   viewModel.checkShipping();
+                                                  viewModel.feeValue.value = 0;
 
-                                                },
+                                                }: (value) {
+                                                    viewModel.shipping.value = value as Shipping? ;
+                                                    viewModel.checkShipping();
+                                                    viewModel.feeValue.value = 0;
+                                                    viewModel.getFee();
+                                                }
                                               ),
                                             ),
+                                          viewModel.feeValue.value > 0 ?
+                                          Row(
+                                            children: [
+                                              const Text('Phí vận chuyển của bạn là: '),
+                                              Text(
+                                                  formatCurrency.format(viewModel.feeValue.value),
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                           : SizedBox()
                                         ],
                                       ),
                                     ),
                                   ),
-                                ),),
+                                ),
+                              ),
+
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -475,33 +496,25 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                           ),
                         ),
                       ),),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  child: Row(
-                    children: [
-                      // Expanded(
-                      //   child: ElevatedButton(
-                      //       style: ElevatedButton.styleFrom(
-                      //           primary: UIColors.white,
-                      //           // elevation: 0.0,
-                      //           shape:  RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.circular(5),
-                      //               side: BorderSide(color: UIColors.red,width: 1)
-                      //           )
-                      //       ) ,
-                      //       onPressed: (){
-                      //
-                      //       },
-                      //       child: Text(
-                      //         'Xoá giỏ quà',
-                      //         style: TextStyle(
-                      //             color: UIColors.red
-                      //         ),
-                      //       )),
-                      // ),
-                      // SizedBox(width: 8,),
-                      Obx(()=>Expanded(
+                Row(
+                  children: [
+                    Obx(()=>Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                        decoration: const BoxDecoration(
+                          color: UIColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 218, 218, 218),
+                              blurRadius: 15, // soften the shadow
+                              spreadRadius: -10, //extend the shadow
+                              offset: Offset(
+                                0.0, // Move to right 10  horizontally
+                                -16.0, // Move to bottom 10 Vertically
+                              ),
+                            ),
+                          ],
+                        ),
                         child: Column(
                           children: [
                             const SizedBox(height: 6,),
@@ -540,7 +553,25 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ),
                               ],
                             ),
-                            Divider(color: UIColors.black),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Phí vận chuyển:',
+                                  style: TextStyle(
+                                      fontSize: 14
+                                  ),
+                                ),
+                                Text(
+                                  formatCurrency.format(viewModel.feeValue.value),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(color: UIColors.black),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -552,7 +583,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   ),
                                 ),
                                 Text(
-                                  formatCurrency.format(viewModel.totalPriceOrigin.value-viewModel.totalPercent.value),
+                                  formatCurrency.format(viewModel.totalPriceOrigin.value-viewModel.totalPercent.value-viewModel.feeValue.value),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14
@@ -560,7 +591,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6,),
+                            const SizedBox(height: 8,),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
@@ -575,19 +606,21 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                   onPressed: () async {
                                     await viewModel.btnConfirmOrder();
                                   },
-                                  child: Text(
-                                    'Xác nhận mua hàng',
-                                    style: TextStyle(
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(6.0),
+                                    child: Text(
+                                      'Xác nhận mua hàng',
+                                      style: TextStyle(
 
+                                      ),
                                     ),
                                   )),
                             ),
                           ],
                         ),
-                      ))
-
-                    ],
-                  ),
+                      ),
+                    ))
+                  ],
                 )
 
               //button add product
@@ -657,10 +690,10 @@ class PaymentMethod extends StatelessWidget{
                                 value: viewModel.dataPayment[i],
                                 groupValue: viewModel.payment.value,
                                 // activeColor: Color(0xFF6200EE),
-                                onChanged: (value) {
+                                onChanged: i <1 ? (value) {
                                   viewModel.payment.value = value as Payment? ;
                                   print(viewModel.payment.value?.name_payment);
-                                },
+                                  }:null,
                               ),
                             ),
                         ],

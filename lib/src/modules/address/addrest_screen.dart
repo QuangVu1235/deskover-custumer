@@ -1,28 +1,32 @@
+import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/apis/user/response/user_response.dart';
 import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
+import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/address/address_model.dart';
 import 'package:deskover_develop/src/modules/cart/cart_model.dart';
 import 'package:deskover_develop/src/modules/cart/creat_cart.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
 import 'package:deskover_develop/src/themes/space_values.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
+import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'add_addrees/add_address.dart';
+class NotAddressScreen extends StatefulWidget{
+  final bool cart;
+  const NotAddressScreen({Key? key, this.cart = true,}) : super(key: key);
+  @override
+  State<NotAddressScreen> createState() => _NotAddressScreen();
+}
 
-class NotAddressScreen extends StatelessWidget {
-  final CartModel viewModel;
-
-  const NotAddressScreen({Key? key, required this.viewModel}) : super(key: key);
-
-
+class _NotAddressScreen extends ViewWidget<NotAddressScreen,NotAddressModel> {
   @override
   Widget build(BuildContext context) {
-    print('1111111111');
     viewModel.loadAddress();
     return Scaffold(
       appBar: AppBar(
@@ -90,8 +94,15 @@ class NotAddressScreen extends StatelessWidget {
                                               break;
                                             case 1:
                                               viewModel.btnChooseAddress(viewModel.dataAddress[index].id ?? 0);
-                                              viewModel.shipping.value == null as Shipping;
-                                              print( viewModel.shipping.value?.name_shipping);
+                                              viewModel.removeAddressAndPayment();
+                                              viewModel.loadAddressCart();
+                                              Get.back();
+                                              break;
+                                            case 2:
+                                              viewModel.btnActiveAddress(viewModel.dataAddress[index].id ?? 0);
+                                              break;
+                                            case 3:
+                                              viewModel.btnActiveAddress(viewModel.dataAddress[index].id ?? 0);
                                               break;
 
                                           }
@@ -102,13 +113,20 @@ class NotAddressScreen extends StatelessWidget {
                                               child: Text('Chỉnh sửa'),
                                               value: 0,
                                             ),
-                                            const PopupMenuItem(
+                                            widget.cart ? const PopupMenuItem(
                                               child: Text('Chọn'),
                                               value: 1,
+                                            ) : const PopupMenuItem(
+                                              child: Text('Chọn 12'),
+                                              value: 2,
+                                            ),
+                                            const PopupMenuItem(
+                                              child: Text('Đặt làm mặc dịnh'),
+                                              value: 3,
                                             ),
                                             const PopupMenuItem(
                                               child: Text('Xóa'),
-                                              value: 2,
+                                              value: 4,
                                             ),
                                           ];
                                         },
@@ -189,5 +207,8 @@ class NotAddressScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  NotAddressModel createViewModel() => getIt<NotAddressModel>();
 }
 

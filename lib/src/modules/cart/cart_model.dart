@@ -1,4 +1,5 @@
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/apis/cart/response/fee.dart';
 import 'package:deskover_develop/src/apis/order/request/order_resquest.dart';
 import 'package:deskover_develop/src/apis/shipping_payment_status/response/shipping_payment_status.dart';
 import 'package:deskover_develop/src/apis/user_addrees/response/user_address.dart';
@@ -27,6 +28,8 @@ class CartModel extends ViewModel{
   Rxn<Shipping> shipping = Rxn();
   RxList<Payment> dataPayment = RxList.empty();
   Rxn<Payment> payment = Rxn();
+  Rxn<FeeGHTK> fee = Rxn();
+  RxInt feeValue = 0.obs;
 
   RxDouble totalPriceOrigin = 0.0.obs;
   RxDouble totalPercent = 0.0.obs;
@@ -53,8 +56,6 @@ class CartModel extends ViewModel{
     ]);
   }
 
-
-
   Future<void> loadShippingMethod() async {
     await _cartUserCase.doGetShipping().then((value) async{
            dataShipping.value = value ?? [];
@@ -78,6 +79,24 @@ class CartModel extends ViewModel{
         });
     });
   }
+  Future<void> btnChooseAddress(int id)async {
+    await _cartUserCase.changeChoose(id).then((value) async{
+      await loadAddress();
+    });
+  }
+
+  Future<void> getFee() async {
+    await _cartUserCase.getFee({
+      'address': address.value?.address,
+      'province': address.value?.province,
+      'district': address.value?.district,
+      'value': totalPriceOrigin.value - totalPercent.value
+    }).then((value) async{
+        fee.value = value;
+        feeValue.value = fee.value?.fee?.fee ?? 0;
+    });
+  }
+
 
   Future<void> loadCartOrder() async{
     totalPriceOrigin.value = 0.0;
@@ -114,7 +133,8 @@ class CartModel extends ViewModel{
     request=OrderResquest(
       payment: payment.value,
       shipping: shipping.value,
-      note: inputNote.text
+      note: inputNote.text,
+      fee: feeValue.value.toDouble()
     );
     loading(() async{
       await _orderUserCase.addOrder(request!).then((value) async{
@@ -149,12 +169,7 @@ class CartModel extends ViewModel{
         // Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
       });
   }
-  Future<void> btnChooseAddress(int id)async {
-    await _cartUserCase.changeChoose(id).then((value) async{
-        await loadAddress();
-        Get.back();
-    });
-  }
+
   Future<void> btnDelete( int productId) async{
     await AppUtils().showPopup(
       isSuccess: false,

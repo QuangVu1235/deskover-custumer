@@ -27,14 +27,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GetMaterialApp(
       useInheritedMediaQuery: true,
       // locale: DevicePreview.locale(context),
       // builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      title: 'MUTOSI Shop',
+      title: 'Deskover',
       theme: Themes.mainTheme,
       home: SplashScreen(
           nextScreen:

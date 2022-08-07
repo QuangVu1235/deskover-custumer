@@ -130,7 +130,12 @@ class SvgImageAssets {
   static const String icFacebook = 'resources/images/svg_facebook.svg';
   static const String icGoogle = 'resources/images/svg_google.svg';
   static const String icUser = 'resources/images/svg_user.svg';
-  static const String icInfomation1 = 'resources/images/ic_infomation1.svg';
+
+  static const String icInfomation0 = 'resources/images/icon-payment/money-transfer1.png';
+  static const String icInfomation00 = 'resources/images/svg_v.svg';
+  static const String icInfomation1 = 'resources/images/svg_container2.svg';
+  static const String icInfomation2 = 'resources/images/svg_container.svg';
+  static const String icCacel = 'resources/images/svg_x.svg';
   static const String imgBannerSearch =
       'resources/images/svg_search_banner.svg';
   static const String imgConfiguration =

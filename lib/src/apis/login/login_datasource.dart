@@ -11,6 +11,7 @@ abstract class LoginDataSource{
   Future<MessageResponse> doLogin(String username, String password);
   Future<User> doGetProfiled();
   Future<void> doPostUploadFile(File file);
+  Future<MessageResponse> doPutUpdate(User user);
 
 }
 @LazySingleton(as: LoginDataSource)
@@ -33,6 +34,10 @@ class LoginDataSourceImpl extends LoginDataSource{
   @override
   Future<void> doPostUploadFile(File file)
   => _loginAPI.doPostUploadFile(file);
+
+  @override
+  Future<MessageResponse> doPutUpdate(User user)
+  => _loginAPI.doPutUpdate(user);
 
 
 }

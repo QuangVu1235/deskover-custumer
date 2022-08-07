@@ -108,9 +108,7 @@ FlashSale _$FlashSaleFromJson(Map<String, dynamic> json) => FlashSale(
       name: json['name'] as String?,
       startDate: json['startDate'] as String?,
       startDateFormat: json['startDateFormat'] as String?,
-      endDate: json['endDate'] == null
-          ? null
-          : DateTime.parse(json['endDate'] as String),
+      endDate: json['endDate'] as String?,
       actived: json['actived'] as bool?,
       modifiedBy: json['modifiedBy'] as String?,
       endDateFormat: json['endDateFormat'] as String?,
@@ -126,7 +124,7 @@ Map<String, dynamic> _$FlashSaleToJson(FlashSale instance) => <String, dynamic>{
       'percent': instance.percent,
       'startDate': instance.startDate,
       'startDateFormat': instance.startDateFormat,
-      'endDate': instance.endDate?.toIso8601String(),
+      'endDate': instance.endDate,
       'endDateFormat': instance.endDateFormat,
       'actived': instance.actived,
       'modifiedAt': instance.modifiedAt,

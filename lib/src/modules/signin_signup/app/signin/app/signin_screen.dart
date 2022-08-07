@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-
 import '../../../reset_pass/app/forget_pass_phonenumber.dart';
 import '../../singup/app/signup_screen.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
@@ -31,7 +30,7 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
       backgroundColor: UIColors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: UIColors.login,
+        color: UIColors.white,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(

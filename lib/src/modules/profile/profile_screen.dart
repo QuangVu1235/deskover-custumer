@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:deskover_develop/src/config/assets/icon_assets.dart';
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
@@ -7,7 +5,9 @@ import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/config/static_data.dart';
 import 'package:deskover_develop/src/modules/address/addrest_screen.dart';
 import 'package:deskover_develop/src/modules/global_modules/widget/global_image.dart';
+import 'package:deskover_develop/src/modules/global_modules/widget/global_image_netword.dart';
 import 'package:deskover_develop/src/modules/main_page.dart';
+import 'package:deskover_develop/src/modules/order/all_order/list_order.dart';
 import 'package:deskover_develop/src/modules/profile/product/purchased_product.dart';
 import 'package:deskover_develop/src/modules/profile/profile_model.dart';
 import 'package:deskover_develop/src/modules/profile/setting/setting_profiled.dart';
@@ -30,11 +30,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
   bool _customTileExpanded = false;
-  @override
-  void initState() {
-    super.initState();
-    viewModel.checkLogin();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,29 +145,28 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                       child: Column(children: [
                         Row(
                           children: [
-                            Obx(
-                                  () => viewModel
-                                  .myProfile.value?.img !=
-                                  null
+                            Obx(() => (
+                                viewModel.myProfile.value?.avatar ?? '').isNotEmpty
                                   ? Container(
                                 height: 64,
                                 width: 64,
                                 margin:
                                 const EdgeInsets.only(left: 8),
                                 child: Visibility(
-                                  visible: viewModel.myProfile.value
-                                      ?.avatar !=
-                                      null,
+                                  visible: (viewModel.myProfile.value?.avatar ?? '').isNotEmpty,
                                   child: CircleAvatar(
                                     backgroundColor: Colors.grey,
                                     radius: 60,
                                     child: ClipOval(
-                                      child: GlobalImage(
-                                        BaseApi.baseUrlUser+'${viewModel.myProfile.value?.avatar}',
+
+                                      child:
+                                      Obx(()=>GlobalImageNetWord(
+                                        BaseApi.baseUrlUser+(viewModel.myProfile.value?.avatar??''),
                                         fit: BoxFit.cover,
                                         width: 120,
                                         height: 120,
-                                      ),
+                                      ),),
+
                                     ),
                                   ),
                                 ),
@@ -207,57 +201,6 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                             ),
                           ],
                         ),
-                        // Row(
-                        //   children: [
-                        //     SvgPicture.asset(
-                        //       SvgImageAssets.imgStart,
-                        //       color: Colors.yellow,
-                        //     ),
-                        //     const Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //           height: 50,
-                        //           thickness: 3,
-                        //           color: Colors.blue),
-                        //     ),
-                        //     SvgPicture.asset(
-                        //       SvgImageAssets.imgStart2,
-                        //     ),
-                        //     const Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //           height: 50,
-                        //           thickness: 3,
-                        //           color: Colors.grey),
-                        //     ),
-                        //     SvgPicture.asset(
-                        //       SvgImageAssets.imgStart3,
-                        //     ),
-                        //     const Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //           height: 50,
-                        //           thickness: 3,
-                        //           color: Colors.grey),
-                        //     ),
-                        //     SvgPicture.asset(
-                        //       SvgImageAssets.imgStart4,
-                        //     ),
-                        //     const Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //           height: 50,
-                        //           thickness: 3,
-                        //           color: Colors.grey),
-                        //     ),
-                        //     SvgPicture.asset(
-                        //       SvgImageAssets.imgStart3,
-                        //     ),
-                        //   ],
-                        // ),
-                        /////////////membership///////////////
-
-                        ////////////////////////////////////////
                       ]),
                     ),
                   ),
@@ -549,7 +492,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                             () => InkWell(
                           onTap: () {
                             isLogin.value
-                                ? Get.to(MainPage())
+                                ? Get.to(NotAddressScreen(cart: false,))
                                 : print("pl login");
                           },
                           child: Column(
@@ -584,7 +527,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                             () => InkWell(
                           onTap: () {
                             isLogin.value
-                                ? Get.to(ManagerOrderSreen())
+                                ? Get.to(ListOrder())
                                 : print("pl login");
                           },
                           child: Column(

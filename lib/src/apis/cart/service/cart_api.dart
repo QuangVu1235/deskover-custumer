@@ -1,4 +1,5 @@
 import 'package:deskover_develop/src/apis/cart/response/cart_response.dart';
+import 'package:deskover_develop/src/apis/cart/response/fee.dart';
 import 'package:deskover_develop/src/apis/message_response.dart';
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:dio/dio.dart';
@@ -15,6 +16,9 @@ abstract class CartAPI{
   @GET('/v1/api/customer/cart')
   Future<List<Cart>?> doGetAllCartOrder();
 
+  @POST('/v1/api/ghtk/fee')
+  Future<FeeGHTK> getFee(@Body() dynamic body);
+
   @POST('/v1/api/customer/add-cart')
   Future<MessageResponse> addToCart(@Query('productId') int? productId, @Query('quantity') int? quantity);
 
@@ -23,4 +27,6 @@ abstract class CartAPI{
 
   @DELETE('/v1/api/customer/cart')
   Future<MessageResponse> deleteCart(@Query('productId') int? productId);
+
+
 }
