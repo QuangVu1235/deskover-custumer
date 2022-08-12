@@ -35,9 +35,16 @@ class Product {
   SubCategory? subCategory;
   Brand? brand;
   FlashSale? flashSale;
-  // List<Null>? ratings;
+  List<Rating>? ratings;
   List<ProductThumbnails>? productThumbnails;
   int? averageRating;
+  int? totalRating;
+  int? totalSold;
+  int? rating5;
+  int? rating4;
+  int? rating3;
+  int? rating2;
+  int? rating1;
 
   Product(
       {this.id,
@@ -60,9 +67,16 @@ class Product {
         this.subCategory,
         this.brand,
         this.flashSale,
-        // this.ratings,
+        this.ratings,
         this.productThumbnails,
-        this.averageRating
+        this.averageRating,
+        this.totalRating,
+        this.totalSold,
+        this.rating5,
+        this.rating4,
+        this.rating3,
+        this.rating2,
+        this.rating1
       });
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
   Map<String, dynamic> toJson() => _$ProductToJson(this);
@@ -200,18 +214,23 @@ class ProductThumbnails {
 @JsonSerializable()
 class Rating {
   int? id;
-  String? thumbnail;
-  String? thumbnailUrl;
+  String? fullname;
+  String? email;
+  int? point;
+  String? content;
+  bool? actived;
   String? modifiedAt;
-  String? modifiedBy;
 
   Rating(
       {this.id,
-        this.thumbnail,
-        this.thumbnailUrl,
-        this.modifiedAt,
-        this.modifiedBy});
+        this.fullname,
+        this.email,
+        this.point,
+        this.content,
+        this.actived,
+        this.modifiedAt});
   factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
   Map<String, dynamic> toJson() => _$RatingToJson(this);
 
 }
+

@@ -48,10 +48,20 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       flashSale: json['flashSale'] == null
           ? null
           : FlashSale.fromJson(json['flashSale'] as Map<String, dynamic>),
+      ratings: (json['ratings'] as List<dynamic>?)
+          ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
+          .toList(),
       productThumbnails: (json['productThumbnails'] as List<dynamic>?)
           ?.map((e) => ProductThumbnails.fromJson(e as Map<String, dynamic>))
           .toList(),
       averageRating: json['averageRating'] as int?,
+      totalRating: json['totalRating'] as int?,
+      totalSold: json['totalSold'] as int?,
+      rating5: json['rating5'] as int?,
+      rating4: json['rating4'] as int?,
+      rating3: json['rating3'] as int?,
+      rating2: json['rating2'] as int?,
+      rating1: json['rating1'] as int?,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -75,8 +85,16 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'subCategory': instance.subCategory,
       'brand': instance.brand,
       'flashSale': instance.flashSale,
+      'ratings': instance.ratings,
       'productThumbnails': instance.productThumbnails,
       'averageRating': instance.averageRating,
+      'totalRating': instance.totalRating,
+      'totalSold': instance.totalSold,
+      'rating5': instance.rating5,
+      'rating4': instance.rating4,
+      'rating3': instance.rating3,
+      'rating2': instance.rating2,
+      'rating1': instance.rating1,
     };
 
 Discount _$DiscountFromJson(Map<String, dynamic> json) => Discount(
@@ -200,16 +218,20 @@ Map<String, dynamic> _$ProductThumbnailsToJson(ProductThumbnails instance) =>
 
 Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(
       id: json['id'] as int?,
-      thumbnail: json['thumbnail'] as String?,
-      thumbnailUrl: json['thumbnailUrl'] as String?,
+      fullname: json['fullname'] as String?,
+      email: json['email'] as String?,
+      point: json['point'] as int?,
+      content: json['content'] as String?,
+      actived: json['actived'] as bool?,
       modifiedAt: json['modifiedAt'] as String?,
-      modifiedBy: json['modifiedBy'] as String?,
     );
 
 Map<String, dynamic> _$RatingToJson(Rating instance) => <String, dynamic>{
       'id': instance.id,
-      'thumbnail': instance.thumbnail,
-      'thumbnailUrl': instance.thumbnailUrl,
+      'fullname': instance.fullname,
+      'email': instance.email,
+      'point': instance.point,
+      'content': instance.content,
+      'actived': instance.actived,
       'modifiedAt': instance.modifiedAt,
-      'modifiedBy': instance.modifiedBy,
     };

@@ -69,18 +69,25 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
       height: MediaQuery.of(context).size.height*0.3,
       child: InkWell(
         onTap: () {
-          Get.back();
-          Get.to(ProductDetail(
-            idProduct: widget.productId,
-            heroTag: herotag,
-          ));
+          if(widget.flashSale == true){
+            Get.back();
+            Get.to(ProductDetail(
+              idProduct: widget.productId,
+              heroTag: herotag,
+            )
+            );
+          }
+          if(widget.flashSale == false){
+            null;
+          }
+          ;
         },
         child: Card(
           elevation: 0.0,
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Padding(
-            padding:  EdgeInsets.all(SpaceValues.space8),
+            padding:  const EdgeInsets.all(SpaceValues.space8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

@@ -499,15 +499,19 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                                     dense: true,
                                     title: const Text(
                                       "KHUYẾN MÃI CHO BẠN",
-                                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                                      style: TextStyle(
+                                          color: UIColors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14),
                                     ),
                                     tileColor: Colors.transparent,
                                     trailing: const Text(
                                       "Xem thêm >",
                                       style: TextStyle(
+
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: UIColors.brandA),
+                                          color: UIColors.white),
                                     ),
                                     onTap: () {
                                       // Get.to(const FlashSalePage());

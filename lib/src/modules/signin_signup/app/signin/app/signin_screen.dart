@@ -47,7 +47,7 @@ class _SigninPage extends ViewWidget<SigninPage, SigninModel> {
                   ),
                   GlobalInputFormWidget(
                     controller: viewModel.inputPhone,
-                textInputType:TextInputType.phone,
+                textInputType:TextInputType.text,
                 validator:(valueDy)=> Validator.phone(valueDy),
                 requireInput: '',
                 hint: 'Số điện thoại',

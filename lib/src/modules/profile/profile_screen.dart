@@ -824,7 +824,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                           ),
                           const SizedBox(height: SpaceValues.space12),
                           Text(
-                            StaticData.hotline,
+                            '1900 919 119',
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.headline5,
                           ),
@@ -837,7 +837,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              launchUrlString(StaticData.urlHotline);
+                              launchUrlString('1900919119');
                             },
                             child: const Text(
                               'Gọi ngay',
