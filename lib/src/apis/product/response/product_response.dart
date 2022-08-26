@@ -5,8 +5,9 @@ part 'product_response.g.dart';
 @JsonSerializable()
 class DataProductResponse {
   List<Product>? content;
+  int? totalElements;
 
-  DataProductResponse({this.content});
+  DataProductResponse({this.content,this.totalElements});
 
   factory DataProductResponse.fromJson(Map<String, dynamic> json) => _$DataProductResponseFromJson(json);
   Map<String, dynamic> toJson() => _$DataProductResponseToJson(this);

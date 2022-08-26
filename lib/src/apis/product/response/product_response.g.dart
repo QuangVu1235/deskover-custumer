@@ -11,12 +11,14 @@ DataProductResponse _$DataProductResponseFromJson(Map<String, dynamic> json) =>
       content: (json['content'] as List<dynamic>?)
           ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList(),
+      totalElements: json['totalElements'] as int?,
     );
 
 Map<String, dynamic> _$DataProductResponseToJson(
         DataProductResponse instance) =>
     <String, dynamic>{
       'content': instance.content,
+      'totalElements': instance.totalElements,
     };
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(

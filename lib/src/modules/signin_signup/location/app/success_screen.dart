@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../app/signin/app/signin_screen.dart';
 
-class SucessScreen extends StatelessWidget {
-  const SucessScreen({Key? key}) : super(key: key);
+class SuccessScreen extends StatelessWidget {
+  final VoidCallback? pressButton;
+  final String subtitle;
+  const SuccessScreen({Key? key, this.pressButton, required this.subtitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class SucessScreen extends StatelessWidget {
                 SizedBox(
                   height: SpaceValues.space24,
                 ),
-                Text('Yêu cầu đăng ký tài khoản của bạn',
+                Text(subtitle,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -52,9 +54,7 @@ class SucessScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: (){
-                        Get.to(SigninPage());
-                      },
+                      onPressed: pressButton,
                       child:const Padding(
                         padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),
                         child: Text("Đăng nhập ngay"),

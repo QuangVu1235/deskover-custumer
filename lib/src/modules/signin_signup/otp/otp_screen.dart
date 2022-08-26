@@ -1,26 +1,29 @@
+import 'dart:async';
+
 import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/signin_signup/location/app/location_screen.dart';
 import 'package:deskover_develop/src/modules/signin_signup/otp/otp_model.dart';
-import 'package:deskover_develop/src/modules/signin_signup/reset_pass/app/reset_password.dart';
-import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../../config/assets/image_asset.dart';
-import '../../../../themes/space_values.dart';
+import '../../../config/assets/image_asset.dart';
+import '../../../themes/space_values.dart';
+import '../../../themes/ui_colors.dart';
 
-class ResetPassOTP extends StatefulWidget {
+class OTPScreen extends StatefulWidget {
   final String phone;
-  const ResetPassOTP({Key? key, required this.phone}) : super(key: key);
+  const OTPScreen({Key? key, required this.phone}) : super(key: key);
 
   @override
-  State<ResetPassOTP> createState() => _ResetPassOTPState();
+  State<OTPScreen> createState() => _OTPScreenState();
 }
 
-class _ResetPassOTPState extends ViewWidget<ResetPassOTP,OtpModel> {
+class _OTPScreenState extends ViewWidget<OTPScreen, OtpModel> {
   dynamic number;
   decreaseNumber()async {
     number=60;
@@ -61,7 +64,7 @@ class _ResetPassOTPState extends ViewWidget<ResetPassOTP,OtpModel> {
                 margin: EdgeInsets.all(50),
                 child: Center(
                   child: Image.asset(
-                    ImageAssets.otpforgetpass,
+                    ImageAssets.otpimg,
                     height: 290,
                   ),
                 ),
@@ -103,7 +106,7 @@ class _ResetPassOTPState extends ViewWidget<ResetPassOTP,OtpModel> {
                   controller: _textEditingController,
                   appContext: context,
                   length: 6,
-                  onCompleted: viewModel.onCompletedResetPassOTP,
+                  onCompleted: viewModel.onCompletedOTP,
                   onChanged: (String value) {},
                   animationType: AnimationType.scale,
                   keyboardType: TextInputType.number,

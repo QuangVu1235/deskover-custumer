@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class GetTime {
   static String parse(DateTime dateTime, {String? locale, String? pattern}) {
-    final _pattern = pattern ?? "dd MMM, yyyy hh:mm aa";
+    final _pattern = pattern ?? "dd-MM-yyyy HH:mm ";
     final date = DateFormat(_pattern).format(dateTime);
     var elapsed = DateTime.now().millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch;
 

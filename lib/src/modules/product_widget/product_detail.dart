@@ -254,15 +254,12 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                             onTap: () {},
                           ),
                            ProductSellingScreen(categoryId: viewModel.productDetail.value?.subCategory?.category?.id ?? 1),
-                          const SizedBox(
-                            height: 24,
-                          ),
                         ],
                       ),
                     )
                   ),
                   Container(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.only(left: 15, right:  15),
                     width: MediaQuery.of(context).size.width * 0.98,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -382,7 +379,8 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(viewModel.productDetail.value.toString(),
+                                    Text(
+                                      '${viewModel.productDetail.value?.averageRating.toString()}',
                                       style: const TextStyle(
                                         fontSize: 18,
                                         color: UIColors.brandA,
@@ -451,10 +449,11 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                           data: const ProgressIndicatorThemeData(
                                             linearMinHeight: 6,
                                           ),
-                                          child: LinearProgressIndicator(
-                                            value: viewModel.start5.toDouble() / (viewModel.productDetail.value?.averageRating?.toDouble() ?? 0),
+                                          child: Obx(()=> LinearProgressIndicator(
+                                            value: viewModel.productDetail.value?.totalRating != 0 ? viewModel.start5.value / (viewModel.productDetail.value?.totalRating ?? 1) : 0,
                                             color: Colors.amber,
-                                          ),
+                                          ),)
+
                                         ),
                                       ),
                                     ),
@@ -467,12 +466,12 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                     //   ),
                                     // ),
                                   ),
-                                  Text(viewModel.start5.toString(),
+                                  Obx(()=> Text(viewModel.start5.toString(),
                                     style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w400,
                                     ),
-                                  ),
+                                  ),)
                                 ],
                               ),
                               Row(
@@ -490,37 +489,37 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                     color: Color(0xAaFBA510),
                                     size: 14,
                                   ),
-                                  // Expanded(
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.symmetric(horizontal: 6),
-                                  //     child: ClipRRect(
-                                  //       borderRadius: BorderRadius.circular(6),
-                                  //       child: ProgressIndicatorTheme(
-                                  //         data: const ProgressIndicatorThemeData(
-                                  //           linearMinHeight: 6,
-                                  //         ),
-                                  //         child: LinearProgressIndicator(
-                                  //           value: viewModel.starCountList[3].toDouble() / (viewModel.comment.value?.data?.length ?? 1).toDouble(),
-                                  //           color: Colors.amber,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  //   // child: Container(
-                                  //   //   margin: const EdgeInsets.symmetric(horizontal: 6),
-                                  //   //   height: 6,
-                                  //   //   decoration: BoxDecoration(
-                                  //   //     color: Colors.grey.withOpacity(0.4),
-                                  //   //     borderRadius: BorderRadius.circular(50.0),
-                                  //   //   ),
-                                  //   // ),
-                                  // ),
-                                  // Text(viewModel.starCountList[3].toString(),
-                                  //   style: const TextStyle(
-                                  //     fontSize: 14.0,
-                                  //     fontWeight: FontWeight.w400,
-                                  //   ),
-                                  // ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: ProgressIndicatorTheme(
+                                          data: const ProgressIndicatorThemeData(
+                                            linearMinHeight: 6,
+                                          ),
+                                          child: Obx(()=> LinearProgressIndicator(
+                                            value: viewModel.productDetail.value?.totalRating != 0 ? viewModel.start4.value / (viewModel.productDetail.value?.totalRating ?? 1) : 0,
+                                            color: Colors.amber,
+                                          ),)
+                                        ),
+                                      ),
+                                    ),
+                                    // child: Container(
+                                    //   margin: const EdgeInsets.symmetric(horizontal: 6),
+                                    //   height: 6,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.grey.withOpacity(0.4),
+                                    //     borderRadius: BorderRadius.circular(50.0),
+                                    //   ),
+                                    // ),
+                                  ),
+                                  Obx(()=> Text(viewModel.start4.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),)
                                 ],
                               ),
                               Row(
@@ -538,37 +537,37 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                     color: Color(0xAaFBA510),
                                     size: 14,
                                   ),
-                                  // Expanded(
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.symmetric(horizontal: 6),
-                                  //     child: ClipRRect(
-                                  //       borderRadius: BorderRadius.circular(6),
-                                  //       child: ProgressIndicatorTheme(
-                                  //         data: const ProgressIndicatorThemeData(
-                                  //           linearMinHeight: 6,
-                                  //         ),
-                                  //         child: LinearProgressIndicator(
-                                  //           value: viewModel.starCountList[2].toDouble() / (viewModel.comment.value?.data?.length ?? 1).toDouble(),
-                                  //           color: Colors.amber,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  //   // child: Container(
-                                  //   //   margin: const EdgeInsets.symmetric(horizontal: 6),
-                                  //   //   height: 6,
-                                  //   //   decoration: BoxDecoration(
-                                  //   //     color: Colors.grey.withOpacity(0.4),
-                                  //   //     borderRadius: BorderRadius.circular(50.0),
-                                  //   //   ),
-                                  //   // ),
-                                  // ),
-                                  // Text(viewModel.starCountList[2].toString(),
-                                  //   style: const TextStyle(
-                                  //     fontSize: 14.0,
-                                  //     fontWeight: FontWeight.w400,
-                                  //   ),
-                                  // ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: ProgressIndicatorTheme(
+                                          data: const ProgressIndicatorThemeData(
+                                            linearMinHeight: 6,
+                                          ),
+                                          child: Obx(()=> LinearProgressIndicator(
+                                            value: viewModel.productDetail.value?.totalRating != 0 ? viewModel.start3.value / (viewModel.productDetail.value?.totalRating ?? 1) : 0,
+                                            color: Colors.amber,
+                                          ),)
+                                        ),
+                                      ),
+                                    ),
+                                    // child: Container(
+                                    //   margin: const EdgeInsets.symmetric(horizontal: 6),
+                                    //   height: 6,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.grey.withOpacity(0.4),
+                                    //     borderRadius: BorderRadius.circular(50.0),
+                                    //   ),
+                                    // ),
+                                  ),
+                                  Obx(()=> Text(viewModel.start3.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),)
                                 ],
                               ),
                               Row(
@@ -586,37 +585,37 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                     color: Color(0xAaFBA510),
                                     size: 14,
                                   ),
-                                  // Expanded(
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.symmetric(horizontal: 6),
-                                  //     child: ClipRRect(
-                                  //       borderRadius: BorderRadius.circular(6),
-                                  //       child: ProgressIndicatorTheme(
-                                  //         data: const ProgressIndicatorThemeData(
-                                  //           linearMinHeight: 6,
-                                  //         ),
-                                  //         child: LinearProgressIndicator(
-                                  //           value: viewModel.starCountList[1].toDouble() / (viewModel.comment.value?.data?.length ?? 1).toDouble(),
-                                  //           color: Colors.amber,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  //   // child: Container(
-                                  //   //   margin: const EdgeInsets.symmetric(horizontal: 6),
-                                  //   //   height: 6,
-                                  //   //   decoration: BoxDecoration(
-                                  //   //     color: Colors.grey.withOpacity(0.4),
-                                  //   //     borderRadius: BorderRadius.circular(50.0),
-                                  //   //   ),
-                                  //   // ),
-                                  // ),
-                                  // Text(viewModel.starCountList[1].toString(),
-                                  //   style: const TextStyle(
-                                  //     fontSize: 14.0,
-                                  //     fontWeight: FontWeight.w400,
-                                  //   ),
-                                  // ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: ProgressIndicatorTheme(
+                                          data: const ProgressIndicatorThemeData(
+                                            linearMinHeight: 6,
+                                          ),
+                                          child: Obx(()=> LinearProgressIndicator(
+                                            value: viewModel.productDetail.value?.totalRating != 0 ? viewModel.start2.value / (viewModel.productDetail.value?.totalRating ?? 1) : 0,
+                                            color: Colors.amber,
+                                          ),)
+                                        ),
+                                      ),
+                                    ),
+                                    // child: Container(
+                                    //   margin: const EdgeInsets.symmetric(horizontal: 6),
+                                    //   height: 6,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.grey.withOpacity(0.4),
+                                    //     borderRadius: BorderRadius.circular(50.0),
+                                    //   ),
+                                    // ),
+                                  ),
+                                  Obx(()=> Text(viewModel.start2.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),)
                                 ],
                               ),
                               Row(
@@ -634,37 +633,37 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                                     color: Color(0xAaFBA510),
                                     size: 14,
                                   ),
-                                  // Expanded(
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.symmetric(horizontal: 6),
-                                  //     child: ClipRRect(
-                                  //       borderRadius: BorderRadius.circular(6),
-                                  //       child: ProgressIndicatorTheme(
-                                  //         data: const ProgressIndicatorThemeData(
-                                  //           linearMinHeight: 6,
-                                  //         ),
-                                  //         child: LinearProgressIndicator(
-                                  //           value: viewModel.starCountList[0].toDouble() / (viewModel.comment.value?.data?.length ?? 1).toDouble(),
-                                  //           color: Colors.amber,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  //   // child: Container(
-                                  //   //   margin: const EdgeInsets.symmetric(horizontal: 6),
-                                  //   //   height: 6,
-                                  //   //   decoration: BoxDecoration(
-                                  //   //     color: Colors.grey.withOpacity(0.4),
-                                  //   //     borderRadius: BorderRadius.circular(50.0),
-                                  //   //   ),
-                                  //   // ),
-                                  // ),
-                                  // Text(viewModel.starCountList[0].toString(),
-                                  //   style: const TextStyle(
-                                  //     fontSize: 14.0,
-                                  //     fontWeight: FontWeight.w400,
-                                  //   ),
-                                  // ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: ProgressIndicatorTheme(
+                                          data: const ProgressIndicatorThemeData(
+                                            linearMinHeight: 6,
+                                          ),
+                                          child:Obx(()=> LinearProgressIndicator(
+                                            value: viewModel.productDetail.value?.totalRating != 0 ? viewModel.start1.value / (viewModel.productDetail.value?.totalRating ?? 1) : 0,
+                                            color: Colors.amber,
+                                          ),)
+                                        ),
+                                      ),
+                                    ),
+                                    // child: Container(
+                                    //   margin: const EdgeInsets.symmetric(horizontal: 6),
+                                    //   height: 6,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.grey.withOpacity(0.4),
+                                    //     borderRadius: BorderRadius.circular(50.0),
+                                    //   ),
+                                    // ),
+                                  ),
+                                  Obx(()=> Text(viewModel.start1.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),)
                                 ],
                               ),
                             ],
@@ -976,39 +975,6 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                       ],
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(16.0),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: const [
-                  //       Text("Khám phá thêm",
-                  //           style: TextStyle(
-                  //               fontWeight: FontWeight.w700, fontSize: 14)),
-                  //       SizedBox(height: 20),
-                  //       ProductSellingScreen(), //  add link products to load
-                  //       // TextButton(
-                  //       //     style: TextButton.styleFrom(
-                  //       //       padding:
-                  //       //       const EdgeInsets.symmetric(horizontal: 16),
-                  //       //     ),
-                  //       //     onPressed: () {},
-                  //       // child: Row(
-                  //       //   mainAxisAlignment: MainAxisAlignment.center,
-                  //       //   children: [
-                  //       //     const Text(
-                  //       //       "Xem thêm",
-                  //       //       style: TextStyle(fontSize: 12),
-                  //       //     ),
-                  //       //     Container(
-                  //       //       padding: const EdgeInsets.only(left: 5),
-                  //       //       child: SvgPicture.asset(IconAssets.chervon1,
-                  //       //           width: 10, color: UIColors.brandA),
-                  //       //     ),
-                  //       //   ],
-                  //       // )),
-                  //     ],
-                  //   ),
-                  // )
                 ],
               ),
             ),

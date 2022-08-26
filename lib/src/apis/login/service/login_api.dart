@@ -30,4 +30,18 @@ abstract class LoginAPI {
 
   @PUT('/v1/api/customer/user')
   Future<MessageResponse> doPutUpdate(@Body() User user);
+
+  @POST('/v0/api/customer/register')
+  Future<dynamic> doPostCreateUser(@Body() dynamic user);
+
+  @GET('/v0/api/customer/registrationConfirm/{otp}')
+  Future<dynamic> confirmOTP(@Path('otp') String otp, @Query('phone') String phone);
+
+  @GET('/v0/api/customer/resend/{phone}')
+  Future<dynamic> resendOTP(@Path('phone') String phone);
+
+  @GET('/v0/api/customer/confirmRePass/{phone}')
+  Future<dynamic> confirmPassReset(@Path('phone') String phone,
+      @Query('password') String password,
+      @Query('comfirmPass') String comfirmPass,);
 }

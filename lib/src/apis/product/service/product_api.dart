@@ -33,6 +33,12 @@ abstract class ProductAPI {
       @Query('size') int? size,
       @Query('keySort') String? keySort
      );
+  @GET('/v1/api/display/product-discount')
+  Future<DataProductResponse> doGetProductByDiscount(
+      @Query('page') int? page,
+      @Query('size') int? size,
+      @Query('keySort') String? keySort
+      );
 
   @GET('/v1/api/display/product/{id}')
   Future<Product> getById(@Path('id') int? id);

@@ -1,6 +1,10 @@
 import 'package:deskover_develop/src/config/assets/image_asset.dart';
-import 'package:deskover_develop/src/modules/signin_signup/otp/app/otp_screen.dart';
+import 'package:deskover_develop/src/config/injection_config.dart';
+import 'package:deskover_develop/src/modules/global_modules/widget/global_input_form_widget.dart';
+import 'package:deskover_develop/src/modules/signin_signup/app/singup/app/siginup_model.dart';
+import 'package:deskover_develop/src/modules/signin_signup/otp/otp_screen.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
+import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +19,7 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ViewWidget<SignUpScreen, SignUpModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,47 +32,112 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SingleChildScrollView(
             child: Column(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 50,left: 50,right: 50,bottom: 10),
-                        child: Center(
-                          child:  Image.asset(ImageAssets.signup_img,height: 290,),
-                        ),
+                  Container(
+                    height: MediaQuery.of(context).size.height *0.2,
+                    margin: EdgeInsets.only(top: 50,left: 50,right: 50,bottom: 10),
+                    child: Center(
+                      child:  Image.asset(ImageAssets.signup_img),
+                    ),
+                  ),
+                  SizedBox(
+                    height: SpaceValues.space12,
+                  ),
+                  Text(
+                    "Đăng ký tài khoản",
+                    style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    color: UIColors.black,
                       ),
-                      SizedBox(
-                        height: SpaceValues.space12,
-                      ),
-                      Text(
-                        "Đăng ký tài khoản",
-                        style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                        color: UIColors.black,
-                          ),
-                        ),
-                      SizedBox(
-                        height: SpaceValues.space24,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          border:OutlineInputBorder(),
-                          hintText: '0912334567',
-                          prefixIcon: Padding(
-                          padding: const EdgeInsets.only(top: 6,right: 8,left: 6,bottom: 6),
-                          child: SvgPicture.asset(SvgImageAssets.phone,height: 15,),
+                    ),
+                  SizedBox(
+                    height: SpaceValues.space24,
+                  ),
+                  Form(
+                    key: viewModel.formKey,
+                      child: Column(
+                        children: [
+                          GlobalInputFormWidget(
+                            controller: viewModel.phone,
+                            textInputType:TextInputType.text,
+                            validator:(valueDy)=> Validator.phone(valueDy),
+                            requireInput: '',
+                            hint: 'Số điện thoại',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: SvgPicture.asset(SvgImageAssets.iconphone,height: 15,),
                             ),
                           ),
-                        ),
-                    ],
+                          SizedBox(
+                            height: SpaceValues.space12,
+                          ),
+                          GlobalInputFormWidget(
+                            controller: viewModel.fullName,
+                            textInputType: TextInputType.name,
+                            requireInput: '',
+                            validator: (valueDy)=> Validator.fullname(valueDy),
+                            hint: 'Họ và tên',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: Image.asset('resources/images/user.png',height: 15,),
+                            ),
+                          ),
+                          SizedBox(
+                            height: SpaceValues.space12,
+                          ),
+                          GlobalInputFormWidget(
+                            controller: viewModel.email,
+                            validator:(valueDy)=> Validator.email(valueDy),
+                            textInputType: TextInputType.emailAddress,
+                            requireInput: '',
+                            hint: 'Email',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: Image.asset('resources/images/email.png',height: 15,),
+                            ),
+                          ),
+                          SizedBox(
+                            height: SpaceValues.space12,
+                          ),
+                          GlobalInputFormWidget(
+                            controller: viewModel.password,
+                            validator: Validator.password,
+                            textInputType: TextInputType.visiblePassword,
+                            requireInput: '',
+                            hint: 'Mật khẩu',
+                            security: true,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: SvgPicture.asset(SvgImageAssets.iconblock,height: 15,),
+                            ),
+                          ),
+                          SizedBox(
+                            height: SpaceValues.space12,
+                          ),
+                          GlobalInputFormWidget(
+                            controller: viewModel.confirmPass,
+                            validator:  (valueDy) => Validator.rePassword(valueDy, viewModel.password.text),
+                            hint: 'Nhập lại mật khẩu',
+                            requireInput: '',
+                            security: true,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: SvgPicture.asset(SvgImageAssets.iconblock,height: 15,),
+                            ),
+                          ),
+                        ],
+                      )
                   ),
-                  SizedBox(height: 147,),
+
+                  SizedBox(
+                    height: SpaceValues.space24,
+                  ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: (){
-                        Get.to(OTPScreen());
+                        viewModel.onSignUp();
+                        // Get.to(OTPScreen());
                       },
                       child:const Padding(
                         padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),
@@ -96,4 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  @override
+  SignUpModel createViewModel() => getIt<SignUpModel>();
 }

@@ -498,7 +498,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                       ),),
                 Row(
                   children: [
-                    Obx(()=>Expanded(
+                    Expanded(
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                         decoration: const BoxDecoration(
@@ -527,12 +527,12 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       fontSize: 14
                                   ),
                                 ),
-                                Text(
+                                Obx(()=> Text(
                                   formatCurrency.format(viewModel.totalPriceOrigin.value),
                                   style: const TextStyle(fontWeight: FontWeight.w700,
                                       fontSize: 14
                                   ),
-                                ),
+                                ),)
                               ],
                             ),
                             Row(
@@ -544,13 +544,13 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       fontSize: 14
                                   ),
                                 ),
-                                Text(
+                                Obx(()=>Text(
                                   formatCurrency.format(viewModel.totalPercent.value),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14
                                   ),
-                                ),
+                                ),)
                               ],
                             ),
                             Row(
@@ -562,13 +562,13 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       fontSize: 14
                                   ),
                                 ),
-                                Text(
+                                Obx(()=>Text(
                                   formatCurrency.format(viewModel.feeValue.value),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14
                                   ),
-                                ),
+                                ),)
                               ],
                             ),
                             const Divider(color: UIColors.black),
@@ -582,13 +582,14 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                                       fontSize: 14
                                   ),
                                 ),
-                                Text(
-                                  formatCurrency.format(viewModel.totalPriceOrigin.value-viewModel.totalPercent.value-viewModel.feeValue.value),
+                                Obx(()=> Text(
+                                  formatCurrency.format(viewModel.totalPriceOrigin.value-viewModel.totalPercent.value + viewModel.feeValue.value),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14
                                   ),
-                                ),
+                                ),)
+
                               ],
                             ),
                             const SizedBox(height: 8,),
@@ -619,7 +620,7 @@ class _CreateChangePointCart extends ViewWidget<CreateChangePointCart,CartModel>
                           ],
                         ),
                       ),
-                    ))
+                    )
                   ],
                 )
 

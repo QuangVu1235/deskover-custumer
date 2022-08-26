@@ -67,7 +67,7 @@ class _NotAddressPageState extends ViewWidget<NotAddressPage, AddAddressModel> {
                         hint: 'Nhập số điện thoại',
                         textInputType: TextInputType.phone,
                         requireInput: '',
-                        validator: Validator.fullname,
+                        validator:(valueDy) => Validator.phone(viewModel.inputPhone),
                       ),
                       const SizedBox(height: 16,),
                       GlobalInputFormWidget(

@@ -19,6 +19,7 @@ class HomePageModel extends ViewModel{
 
   RxList<CategoryReponse> DataCategory = RxList.empty();
   RxList<Product> dataProductNew = RxList.empty();
+  RxList<Product> dataProductDiscount = RxList.empty();
   RxList<Product> dataProductFlashSale = RxList.empty();
 
   RxInt size = 8.obs;
@@ -29,17 +30,15 @@ class HomePageModel extends ViewModel{
 
   @override
   void initState() {
-    super.initState();
-    resfresh();
-
+    refresh();
   }
 
-  Future<void> resfresh()async {
+  Future<void> refresh()async {
     await Future.wait([
       loadCategory(),
       loadProductNew(),
-      loadProductSale()
-
+      loadProductSale(),
+      loadProductDiscount()
     ]);
   }
 
@@ -69,6 +68,14 @@ class HomePageModel extends ViewModel{
     });
   }
 
+  Future<void> loadProductDiscount() async{
+    loading(() async{
+      await _productUserCase.doGetProductByDiscount(0,8,'ASC').then((value) async{
+        dataProductDiscount.value = value.content ?? [Product()];
+      });
+    });
+  }
+
   Future<void> loadProductSale() async{
     await _productUserCase.doGetAllProductSale(0,size.value).then((value) async{
       dataProductFlashSale.value = value.content ?? [Product()];
@@ -76,7 +83,6 @@ class HomePageModel extends ViewModel{
         Get.offAll( const MainPage(indexTab: 0,));
       }
     });
-
   }
 
 }

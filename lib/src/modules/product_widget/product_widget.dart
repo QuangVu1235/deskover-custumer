@@ -16,9 +16,7 @@ import 'package:intl/intl.dart';
 import '../../themes/space_values.dart';
 import '../../themes/ui_colors.dart';
 
-
 class ProductWidget extends StatefulWidget {
-
   const ProductWidget({
     Key? key,
     required this.productId,
@@ -28,11 +26,12 @@ class ProductWidget extends StatefulWidget {
     this.avatar = '',
     this.promotion = '',
     this.isCanBuy = true,
-    this.flashSale =true,
+    this.flashSale = true,
     this.qrCode = '',
     this.width = 180,
     this.height = 270,
-    this.quantity=0, this.discount = 0,
+    this.quantity = 0,
+    this.discount = 0,
   }) : super(key: key);
 
   final int productId;
@@ -53,31 +52,30 @@ class ProductWidget extends StatefulWidget {
   State<ProductWidget> createState() => _ProductWidgetState();
 }
 
-class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
-
+class _ProductWidgetState extends ViewWidget<ProductWidget, ProductCartModel> {
   String? _herotag;
   String get herotag {
     _herotag ??= '${widget.productId.toString()}${Random().nextDouble()}';
     return _herotag!;
   }
-  final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
+
+  final formatCurrency = NumberFormat.currency(locale: "vi_VN", symbol: "đ");
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
-      height: MediaQuery.of(context).size.height*0.3,
+      height: MediaQuery.of(context).size.height * 0.3,
       child: InkWell(
         onTap: () {
-          if(widget.flashSale == true){
+          if (widget.flashSale == true) {
             Get.back();
             Get.to(ProductDetail(
               idProduct: widget.productId,
               heroTag: herotag,
-            )
-            );
+            ));
           }
-          if(widget.flashSale == false){
+          if (widget.flashSale == false) {
             null;
           }
           ;
@@ -87,7 +85,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Padding(
-            padding:  const EdgeInsets.all(SpaceValues.space8),
+            padding: const EdgeInsets.all(SpaceValues.space8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -113,7 +111,8 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Visibility(
-                          visible: ('' != widget.promotion) && '0%' != widget.promotion.replaceAll(' ', ''),
+                          visible: ('' != widget.promotion) &&
+                              '0%' != widget.promotion.replaceAll(' ', ''),
                           child: Card(
                             elevation: 0,
                             shape: OutlineInputBorder(
@@ -137,11 +136,8 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: SvgPicture.asset(
-                            widget.qrCode
-                          )
-                        ),
+                            alignment: Alignment.bottomLeft,
+                            child: SvgPicture.asset(widget.qrCode)),
                       ),
                     ],
                   ),
@@ -151,7 +147,10 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                   widget.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 12, color: UIColors.title, fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                      fontSize: 12,
+                      color: UIColors.title,
+                      fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: SpaceValues.space4),
                 Visibility(
@@ -160,7 +159,10 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                     formatCurrency.format(widget.priceOrigin),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 12, color: UIColors.title, decoration: TextDecoration.lineThrough),
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: UIColors.title,
+                        decoration: TextDecoration.lineThrough),
                   ),
                   replacement: const SizedBox.shrink(),
                 ),
@@ -169,7 +171,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                   text: TextSpan(
                     text: 'Số lượng còn  ',
                     style:
-                    const TextStyle(fontSize: 10, color: UIColors.title70),
+                        const TextStyle(fontSize: 10, color: UIColors.title70),
                     children: <TextSpan>[
                       TextSpan(
                           text: widget.quantity.toString(),
@@ -185,7 +187,7 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                   text: TextSpan(
                     text: 'Giá từ:  ',
                     style:
-                    const TextStyle(fontSize: 10, color: UIColors.title70),
+                        const TextStyle(fontSize: 10, color: UIColors.title70),
                     children: <TextSpan>[
                       TextSpan(
                           text: formatCurrency.format(widget.price.toDouble()),
@@ -215,11 +217,9 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               padding: EdgeInsets.zero,
                             ),
-                            onPressed: () async
-                            => await viewModel.btnAddToCart(widget.productId).then((value) async{
-                                Get.to(()=> CreateChangePointCart());
-                            })
-                            ,
+                            onPressed: () {
+                              viewModel.btnAddToCartGetToCart(widget.productId);
+                            },
                             child: const Text(
                               'Mua ngay',
                               style: TextStyle(
@@ -231,19 +231,19 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
                           width: SpaceValues.space8,
                         ),
                         InkWell(
-                          onTap: ()
-                          async => await viewModel.btnAddToCart( widget.productId).then((value) async{
-
-                          }),
+                          onTap: () async => await viewModel
+                              .btnAddToCart(widget.productId)
+                              .then((value) async {}),
                           child: Container(
                             height: 30,
                             alignment: Alignment.center,
                             width: 48,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
+                                    const BorderRadius.all(Radius.circular(8)),
                                 border: Border.all(
-                                  color: Colors.blue, //                   <--- border color
+                                  color: Colors
+                                      .blue, //                   <--- border color
                                   width: 1.0,
                                 )),
                             child: Icon(
@@ -312,6 +312,4 @@ class _ProductWidgetState extends ViewWidget<ProductWidget,ProductCartModel>{
 
   @override
   ProductCartModel createViewModel() => getIt<ProductCartModel>();
-
 }
-

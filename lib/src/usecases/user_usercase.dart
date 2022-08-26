@@ -26,6 +26,18 @@ class UserUserCase{
   Future<MessageResponse> doPutUpdate(User user)
   => _loginDataSource.doPutUpdate(user);
 
+  Future confirmOTP(String otp, String phone)
+  => _loginDataSource.confirmOTP(otp, phone);
+
+  Future doPostCreateUser(user)
+  => _loginDataSource.doPostCreateUser(user);
+
+  Future resendOTP(String phone)
+  => _loginDataSource.resendOTP(phone);
+
+  Future confirmPassReset(String phone, String password, String comfirmPass)
+  => _loginDataSource.confirmPassReset(phone, password, comfirmPass);
+
 
 
 

@@ -74,7 +74,9 @@ class _Notify extends ViewWidget<Notify,NotifyModel>{
                                  ),
                                  const SizedBox(height: 6,),
                                  Text(
-                                   GetTime.parse(DateTime.parse(viewModel.listNotify[index].createdAt ?? ''),).toString()
+                                   GetTime.parse(
+                                     DateTime.parse(viewModel.listNotify[index].createdAt ?? ''),).toString(),
+
                                  )
                                ],
                              ),

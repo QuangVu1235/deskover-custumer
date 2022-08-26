@@ -1,3 +1,4 @@
+import 'package:deskover_develop/src/modules/cart/creat_cart.dart';
 import 'package:deskover_develop/src/modules/main_page_model.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
 import 'package:deskover_develop/src/usecases/cart_usercase/cart_usercase.dart';
@@ -29,6 +30,17 @@ class ProductCartModel extends ViewModel{
     }).then((value) async{
 
      });
+  }
+
+  Future<void> btnAddToCartGetToCart(int productId) async{
+    loading(() async{
+      await _cartUserCase.addToCart(productId, 1).then((value) async{
+        Fluttertoast.showToast(msg: value.message.toString(), backgroundColor: UIColors.black70);
+        await _mainPageModel.loadCart();
+      });
+    }, reCatchString: true).then((value) async{
+      Get.to(() => CreateChangePointCart());
+    });
   }
 
 }

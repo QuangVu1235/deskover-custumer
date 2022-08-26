@@ -12,6 +12,13 @@ abstract class LoginDataSource{
   Future<User> doGetProfiled();
   Future<void> doPostUploadFile(File file);
   Future<MessageResponse> doPutUpdate(User user);
+  Future<dynamic> doPostCreateUser(dynamic user);
+  Future<dynamic> confirmOTP(String otp,String phone);
+  Future<dynamic> resendOTP(String phone);
+  Future<dynamic> confirmPassReset(
+      String phone,
+      String password,
+      String comfirmPass,);
 
 }
 @LazySingleton(as: LoginDataSource)
@@ -38,6 +45,22 @@ class LoginDataSourceImpl extends LoginDataSource{
   @override
   Future<MessageResponse> doPutUpdate(User user)
   => _loginAPI.doPutUpdate(user);
+
+  @override
+  Future confirmOTP(String otp, String phone)
+  => _loginAPI.confirmOTP(otp, phone);
+
+  @override
+  Future doPostCreateUser(user)
+  => _loginAPI.doPostCreateUser(user);
+
+  @override
+  Future resendOTP(String phone)
+  => _loginAPI.resendOTP(phone);
+
+  @override
+  Future confirmPassReset(String phone, String password, String comfirmPass)
+  => _loginAPI.confirmPassReset(phone, password, comfirmPass);
 
 
 }

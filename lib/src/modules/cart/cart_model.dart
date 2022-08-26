@@ -128,8 +128,19 @@ class CartModel extends ViewModel{
 
     });
   }
+  bool validate(){
+    bool check = true;
+    if(address.value == null){
+      check = false;
+    }
+    return check;
+  }
   OrderResquest? request;
   Future<void> btnConfirmOrder() async {
+    if(!validate()){
+        loading(() => throw 'Vui lòng chọn địa chỉ nhận hàng');
+        return;
+    }
     request=OrderResquest(
       payment: payment.value,
       shipping: shipping.value,

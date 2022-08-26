@@ -10,7 +10,7 @@ part of 'login_api.dart';
 
 class _LoginAPI implements LoginAPI {
   _LoginAPI(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.11.52.56:8080';
+    baseUrl ??= 'http://10.0.2.2:8080';
   }
 
   final Dio _dio;
@@ -81,6 +81,70 @@ class _LoginAPI implements LoginAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MessageResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<dynamic> doPostCreateUser(user) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = user;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v0/api/customer/register',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> confirmOTP(otp, phone) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'phone': phone};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(
+                _dio.options, '/v0/api/customer/registrationConfirm/${otp}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> resendOTP(phone) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v0/api/customer/resend/${phone}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> confirmPassReset(phone, password, comfirmPass) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'password': password,
+      r'comfirmPass': comfirmPass
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v0/api/customer/confirmRePass/${phone}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
     return value;
   }
 

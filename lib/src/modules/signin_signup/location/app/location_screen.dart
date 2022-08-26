@@ -73,7 +73,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                         onPressed: (){
-                          Get.to(SucessScreen());
+                          Get.to(SuccessScreen(subtitle: '',));
                         },
                         child:const Padding(
                           padding:  EdgeInsets.only(top: SpaceValues.space8,bottom: SpaceValues.space8 ),

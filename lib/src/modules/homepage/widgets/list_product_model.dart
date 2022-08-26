@@ -10,6 +10,7 @@ class ListProductModel extends ViewModel{
   RxList<Product> dataProduct = RxList.empty();
 
   RxInt size = 8.obs;
+  RxInt totalPage = 8.obs;
   RxInt categoryId = 0.obs;
 
   ListProductModel(this._productUserCase);
@@ -25,6 +26,7 @@ class ListProductModel extends ViewModel{
     loading(() async{
       await _productUserCase.doGetAllProductNew(0,size.value).then((value) async{
         dataProduct.value = value.content ?? [Product()];
+        totalPage.value = value.totalElements ?? 0;
       });
     });
   }

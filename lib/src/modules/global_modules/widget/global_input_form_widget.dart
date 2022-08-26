@@ -332,9 +332,9 @@ class Validator {
   static String? phone(valueDy) {
     String value = valueDy ?? '';
     if (value.isEmpty) {
-      return 'Vui lòng nhập số điện thoại Việt Nam';
+      return 'Vui lòng nhập số điện thoại';
     }
-    if (value.trim().length != 10) {
+    if (value.trim().length != 10 ) {
       return 'Vui lòng nhập đúng 10 số điện thoại';
     }
     if (!RegExp(r'^0?[3|5|7|8|9][0-9]{8}$')

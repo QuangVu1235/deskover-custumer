@@ -10,7 +10,7 @@ part of 'product_api.dart';
 
 class _ProductAPI implements ProductAPI {
   _ProductAPI(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.11.52.56:8080';
+    baseUrl ??= 'http://10.0.2.2:8080';
   }
 
   final Dio _dio;
@@ -91,6 +91,28 @@ class _ProductAPI implements ProductAPI {
         _setStreamType<DataProductResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/api/display/product-subcategory',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DataProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DataProductResponse> doGetProductByDiscount(
+      page, size, keySort) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'size': size,
+      r'keySort': keySort
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DataProductResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/api/display/product-discount',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataProductResponse.fromJson(_result.data!);

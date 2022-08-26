@@ -1,6 +1,7 @@
 import 'package:deskover_develop/src/config/base_api.dart';
 import 'package:deskover_develop/src/config/injection_config.dart';
 import 'package:deskover_develop/src/modules/homepage/widgets/list_product_new.dart';
+import 'package:deskover_develop/src/modules/homepage/widgets/product_see_more.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_widget.dart';
 import 'package:deskover_develop/src/modules/subcategory/subcategory_screen.dart';
 import 'package:deskover_develop/src/themes/dialogs/loading_dialog.dart';
@@ -31,7 +32,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: ()=> viewModel.resfresh(),
+        onRefresh: ()=> viewModel.refresh(),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -47,19 +48,19 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                     },
                     autoPlayInterval: 3000,
                     isLoop: true,
-                    children: const [
-                      GlobalImage(
-                        'https://cdn2.cellphones.com.vn/690x300/https://dashboard.cellphones.com.vn/storage/690-300%20poco.png',
+                    children:  [
+                      Image.asset(
+                        'resources/images/banner1.png',
                         fit: BoxFit.fill,
                       ),
-                      GlobalImage(
-                        'https://cdn2.cellphones.com.vn/690x300/https://dashboard.cellphones.com.vn/storage/banner-huawei-tbvp.png',
+                      Image.asset(
+                        'resources/images/banner2.png',
                         fit: BoxFit.fill,
                       ),
-                      GlobalImage(
-                        'https://cdn2.cellphones.com.vn/690x300/https://dashboard.cellphones.com.vn/storage/CPS_690x300_19July22.jpg',
+                      Image.asset(
+                        'resources/images/banner3.jpg',
                         fit: BoxFit.fill,
-                      )
+                      ),
                     ]),
               ),
               Container(
@@ -79,9 +80,9 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                     ),
                     Obx(
                        ()=> Visibility(
-                         visible: viewModel.DataCategory.value.isNotEmpty,
+                         visible: viewModel.DataCategory.isNotEmpty,
                          child: SizedBox(
-                           height: (viewModel.DataCategory.value.length) > 8
+                           height: (viewModel.DataCategory.length) > 8
                                ? 230
                                : 230 / 2,
                            child: Center(
@@ -598,7 +599,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                             color: UIColors.brandA),
                       ),
                       onTap: () {
-                        Get.to(ListProductNew(categoryId:viewModel.dataProductNew.first.subCategory?.category?.id ?? 1 ,title: "Sản phẩm mới",));
+                        Get.to(const ProductSeeMore(title: "Sản phẩm ưu đãi",));
                       },
                     ),
                     Obx(
@@ -607,19 +608,22 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           scrollDirection: Axis.horizontal,
-                          itemCount: viewModel.dataProductNew.value.length,
+                          itemCount: viewModel.dataProductDiscount.value.length,
                           separatorBuilder: (context, index) =>
                           const SizedBox(width: 8),
                           itemBuilder: (context, index) {
                             return ProductWidget(
-                              productId:  viewModel.dataProductNew[index].id!,
-                              title: viewModel.dataProductNew[index].name ?? '',
-                              discount: viewModel.dataProductNew[index].discount?.percent ?? 0,
-                              avatar: BaseApi.baseUrl+'/img/shop/products/${viewModel.dataProductNew[index].img}',
-                              price: ((viewModel.dataProductNew.value[index].discount?.percent) ?? 0) !=0
-                                  ? viewModel.dataProductNew.value[index].price! - (viewModel.dataProductNew.value[index].price! * (viewModel.dataProductNew.value[index].discount?.percent ?? 0)/100)
-                                  :  viewModel.dataProductNew.value[index].price ?? 0,
-                              quantity: viewModel.dataProductNew[index].quantity!,
+                              productId: viewModel.dataProductDiscount.value[index].id ?? 0,
+                              avatar: BaseApi.baseUrl_product+ '${viewModel.dataProductDiscount.value[index].img}',
+                              title: viewModel.dataProductDiscount.value[index].name ?? '',
+                              quantity: viewModel.dataProductDiscount.value[index].quantity ?? 0,
+                              promotion: '${viewModel.dataProductDiscount.value[index].discount?.percent}%',
+                              discount: viewModel.dataProductDiscount.value[index].discount?.percent ?? 0,
+                              price: ((viewModel.dataProductDiscount.value[index].discount?.percent) ?? 0) !=0
+                                  ? viewModel.dataProductDiscount.value[index].price! - (viewModel.dataProductDiscount.value[index].price!
+                                  * (viewModel.dataProductDiscount.value[index].discount?.percent ?? 0)/100)
+                                  :  viewModel.dataProductDiscount.value[index].price ?? 0,
+                              priceOrigin:viewModel.dataProductDiscount.value[index].price ?? 0,
                             );
                           },
                         ),

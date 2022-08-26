@@ -4,6 +4,7 @@ import 'package:deskover_develop/src/modules/homepage/homepage_model.dart';
 import 'package:deskover_develop/src/modules/homepage/homepage_screen.dart';
 import 'package:deskover_develop/src/modules/product_widget/product_widget.dart';
 import 'package:deskover_develop/src/themes/ui_colors.dart';
+import 'package:deskover_develop/src/utils/AppUtils.dart';
 import 'package:deskover_develop/src/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,8 +78,17 @@ class _ListProductNew extends ViewWidget<ListProductNew, ListProductModel> {
             color: UIColors.white,
             child: TextButton(
               onPressed: () {
-                viewModel.size.value = viewModel.size.value + 8;
-                viewModel.loadProductNew();
+                if(viewModel.totalPage.value <= viewModel.size.value){
+                  AppUtils().showPopupSuccessWarranty(
+                    title: 'Trống',
+                    subtitle: 'Bạn đã ở cuối trang',
+                    isSuccess: false
+                  );
+                }else{
+                  viewModel.size.value = viewModel.size.value + 8;
+                  viewModel.loadProductNew();
+                }
+
               },
               child: Text(
                 "Xem thêm >",

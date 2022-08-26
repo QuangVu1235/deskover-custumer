@@ -27,4 +27,7 @@ class ProductUserCase{
   Future<DataProductResponse> getSearch(String search, int page, int size)
   => _productDataSource.getSearch(search, page, size);
 
+  Future<DataProductResponse> doGetProductByDiscount(int? page, int? size, String? keySort)
+  => _productDataSource.doGetProductByDiscount(page, size, keySort);
+
 }

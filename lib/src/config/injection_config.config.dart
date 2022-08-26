@@ -30,36 +30,40 @@ import '../apis/subcategory/subcategory_datasource.dart' as _i26;
 import '../apis/user_addrees/service/user_address_api.dart' as _i27;
 import '../apis/user_addrees/user_address_datasource.dart' as _i28;
 import '../core/dio_cache/dio_cache_manager.dart' as _i3;
-import '../modules/action/search/search_model.dart' as _i45;
-import '../modules/address/add_addrees/add_address_model.dart' as _i53;
-import '../modules/address/address_model.dart' as _i55;
-import '../modules/cart/cart_model.dart' as _i54;
-import '../modules/homepage/homepage_model.dart' as _i50;
+import '../modules/action/search/search_model.dart' as _i48;
+import '../modules/address/add_addrees/add_address_model.dart' as _i57;
+import '../modules/address/address_model.dart' as _i59;
+import '../modules/cart/cart_model.dart' as _i58;
+import '../modules/homepage/homepage_model.dart' as _i54;
 import '../modules/homepage/widgets/list_product_model.dart' as _i40;
-import '../modules/main_page_model.dart' as _i51;
+import '../modules/homepage/widgets/product_see_more_model.dart' as _i44;
+import '../modules/main_page_model.dart' as _i55;
 import '../modules/notification/datasource/notify_datasource.dart' as _i15;
 import '../modules/notification/notifi_model.dart' as _i16;
 import '../modules/order/all_order/list_order_model.dart' as _i39;
-import '../modules/order/order_manager_model.dart' as _i56;
-import '../modules/product_widget/product_detail_model.dart' as _i42;
-import '../modules/product_widget/product_model.dart' as _i52;
+import '../modules/order/order_manager_model.dart' as _i60;
+import '../modules/product_widget/product_detail_model.dart' as _i43;
+import '../modules/product_widget/product_model.dart' as _i56;
 import '../modules/product_widget/product_selling/product_selling_model.dart'
-    as _i43;
+    as _i45;
 import '../modules/profile/managerorder/manager_model.dart' as _i5;
 import '../modules/profile/product/pur_product_model.dart' as _i7;
-import '../modules/profile/profile_model.dart' as _i44;
+import '../modules/profile/profile_model.dart' as _i46;
 import '../modules/profile/setting/password/change_password_model.dart' as _i38;
-import '../modules/profile/setting/setting_profile_model.dart' as _i46;
+import '../modules/profile/setting/setting_profile_model.dart' as _i49;
 import '../modules/signin_signup/app/form_pass/form_pass_model.dart' as _i4;
 import '../modules/signin_signup/app/signin/app/signin_model.dart' as _i23;
+import '../modules/signin_signup/app/singup/app/siginup_model.dart' as _i50;
+import '../modules/signin_signup/otp/otp_model.dart' as _i42;
+import '../modules/signin_signup/reset_pass/app/reset_pass_model.dart' as _i47;
 import '../modules/splashsreen/splashsreen_model.dart' as _i24;
-import '../modules/subcategory/subcategory_model.dart' as _i48;
+import '../modules/subcategory/subcategory_model.dart' as _i52;
 import '../usecases/add_addrees_usercase/add_addrees_usercase.dart' as _i32;
-import '../usecases/cart_usercase/cart_usercase.dart' as _i49;
+import '../usecases/cart_usercase/cart_usercase.dart' as _i53;
 import '../usecases/category_usercase/category_usercase.dart' as _i37;
 import '../usecases/category_usercase/product_usercase.dart' as _i22;
 import '../usecases/order/order_usercase.dart' as _i19;
-import '../usecases/subcategory_usercase/subcategory_usercase.dart' as _i47;
+import '../usecases/subcategory_usercase/subcategory_usercase.dart' as _i51;
 import '../usecases/user_usercase.dart' as _i29;
 import 'injection_config.dart' as _i6; // ignore_for_file: unnecessary_lambdas
 
@@ -139,46 +143,53 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => _i40.ListProductModel(get<_i22.ProductUserCase>()));
   gh.lazySingleton<_i41.MethodDataSource>(
       () => _i41.MethodDataSourceImpl(get<_i12.MethodOrderApi>()));
-  gh.factory<_i42.ProductDetailModel>(
-      () => _i42.ProductDetailModel(get<_i22.ProductUserCase>()));
-  gh.factory<_i43.ProductSellingModel>(
-      () => _i43.ProductSellingModel(get<_i22.ProductUserCase>()));
-  gh.factory<_i44.ProfileModel>(() => _i44.ProfileModel(
+  gh.factory<_i42.OtpModel>(() => _i42.OtpModel(get<_i29.UserUserCase>()));
+  gh.factory<_i43.ProductDetailModel>(
+      () => _i43.ProductDetailModel(get<_i22.ProductUserCase>()));
+  gh.factory<_i44.ProductSeeMoreModel>(
+      () => _i44.ProductSeeMoreModel(get<_i22.ProductUserCase>()));
+  gh.factory<_i45.ProductSellingModel>(
+      () => _i45.ProductSellingModel(get<_i22.ProductUserCase>()));
+  gh.factory<_i46.ProfileModel>(() => _i46.ProfileModel(
       get<_i8.SharedPreferences>(), get<_i29.UserUserCase>()));
-  gh.lazySingleton<_i45.SearchModel>(() => _i45.SearchModel(
+  gh.factory<_i47.ResetPassModel>(
+      () => _i47.ResetPassModel(get<_i29.UserUserCase>()));
+  gh.lazySingleton<_i48.SearchModel>(() => _i48.SearchModel(
       get<_i22.ProductUserCase>(), get<_i37.CategoryUserCase>()));
-  gh.factory<_i46.SettingProfileModel>(
-      () => _i46.SettingProfileModel(get<_i29.UserUserCase>()));
-  gh.lazySingleton<_i47.SubCateUserCase>(
-      () => _i47.SubCateUserCase(get<_i26.SubCategoryDataSource>()));
-  gh.factory<_i48.SubCategoryModel>(() => _i48.SubCategoryModel(
-      get<_i22.ProductUserCase>(), get<_i47.SubCateUserCase>()));
-  gh.lazySingleton<_i49.CartUserCase>(() => _i49.CartUserCase(
+  gh.factory<_i49.SettingProfileModel>(
+      () => _i49.SettingProfileModel(get<_i29.UserUserCase>()));
+  gh.factory<_i50.SignUpModel>(
+      () => _i50.SignUpModel(get<_i29.UserUserCase>()));
+  gh.lazySingleton<_i51.SubCateUserCase>(
+      () => _i51.SubCateUserCase(get<_i26.SubCategoryDataSource>()));
+  gh.factory<_i52.SubCategoryModel>(() => _i52.SubCategoryModel(
+      get<_i22.ProductUserCase>(), get<_i51.SubCateUserCase>()));
+  gh.lazySingleton<_i53.CartUserCase>(() => _i53.CartUserCase(
       get<_i34.CartDataSource>(),
       get<_i28.UserAddressDataSource>(),
       get<_i41.MethodDataSource>()));
-  gh.factory<_i50.HomePageModel>(() => _i50.HomePageModel(
+  gh.factory<_i54.HomePageModel>(() => _i54.HomePageModel(
       get<_i37.CategoryUserCase>(),
       get<_i22.ProductUserCase>(),
-      get<_i49.CartUserCase>()));
-  gh.lazySingleton<_i51.MainPageModel>(() => _i51.MainPageModel(
-      get<_i49.CartUserCase>(),
+      get<_i53.CartUserCase>()));
+  gh.lazySingleton<_i55.MainPageModel>(() => _i55.MainPageModel(
+      get<_i53.CartUserCase>(),
       get<_i14.NotifyApi>(),
       get<_i15.NotifyDatasoure>()));
-  gh.factory<_i52.ProductCartModel>(() => _i52.ProductCartModel(
-      get<_i49.CartUserCase>(), get<_i51.MainPageModel>()));
-  gh.factory<_i53.AddAddressModel>(() => _i53.AddAddressModel(
-      get<_i32.AddAddreesUserCase>(), get<_i49.CartUserCase>()));
-  gh.lazySingleton<_i54.CartModel>(() => _i54.CartModel(
-      get<_i49.CartUserCase>(),
-      get<_i51.MainPageModel>(),
+  gh.factory<_i56.ProductCartModel>(() => _i56.ProductCartModel(
+      get<_i53.CartUserCase>(), get<_i55.MainPageModel>()));
+  gh.factory<_i57.AddAddressModel>(() => _i57.AddAddressModel(
+      get<_i32.AddAddreesUserCase>(), get<_i53.CartUserCase>()));
+  gh.lazySingleton<_i58.CartModel>(() => _i58.CartModel(
+      get<_i53.CartUserCase>(),
+      get<_i55.MainPageModel>(),
       get<_i19.OrderUserCase>()));
-  gh.factory<_i55.NotAddressModel>(() =>
-      _i55.NotAddressModel(get<_i49.CartUserCase>(), get<_i54.CartModel>()));
-  gh.factory<_i56.OrderManagerModel>(() => _i56.OrderManagerModel(
+  gh.factory<_i59.NotAddressModel>(() =>
+      _i59.NotAddressModel(get<_i53.CartUserCase>(), get<_i58.CartModel>()));
+  gh.factory<_i60.OrderManagerModel>(() => _i60.OrderManagerModel(
       get<_i18.OrderDataSource>(),
       get<_i14.NotifyApi>(),
-      get<_i54.CartModel>()));
+      get<_i58.CartModel>()));
   return get;
 }
 

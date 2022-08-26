@@ -10,7 +10,7 @@ part of 'add_addrees_api.dart';
 
 class _AddAddreesAPI implements AddAddreesAPI {
   _AddAddreesAPI(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.11.52.56:8080';
+    baseUrl ??= 'http://10.0.2.2:8080';
   }
 
   final Dio _dio;

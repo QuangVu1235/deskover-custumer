@@ -200,25 +200,23 @@ class AppUtils {
                     ],
                   ),
                 ),
-                SizedBox(width: 40,)
               ],
             ),
           ),
-          const SizedBox(height: SpaceValues.space8,),
           Divider(),
           Visibility(
             visible: (action ?? []).isNotEmpty,
             child: Padding(
-              padding: const EdgeInsets.only(top: 12),
+              padding: const EdgeInsets.only(top: 0,bottom: 8, right: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: action ?? [const SizedBox.shrink()],
               ),
             ),
           ),
-          const SizedBox(
-            height: SpaceValues.space24,
-          ),
+          // const SizedBox(
+          //   height: SpaceValues.space24,
+          // ),
         ],
       ),
     ));

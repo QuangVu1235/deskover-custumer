@@ -23,20 +23,22 @@ class ProfileModel extends ViewModel{
 
   @override
    initState() {
-    loading(() async {
-      await Future.wait([
-        checkLogin(),
-      ]);
-
-    });
-
+    if(myProfile.value == null){
+      loading(() async {
+        await Future.wait([
+          checkLogin(),
+        ]);
+      });
+    }
   }
   Future<void> checkLogin() async {
     if ((_sharedPreferences.getString("uToken") ?? '').isNotEmpty) {
       if (kDebugMode) {
         print(_sharedPreferences.getString("uToken"));
       }
-      await getProfile();
+      if(myProfile.value == null){
+        await getProfile();
+      }
       isLogin.value = true;
     } else {
       isLogin.value = false;
