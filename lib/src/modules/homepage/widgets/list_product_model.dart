@@ -10,18 +10,12 @@ class ListProductModel extends ViewModel{
   RxList<Product> dataProduct = RxList.empty();
 
   RxInt size = 8.obs;
-  RxInt totalPage = 8.obs;
+  RxInt totalPage = 0.obs;
   RxInt categoryId = 0.obs;
 
   ListProductModel(this._productUserCase);
 
 
-  Future<void> doGetProductByCate() async{
-    loading(() async {
-      await _productUserCase.doGetProductByCategoryId(categoryId.value, 0, size.value,'DESC')
-          .then((value) => dataProduct.value = value.content ?? []);
-    });
-  }
   Future<void> loadProductNew() async{
     loading(() async{
       await _productUserCase.doGetAllProductNew(0,size.value).then((value) async{

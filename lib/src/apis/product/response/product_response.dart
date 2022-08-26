@@ -4,7 +4,10 @@ part 'product_response.g.dart';
 
 @JsonSerializable()
 class DataProductResponse {
+  @JsonKey(name: 'content')
+
   List<Product>? content;
+  @JsonKey(name: 'totalElements')
   int? totalElements;
 
   DataProductResponse({this.content,this.totalElements});

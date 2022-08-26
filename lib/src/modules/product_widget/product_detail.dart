@@ -104,41 +104,44 @@ class _ProductDetailState extends ViewWidget<ProductDetail, ProductDetailModel> 
                       ),
                     )
                   ]),
+                  SizedBox(height: 6,),
                   Obx(() => Container(
                     color: UIColors.white,
                     height: 64,
                     width: double.infinity,
                     child: Visibility(
                       visible: (viewModel.productDetail.value?.productThumbnails?.length ?? 0) != 0,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: viewModel.productDetail.value?.productThumbnails?.length ?? 0,
-                        itemBuilder: (context, i) {
-                          return InkWell(
-                            onTap: () {
-                              if (_carouselController.ready) {
-                                viewModel.indexSlider.value = i;
-                                _carouselController.animateToPage(i);
-                              }
-                            },
-                            child: Obx(()
-                            => Container(
-                              margin: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: UIColors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: viewModel.indexSlider.value == i ? UIColors.brandA : UIColors.border10)),
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              child: GlobalImage(
-                                BaseApi.baseUrl_product+'${viewModel.productDetail.value?.productThumbnails?[i].thumbnail}',
-                                fit: BoxFit.contain,
-                                height: 56,
+                      child: Center(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: viewModel.productDetail.value?.productThumbnails?.length ?? 0,
+                          itemBuilder: (context, i) {
+                            return InkWell(
+                              onTap: () {
+                                if (_carouselController.ready) {
+                                  viewModel.indexSlider.value = i;
+                                  _carouselController.animateToPage(i);
+                                }
+                              },
+                              child: Obx(()
+                              => Container(
+                                margin: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: UIColors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: viewModel.indexSlider.value == i ? UIColors.brandA : UIColors.border10)),
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                child: GlobalImage(
+                                  BaseApi.baseUrl_product+'${viewModel.productDetail.value?.productThumbnails?[i].thumbnail}',
+                                  fit: BoxFit.contain,
+                                  height: 56,
+                                ),
                               ),
-                            ),
-                            ),
-                          );
-                        },
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       replacement: Row(
                         children: [

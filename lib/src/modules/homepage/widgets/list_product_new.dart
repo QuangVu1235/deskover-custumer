@@ -31,7 +31,7 @@ class _ListProductNew extends ViewWidget<ListProductNew, ListProductModel> {
     // TODO: implement initState
     super.initState();
     viewModel.categoryId.value = widget.categoryId;
-    viewModel.doGetProductByCate();
+    viewModel.loadProductNew();
   }
 
   @override
@@ -78,7 +78,8 @@ class _ListProductNew extends ViewWidget<ListProductNew, ListProductModel> {
             color: UIColors.white,
             child: TextButton(
               onPressed: () {
-                if(viewModel.totalPage.value <= viewModel.size.value){
+                print(viewModel.totalPage.value);
+                if(viewModel.size.value > viewModel.totalPage.value){
                   AppUtils().showPopupSuccessWarranty(
                     title: 'Trống',
                     subtitle: 'Bạn đã ở cuối trang',
